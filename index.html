@@ -1,0 +1,1260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ASCEND · Migration Conclusion Dashboard</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/primeng@17.18.0/resources/themes/lara-light-blue/theme.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/primeng@17.18.0/resources/primeng.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/primeicons@7.0.0/primeicons.css">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* ── DESIGN TOKENS ── */
+:root {
+  --blue-50:#f0f5ff;--blue-100:#dce8ff;--blue-200:#bfdbfe;--blue-300:#93c5fd;
+  --blue-400:#60a5fa;--blue-500:#3b82f6;--blue-600:#2563eb;--blue-700:#1d4ed8;
+  --s0:#ffffff;--s50:#f8fafc;--s100:#f1f5f9;--s150:#edf2f7;--s200:#e2e8f0;
+  --s300:#cbd5e1;--s400:#94a3b8;--s500:#64748b;--s600:#475569;--s700:#334155;
+  --s800:#1e293b;--s900:#0f172a;
+  --am50:#fffbf0;--am100:#fef3d0;--am400:#e8a020;--am500:#cc8800;
+  --am600:#b07300;--am700:#8f5c00;
+  --or400:#fb923c;--or500:#f97316;--or600:#ea580c;--or700:#c2410c;
+  --gn50:#f4faf6;--gn100:#e2f0e8;--gn400:#6b9e78;--gn500:#528a6a;
+  --gn600:#3a6b4f;--gn700:#2d5340;
+  --rd50:#fff4f4;--rd100:#fde0e0;--rd400:#f87171;--rd500:#d94040;--rd600:#b83030;
+  --pu400:#9e72d4;--pu500:#7c52b8;
+  --ff:'Roboto',sans-serif;--fm:'JetBrains Mono',monospace;
+  --sh1:0 1px 2px rgba(15,23,42,.06),0 1px 3px rgba(15,23,42,.1);
+  --sh2:0 4px 6px -1px rgba(15,23,42,.07),0 2px 4px -2px rgba(15,23,42,.07);
+  --r6:6px;--r8:8px;--r12:12px;
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--ff);background:linear-gradient(160deg,#dce9f7 0%,#b8cfe5 100%);
+  color:var(--s700);min-height:100vh;font-size:13px;display:flex;flex-direction:column}
+body>*{flex-shrink:0}
+.main{flex:1;min-height:0}
+
+/* ── NAV ── */
+.nav{display:flex;align-items:center;justify-content:space-between;padding:0 22px;height:54px;
+  background:#fff;border-bottom:1px solid var(--s200);box-shadow:0 1px 4px rgba(15,23,42,.08);
+  position:sticky;top:0;z-index:100}
+.brand{display:flex;align-items:center;gap:10px}
+.brand-logo{height:30px;width:auto;object-fit:contain;flex-shrink:0;display:block}
+.vsep{width:1px;height:20px;background:var(--s200)}
+.brand-sub{font-size:13px;color:var(--s500);font-weight:600}
+.nav-r{display:flex;align-items:center;gap:8px}
+.snap-badge{display:flex;align-items:center;gap:6px;padding:5px 11px;border-radius:20px;
+  background:var(--gn50);border:1px solid rgba(82,138,106,.25);font-size:13px;font-weight:700;color:var(--gn600)}
+.sdot{width:7px;height:7px;border-radius:50%;background:var(--gn500);animation:blink 2s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+.btn-o{padding:5px 12px;border-radius:var(--r6);border:1px solid var(--s300);background:#fff;
+  color:var(--s600);font-size:13px;font-weight:700;cursor:pointer;font-family:var(--ff);
+  display:flex;align-items:center;gap:5px;transition:all .15s}
+.btn-o:hover{border-color:var(--blue-400);color:var(--blue-600);background:var(--blue-50)}
+
+/* ── NAV MENU + HAMBURGER ── */
+.nav-menu-item{display:flex;align-items:center;gap:8px}
+.nav-hamburger{display:none;position:relative}
+.ham-btn{padding:6px 10px!important;font-size:15px!important}
+.ham-dropdown{display:none;position:absolute;top:calc(100% + 8px);right:0;
+  background:#fff;border:1px solid var(--s200);border-radius:var(--r8);
+  box-shadow:0 8px 24px rgba(15,23,42,.12);min-width:180px;z-index:200;
+  overflow:hidden;flex-direction:column}
+.ham-dropdown.open{display:flex}
+.ham-item{width:100%!important;border:none!important;border-radius:0!important;
+  padding:11px 16px!important;justify-content:flex-start!important;font-size:13px!important;
+  gap:10px!important;border-bottom:1px solid var(--s100)!important;background:#fff!important;
+  display:flex!important;align-items:center!important;cursor:pointer!important;
+  color:var(--s700)!important;font-family:var(--ff)!important;font-weight:600!important}
+.ham-item:last-child{border-bottom:none!important}
+.ham-item:hover{background:var(--blue-50)!important;color:var(--blue-600)!important}
+
+/* ── STEPPER ── */
+.steps-band{background:#f1f5f9;border-bottom:1px solid var(--s200);padding:0 22px;display:flex;align-items:center;width:100%}
+.p-steps{display:flex;align-items:center;gap:0;padding:0;width:100%}
+.p-steps-item{display:flex;align-items:center;cursor:pointer;position:relative}
+.p-steps-sep{flex:1;height:1px;background:var(--s200);min-width:20px;align-self:center}
+.p-steps-item.done + .p-steps-sep{background:var(--blue-300)}
+.p-steps-link{display:flex;align-items:center;gap:7px;padding:14px 10px;height:52px;
+  text-decoration:none;border-bottom:2px solid transparent;transition:all .2s;white-space:nowrap}
+.p-steps-item.done .p-steps-link{color:var(--s500)}
+.p-steps-item.active .p-steps-link{color:var(--blue-600);border-bottom-color:var(--blue-500)}
+.p-steps-item:not(.done):not(.active) .p-steps-link{color:var(--s400)}
+.p-steps-number{width:22px;height:22px;border-radius:50%;font-size:13px;font-weight:800;
+  display:flex;align-items:center;justify-content:center;font-family:var(--fm);
+  transition:all .2s;flex-shrink:0}
+.p-steps-item:not(.done):not(.active) .p-steps-number{background:var(--s100);color:var(--s400);border:1.5px solid var(--s300)}
+.p-steps-item.done .p-steps-number{background:var(--blue-100);color:var(--blue-600);border:1.5px solid var(--blue-200)}
+.p-steps-item.active .p-steps-number{background:var(--blue-600);color:#fff;border:1.5px solid var(--blue-600)}
+.p-steps-title{font-size:13px;font-weight:700;line-height:1.2}
+.p-steps-item.active .p-steps-link{background:rgba(59,130,246,.07)!important}
+.p-steps-item.active .p-steps-number{box-shadow:0 0 0 3px rgba(59,130,246,.2)!important}
+.p-steps .p-steps-item::before,.p-steps .p-steps-item::after{content:none!important;display:none!important;border:none!important;background:none!important}
+
+/* ── COMPLETION BANNER ── */
+.completion-banner{margin:18px 22px 0;background:#f4faf6;border-radius:var(--r8);
+  padding:12px 18px;display:flex;align-items:center;gap:10px;
+  border-left:4px solid var(--gn500);border:1px solid rgba(82,138,106,.25);border-left:4px solid var(--gn500)}
+.cb-left{display:flex;align-items:center;gap:10px}
+.cb-icon{font-size:21px;color:var(--gn600);flex-shrink:0}
+.cb-title{font-size:13px;font-weight:700;color:var(--gn600)}
+.cb-sub{font-size:13px;color:var(--gn500);font-weight:500;margin-top:1px}
+.cb-right{display:none}
+.cb-stat{display:none}
+.cb-stat-n{display:none}
+.cb-stat-l{display:none}
+.cb-divider{display:none}
+.cb-ts{display:none}
+
+/* ── LAYOUT ── */
+.main{padding:14px 22px;display:flex;flex-direction:column;gap:14px}
+.card{background:var(--s0);border:1px solid var(--s200);border-radius:var(--r12);
+  box-shadow:var(--sh1);overflow:hidden;display:flex;flex-direction:column}
+.ch{background:var(--s0);border-bottom:1px solid var(--s150);min-height:46px;padding:11px 18px;
+  display:flex;align-items:center;justify-content:space-between}
+.ct{font-size:13px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;
+  color:var(--s600);gap:8px;display:flex;align-items:center}
+.ct i{font-size:13px;color:var(--s400)}
+.acc{width:3px;height:14px;border-radius:2px;display:inline-block;flex-shrink:0;background:#3B82F6}
+.acc-b,.acc-am,.acc-g,.acc-or,.acc-pu,.acc-rd{background:#3B82F6}
+.cb-area{padding:16px;flex:1}
+.row-label{font-size:13px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;
+  color:var(--s800);padding:0 2px;margin-bottom:4px;display:flex;align-items:center;gap:5px}
+.row-label i{display:none}
+
+/* ── KPI ROW ── */
+.kg{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.kc{display:flex;flex-direction:column;gap:10px;padding:18px 20px;height:100%}
+.klabel{font-size:13px;color:var(--s500);font-weight:700;display:flex;align-items:center;gap:6px;text-transform:uppercase;letter-spacing:.4px}
+.klabel i{color:var(--s400)}
+.knum{font-family:var(--fm);font-size:36px;font-weight:700;line-height:1;color:var(--s800)}
+.kdesc{font-size:13px;color:var(--s400);font-weight:400}
+.kbar{height:4px;background:var(--s100);border-radius:2px;margin-top:4px;overflow:hidden}
+.kbar-f{height:4px;border-radius:2px}
+.kbar-stack{box-shadow:none;background:var(--s200)!important}
+.kbar-pct{font-size:13px!important;font-weight:700}
+.kbar-pct .kbar-sq{width:10px!important;height:10px!important}
+.kbar-empty{background:var(--s300)!important}
+.knumrow{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.kdonut{flex-shrink:0}
+.krows{display:flex;flex-direction:column;gap:5px;margin-top:auto}
+.krow{display:flex;align-items:center;justify-content:space-between;font-size:13px;font-weight:600;color:var(--s600)}
+.sbadge{font-size:13px;font-weight:700;padding:2px 7px;border-radius:10px;letter-spacing:.4px;text-transform:uppercase}
+.sb-hi{background:#fff0f0;color:#b83030;border:1px solid rgba(184,48,48,.2)}
+.sb-me{background:#fff8e8;color:#8f5c00;border:1px solid rgba(143,92,0,.2)}
+.sb-lo{background:var(--gn50);color:var(--gn600);border:1px solid rgba(82,138,106,.2)}
+
+/* ── MAIN CONTENT GRID ── */
+.g-main{display:grid;grid-template-columns:1fr 380px;gap:14px;align-items:stretch}
+/* Compact layout in Object Review + Rollback History */
+.g-main .card{display:flex;flex-direction:column;min-height:0}
+.g-main .card .ch{padding:9px 16px;min-height:42px}
+/* 2% smaller text */
+.g-main .tab,.g-main .tbadge,.g-main .pinpw i,.g-main .pinp,.g-main .psel,.g-main .pchip,.g-main .pchip i,
+.g-main .pt th,.g-main .pt td,.g-main .oname,.g-main .otype,.g-main .otype i,.g-main .mtag,.g-main .ds,
+.g-main .parity,.g-main .parity .src,.g-main .parity .arrow,.g-main .parity .tgt,.g-main .fctx,.g-main .ico-btn,
+.g-main .tfoot,.g-main .pgb,.g-main .ug-txt,.g-main .ug-ts,
+.g-main .rb-dot,.g-main .rb-dot.warn i,.g-main .rb-ts,.g-main .rb-label,.g-main .rb-diff-row,
+.g-main .rb-diff-k,.g-main .rb-diff-k i,.g-main .rb-diff-v,.g-main .rb-restore-btn,.g-main .rb-restore-btn i,.g-main .rb-current-tag{font-size:12.74px}
+
+/* ── TABS ── */
+.tabs{display:flex;border-bottom:1px solid var(--s200);padding:0 16px;background:var(--s50);gap:8px;justify-content:space-between;
+  overflow-x:auto;-webkit-overflow-scrolling:touch;min-width:0;flex-wrap:nowrap}
+.tab{display:flex;align-items:center;gap:6px;padding:9px 14px;font-size:13px;font-weight:800;
+  color:var(--s400);cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;letter-spacing:.1px;
+  justify-content:center;min-width:min-content;flex-shrink:0;white-space:nowrap}
+.tab:hover{color:var(--s600)}
+.tab.on{color:var(--blue-600);border-bottom-color:var(--blue-500)}
+.tbadge{font-family:var(--fm);font-size:13px;font-weight:700;padding:1px 7px;border-radius:10px}
+.tab.on .tbadge{background:var(--blue-100);color:var(--blue-600)}
+.tab:not(.on) .tbadge{background:var(--s200);color:var(--s400)}
+
+/* ── FILTER BAR ── */
+.fbar{display:flex;gap:8px;align-items:center;padding:10px 16px;
+  border-bottom:1px solid var(--s100);flex-wrap:wrap}
+.pinpw{position:relative}
+.pinpw i{position:absolute;left:9px;top:50%;transform:translateY(-50%);font-size:13px;color:var(--s400);pointer-events:none}
+.pinp{height:33px;border-radius:var(--r6);border:1px solid var(--s300);color:var(--s700);
+  font-size:13px;padding:0 11px 0 32px;font-family:var(--ff);outline:none;max-width:220px;
+  background:#fff;transition:border-color .15s}
+.pinp:focus{border-color:var(--blue-400);box-shadow:0 0 0 2px rgba(59,130,246,.15)}
+.psel{height:33px;border-radius:var(--r6);padding:0 9px;border:1px solid var(--s300);
+  background:#fff;color:var(--s600);font-size:13px;font-family:var(--ff);cursor:pointer;outline:none;font-weight:700}
+.pchip{display:flex;align-items:center;gap:5px;padding:4px 11px;border-radius:20px;
+  border:1px solid var(--s300);background:#fff;font-size:13px;font-weight:800;
+  color:var(--s500);cursor:pointer;transition:all .15s}
+.pchip.on{background:var(--blue-50);border-color:var(--blue-400);color:var(--blue-600)}
+.pchip i{font-size:13px}
+
+/* ── TABLE ── */
+.pt-wrap{overflow-x:auto;overflow-y:hidden;min-height:0;min-width:0;flex:1;display:flex;flex-direction:column;-webkit-overflow-scrolling:touch;max-height:420px}
+.pt{width:100%;min-width:640px;border-collapse:collapse;table-layout:auto}
+.pt th{text-align:left;padding:8px 12px;font-size:13px;font-weight:800;letter-spacing:1px;
+  text-transform:uppercase;color:var(--s400);background:var(--s50);
+  border-bottom:1px solid var(--s200);white-space:nowrap;
+  position:sticky;top:0;z-index:2;box-shadow:0 1px 0 var(--s200)}
+.pt th:first-child{padding-left:16px;min-width:140px}
+.pt th:nth-child(2){min-width:90px}
+.pt th:nth-child(3){min-width:80px}
+.pt th:nth-child(4){min-width:120px}
+.pt th:nth-child(5){min-width:90px}
+.pt th:nth-child(6){min-width:60px}
+.pt td{padding:8px 12px;font-size:13px;border-bottom:1px solid var(--s100);
+  color:var(--s700);vertical-align:middle}
+.pt td:first-child{padding-left:16px}
+.pt tr:last-child td{border-bottom:none}
+.pt tr:hover td{background:var(--blue-50)}
+.oname{font-family:var(--fm);font-size:13px;font-weight:700;color:var(--s900)}
+.otype{font-size:13px;font-weight:600;color:var(--s400);margin-top:2px}
+.otype i{color:var(--s400)!important}
+.mtag{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:10px;
+  font-size:13px;font-weight:800;border:1px solid transparent}
+.mtag-md{background:rgba(96,165,250,.09);color:#3d6bc8;border-color:rgba(96,165,250,.22)}
+.mtag-il{background:rgba(124,82,184,.09);color:#6b4dab;border-color:rgba(124,82,184,.24)}
+.mtag-gj{background:rgba(236,72,153,.09);color:#d84d7a;border-color:rgba(236,72,153,.28)}
+/* Deployment status */
+.ds{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:20px;font-size:13px;font-weight:800}
+.ds-dep{background:var(--gn50);color:var(--gn600);border:1px solid rgba(82,138,106,.2)}
+.ds-pnd{background:var(--am50);color:var(--am600);border:1px solid rgba(200,136,0,.25)}
+.ds-fai{background:var(--rd50);color:var(--rd600);border:1px solid rgba(184,48,48,.2)}
+/* Parity arrows */
+.parity{display:flex;align-items:center;gap:5px;font-size:13px;font-weight:700;color:var(--s500)}
+.parity .src{font-family:var(--fm);font-size:13px;color:var(--s700)}
+.parity .arrow{font-size:13px;color:var(--s300)}
+.parity .tgt{font-family:var(--fm);font-size:13px;color:var(--gn600)}
+.parity .tgt.new{color:var(--blue-600)}
+.parity .tgt.miss{color:var(--rd500)}
+/* Functional context tag */
+.fctx{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:4px;
+  font-size:13px;font-weight:800;background:var(--s100);color:var(--s500);border:1px solid var(--s200)}
+.ico-btn{width:27px;height:27px;border-radius:var(--r6);border:1px solid var(--s300);
+  background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;
+  color:var(--s400);font-size:13px;transition:all .15s;margin:0 auto}
+.ico-btn:hover{border-color:var(--blue-400);color:var(--blue-600);background:var(--blue-50)}
+/* Table footer */
+.tfoot{display:flex;align-items:center;justify-content:space-between;padding:8px 16px;
+  border-top:1px solid var(--s100);background:var(--s50);font-size:13px;color:var(--s400);font-weight:600}
+.pgn{display:flex;gap:3px}
+.pgb{width:29px;height:29px;border-radius:var(--r6);border:1px solid var(--s200);background:#fff;
+  color:var(--s500);font-size:13px;font-weight:700;font-family:var(--fm);
+  cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s}
+.pgb.on{background:var(--blue-500);border-color:var(--blue-500);color:#fff}
+.pgb:hover:not(.on){border-color:var(--blue-400);color:var(--blue-600)}
+
+/* ── ROLLBACK HISTORY PANEL (compact mode) ── */
+.rb-body{padding:0;flex:1;display:flex;flex-direction:column;max-height:520px;overflow-y:auto}
+.rb-timeline{padding:10px 12px;display:flex;flex-direction:column;gap:0;position:relative;flex:1;min-height:0;justify-content:space-between}
+.rb-item{display:flex;gap:12px;position:relative;padding-bottom:10px}
+.rb-item:last-child{padding-bottom:0}
+.rb-item:not(:last-child)::before{content:'';position:absolute;left:11px;top:26px;
+  bottom:0;width:1px;background:var(--s200)}
+.rb-dot-wrap{display:flex;flex-direction:column;align-items:center;flex-shrink:0}
+.rb-dot{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;
+  justify-content:center;font-size:11px;flex-shrink:0;z-index:1;border:2px solid transparent}
+.rb-dot.stable{background:var(--gn50);color:var(--gn600);border-color:var(--gn100)}
+.rb-dot.warn{background:var(--am50);color:var(--am600);border-color:var(--am100)}
+.rb-dot.warn i{font-size:11px!important}
+.rb-dot.current{background:var(--blue-600);color:#fff;border-color:var(--blue-600);
+  box-shadow:0 0 0 3px rgba(37,99,235,.15)}
+.rb-content{flex:1;min-width:0}
+.rb-ts{font-family:var(--fm);font-size:13px;color:var(--s400);font-weight:600;
+  display:flex;align-items:center;gap:5px;margin-bottom:1px}
+.rb-label{font-size:12px;font-weight:800;color:var(--s700);margin-bottom:2px}
+.rb-diff{background:var(--s50);border:1px solid var(--s200);border-radius:var(--r6);
+  padding:5px 8px;margin-bottom:4px}
+.rb-diff-row{display:flex;justify-content:space-between;align-items:center;gap:10px;
+  font-size:12px;padding:1px 0;font-weight:600}
+.rb-diff-row:not(:last-child){border-bottom:1px solid var(--s100)}
+.rb-diff-k{color:var(--s500);display:flex;align-items:center;gap:4px;font-size:12px;flex-shrink:0}
+.rb-diff-k i{font-size:12px!important}
+.rb-diff-v{font-family:var(--fm);font-size:12px;font-weight:700;
+  display:flex;flex-direction:row;align-items:center;gap:4px;flex-shrink:0;min-width:0;text-align:right;justify-content:flex-end}
+.rb-diff-v .rb-diff-cmp{font-weight:400;color:var(--s400);font-size:11px;white-space:nowrap}
+.rb-diff-v.up{color:var(--gn600)}.rb-diff-v.dn{color:var(--rd500)}.rb-diff-v.neu{color:var(--s600)}
+.rb-restore-btn{width:100%;padding:5px 8px;border-radius:var(--r6);border:1px solid var(--s200);
+  background:#fff;color:var(--s500);font-size:12px;font-weight:800;cursor:pointer;
+  font-family:var(--ff);display:flex;align-items:center;gap:5px;justify-content:center;
+  transition:all .15s}
+.rb-restore-btn:hover{border-color:var(--am400);color:var(--am600);background:var(--am50)}
+.rb-restore-btn i{font-size:12px}
+.rb-current-tag{display:inline-flex;align-items:center;gap:4px;padding:2px 6px;
+  border-radius:10px;background:var(--blue-50);border:1px solid var(--blue-200);
+  font-size:12px;font-weight:800;color:var(--blue-600)}
+
+/* ── Lazy-reveal animation ── */
+.lazy-row{opacity:0;transform:translateY(20px);
+  transition:opacity .45s cubic-bezier(.4,0,.2,1),transform .45s cubic-bezier(.4,0,.2,1)}
+.lazy-row.revealed{opacity:1;transform:none}
+
+/* ── GOVERNANCE / EXPORT PANEL ── */
+.gov-grid{display:grid;grid-template-columns:1fr 380px;gap:14px}
+.sum-body{padding:16px}
+.sum-row{display:flex;justify-content:space-between;align-items:center;
+  padding:8px 0;border-bottom:1px solid var(--s100);font-size:13px}
+.sum-row:last-of-type{border-bottom:none}
+.sum-k{color:var(--s500);font-weight:600;display:flex;align-items:center;gap:5px}
+.sum-k i{font-size:13px;color:var(--s400)}
+.sum-v{font-family:var(--fm);font-size:13px;font-weight:700}
+.div{height:1px;background:var(--s100);margin:11px 0}
+.cta-lbl{font-size:13px;font-weight:800;letter-spacing:.7px;text-transform:uppercase;
+  color:var(--s400);margin-bottom:10px;display:flex;align-items:center;gap:5px}
+.cta-lbl i{font-size:13px}
+.btn-sec{width:100%;padding:9px 14px;border-radius:var(--r8);border:1px solid var(--s300);background:#fff;
+  color:var(--s600);font-size:13px;font-weight:800;cursor:pointer;font-family:var(--ff);
+  display:flex;align-items:center;gap:7px;justify-content:center;transition:all .15s;margin-bottom:7px}
+.btn-sec:hover{border-color:var(--blue-400);color:var(--blue-600);background:var(--blue-50)}
+.btn-sec i{font-size:13px}
+/* CAPTURE BUTTON — primary CTA of this screen */
+.btn-capture{width:100%;padding:13px 16px;border-radius:var(--r8);
+  background:var(--blue-600);border:none;color:#fff;font-size:13px;font-weight:900;
+  cursor:pointer;font-family:var(--ff);display:flex;align-items:center;gap:8px;
+  justify-content:center;box-shadow:0 4px 14px rgba(37,99,235,.35);transition:all .2s}
+.btn-capture:hover{background:var(--blue-700);box-shadow:0 6px 20px rgba(37,99,235,.45);transform:translateY(-1px)}
+.btn-capture i{font-size:15px}
+.capture-note{display:flex;align-items:center;gap:6px;margin-top:9px;padding:7px 11px;
+  border-radius:var(--r6);background:var(--s50);border:1px solid var(--s200);
+  font-size:13px;font-weight:600;color:var(--s500)}
+.capture-note i{font-size:13px;color:var(--s400);flex-shrink:0}
+
+/* ── UNCERTAINTY GUARD ── */
+.ug-bar{display:flex;align-items:center;gap:10px;padding:8px 16px;
+  border-bottom:1px solid var(--s100);background:var(--gn50)}
+.ug-dot{width:13px;height:13px;border-radius:50%;background:var(--gn500);flex-shrink:0}
+.ug-txt{font-size:13px;font-weight:700;color:var(--gn700)}
+.ug-ts{font-size:13px;color:var(--gn600);margin-left:auto;font-family:var(--fm)}
+
+/* ── ANNOTATIONS ── */
+.ann-body{padding:14px 16px;display:flex;flex-direction:column;gap:9px;flex:1}
+.ann{padding:11px 13px;border-radius:var(--r8);border:1px solid var(--s200);transition:box-shadow .15s}
+.ann:hover{box-shadow:var(--sh2)}
+.ann-meta{display:flex;align-items:center;gap:7px;font-size:13px;font-weight:700;
+  color:var(--s400);margin-bottom:5px;flex-wrap:wrap}
+.ann-meta i{font-size:13px}
+.ann-obj{color:var(--blue-600);font-family:var(--fm);font-size:13px;font-weight:700}
+.ann-txt{font-size:13px;color:var(--s600);line-height:1.55;font-weight:500}
+.ann-foot{margin-top:6px;display:flex;gap:6px}
+.dtag{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:10px;
+  font-size:13px;font-weight:800;letter-spacing:.3px}
+.dtag i{font-size:13px}
+.dt-dep{background:var(--gn50);color:var(--gn600);border:1px solid rgba(82,138,106,.2)}
+.dt-rb{background:var(--am50);color:var(--am600);border:1px solid rgba(200,136,0,.2)}
+.dt-ai{background:var(--blue-50);color:var(--blue-600);border:1px solid var(--blue-200)}
+
+/* capture flash animation */
+@keyframes flash{0%{opacity:1}40%{opacity:.2}100%{opacity:1}}
+.capturing .nav,.capturing .steps-band,.capturing .main{animation:none}
+
+/* ════════════════════════════════════════════
+   RESPONSIVE — dimensionamiento (igual que ascend-demo-assesment)
+   ════════════════════════════════════════════ */
+
+/* ── Tablet wide: 1100px ── */
+@media (max-width: 1100px) {
+  .g-main{grid-template-columns:1fr 340px}
+  .gov-grid{grid-template-columns:1fr 340px}
+  .kg{grid-template-columns:1fr 1fr;gap:10px}
+  .rb-diff,.rb-content{min-width:180px}
+  .tab,.tbadge{font-size:12px!important}
+  .tab{padding:8px 12px;gap:5px}
+  .tbadge{padding:1px 6px}
+}
+
+/* ── Tablet: 900px ── */
+@media (max-width: 900px) {
+  .nav-menu-item{display:none!important}
+  .nav-hamburger{display:block!important}
+  .snap-badge{font-size:10px;padding:4px 9px}
+  .p-steps-title{font-size:10px}
+  .p-steps-link{padding:10px 7px;gap:5px}
+  .kg{grid-template-columns:1fr 1fr;gap:10px}
+  .g-main{grid-template-columns:1fr}
+  .gov-grid{grid-template-columns:1fr}
+  .main{padding:14px 14px}
+  .tab,.tbadge{font-size:11px!important}
+  .tab{padding:7px 10px;gap:4px}
+  .tbadge{padding:1px 5px}
+}
+
+/* ── Tablet narrow: 720px (preventiva para tabs) ── */
+@media (max-width: 720px) {
+  .tab,.tbadge{font-size:10px!important}
+  .tab{padding:6px 8px;gap:3px}
+  .tbadge{padding:1px 4px}
+  .tab i{font-size:10px!important}
+}
+
+/* ── Tablet portrait / large phone: 680px ── */
+@media (max-width: 680px) {
+  .nav{padding:0 14px}
+  .snap-badge i{display:none}
+  .steps-band{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .p-steps{flex-shrink:0;min-width:min-content}
+  .p-steps-title{display:none!important}
+  .p-steps-link{padding:12px 6px;gap:0}
+  .p-steps-sep{min-width:10px}
+  .kg{grid-template-columns:1fr}
+  .pt-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .pt{min-width:560px}
+  .completion-banner{margin:18px 14px 0;flex-wrap:wrap}
+  .main{padding:12px 10px;gap:10px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .g-main .card,.gov-grid .card{min-width:0}
+  .rb-diff-v{flex-direction:column;align-items:flex-end;gap:2px}
+  .rb-diff-v .rb-diff-cmp{font-size:11px}
+  .tab,.tbadge{font-size:10px!important}
+  .tab{padding:6px 8px;gap:3px}
+  .tbadge{padding:1px 4px}
+  .tab i{font-size:10px!important}
+}
+
+/* ── Small phone: 420px ── */
+@media (max-width: 420px) {
+  body{font-size:13px}
+  .nav{padding:0 10px}
+  .btn-o{padding:4px 9px;font-size:12px}
+  .knum{font-size:32px!important}
+  .card{border-radius:8px}
+  .ch{padding:10px 14px!important}
+  .kc{padding:13px 14px!important}
+  .cb-area{padding:12px 14px}
+  .ann-meta{flex-wrap:wrap;gap:4px}
+  .fbar{flex-wrap:wrap}
+  .pt td,.pt th{font-size:11px!important;padding:8px 10px!important}
+  .pt{min-width:560px}
+  .main{padding:10px 8px;gap:8px}
+  .tab,.tbadge{font-size:9px!important}
+  .tab{padding:5px 6px;gap:2px}
+  .tbadge{padding:0 3px}
+  .tab i{font-size:9px!important}
+}
+</style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav class="nav">
+  <div class="brand">
+    <img src="Arganologo (2).png" alt="argano" style="height:30px;object-fit:contain;flex-shrink:0;">
+    <div class="vsep"></div>
+    <div style="display:flex;align-items:baseline;gap:5px;">
+      <span style="font-size:13px;font-weight:700;color:var(--s700);letter-spacing:.5px;">ASCEND</span>
+    </div>
+  </div>
+
+  <div class="nav-r">
+    <div class="snap-badge"><span class="sdot"></span><i class="pi pi-shield"></i> Snapshot · Verified</div>
+    <div class="nav-menu-item">
+      <button class="btn-o"><i class="pi pi-cog"></i> Config</button>
+      <button class="btn-o"><i class="pi pi-building"></i> Acme Logistics</button>
+    </div>
+    <div class="nav-hamburger" style="position:relative">
+      <button id="hamBtn" class="btn-o ham-btn" aria-expanded="false" aria-label="Menu">
+        <i class="pi pi-bars"></i>
+      </button>
+      <div id="hamDropdown" class="ham-dropdown">
+        <button class="ham-item"><i class="pi pi-cog"></i> Config</button>
+        <button class="ham-item"><i class="pi pi-building"></i> Acme Logistics</button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ── STEPPER ── -->
+<div class="steps-band">
+  <div class="p-steps">
+    <div class="p-steps-item done">
+      <a class="p-steps-link">
+        <span class="p-steps-number"><i class="pi pi-check" style="font-size:13px"></i></span>
+        <span class="p-steps-title">Technical Assessment</span>
+      </a>
+    </div>
+    <div class="p-steps-sep"></div>
+    <div class="p-steps-item done">
+      <a class="p-steps-link">
+        <span class="p-steps-number"><i class="pi pi-check" style="font-size:13px"></i></span>
+        <span class="p-steps-title">Migration Path Planning</span>
+      </a>
+    </div>
+    <div class="p-steps-sep"></div>
+    <div class="p-steps-item done">
+      <a class="p-steps-link">
+        <span class="p-steps-number"><i class="pi pi-check" style="font-size:13px"></i></span>
+        <span class="p-steps-title">AI-Powered Orchestration</span>
+      </a>
+    </div>
+    <div class="p-steps-sep"></div>
+    <div class="p-steps-item active">
+      <a class="p-steps-link">
+        <span class="p-steps-number">4</span>
+        <span class="p-steps-title">Cutover Readiness</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- ── COMPLETION BANNER ── -->
+<div class="completion-banner" id="completionBanner">
+  <div class="cb-left">
+    <div class="cb-icon"><i class="pi pi-verified"></i></div>
+    <div>
+      <div class="cb-title">Migration Complete — No Background Processes Pending</div>
+      <div class="cb-sub">All staged batches finalized · Deployment confirmed · System stable as of 14:32 UTC</div>
+    </div>
+  </div>
+  <div class="cb-right">
+    <div class="cb-stat">
+      <div class="cb-stat-n">1,847</div>
+      <div class="cb-stat-l">Objects Total</div>
+    </div>
+    <div class="cb-divider"></div>
+    <div class="cb-stat">
+      <div class="cb-stat-n">1,802</div>
+      <div class="cb-stat-l">Deployed</div>
+    </div>
+    <div class="cb-divider"></div>
+    <div class="cb-stat">
+      <div class="cb-stat-n">31</div>
+      <div class="cb-stat-l">Pending</div>
+    </div>
+    <div class="cb-divider"></div>
+    <div class="cb-stat">
+      <div class="cb-stat-n">14</div>
+      <div class="cb-stat-l">Failed</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── MAIN ── -->
+<div class="main" id="dashCapture">
+
+  <!-- KPI Row -->
+  <div class="lazy-row" id="lazyRow0">
+  <div class="row-label"><i class="pi pi-chart-bar"></i> Deployment Summary</div>
+  <div class="kg">
+
+    <!-- Master Data -->
+    <div class="card">
+      <div class="ch">
+        <div class="ct"><span class="acc acc-b"></span><i class="pi pi-database"></i> Master Data</div>
+        <span class="sbadge sb-lo">Deployed</span>
+      </div>
+      <div class="kc">
+        <div class="klabel"><i class="pi pi-check-circle"></i> Objects Migrated</div>
+        <div class="knum" style="margin-bottom:2px">824</div>
+        <div class="kdesc" style="margin-bottom:10px">of 826 in scope</div>
+        <!-- stacked bar -->
+        <div class="kbar-stack" style="width:100%;height:10px;border-radius:6px;overflow:hidden;display:flex;background:var(--s100);margin-bottom:6px">
+          <div style="width:99.5%;background:var(--gn500);height:100%;transition:width .4s"></div>
+          <div style="width:0.2%;background:#f59e0b;height:100%;transition:width .4s"></div>
+          <div class="kbar-empty" style="width:0.0%;height:100%;transition:width .4s"></div>
+        </div>
+        <!-- pct labels -->
+        <div style="display:flex;gap:10px;margin-bottom:8px">
+          <span class="kbar-pct" style="color:var(--gn600)"><span class="kbar-sq" style="display:inline-block;width:10px;height:10px;border-radius:2px;background:var(--gn500);margin-right:3px;vertical-align:middle"></span>99.5%</span>
+          <span class="kbar-pct" style="color:#b45309"><span class="kbar-sq" style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#f59e0b;margin-right:3px;vertical-align:middle"></span>0.2%</span>
+          
+        </div>
+        <div class="krows">
+          <div class="krow"><span>Deployed</span><span style="color:var(--gn600);font-family:var(--fm)">822</span></div>
+          <div class="krow"><span>Pending</span><span style="color:var(--am600);font-family:var(--fm)">2</span></div>
+          <div class="krow"><span>Failed</span><span style="color:var(--rd500);font-family:var(--fm)">0</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Integration Layer -->
+    <div class="card">
+      <div class="ch">
+        <div class="ct"><span class="acc acc-am"></span><i class="pi pi-share-alt"></i> Integration Layer</div>
+        <span class="sbadge sb-me">Pending</span>
+      </div>
+      <div class="kc">
+        <div class="klabel"><i class="pi pi-arrow-right-arrow-left"></i> Interfaces Migrated</div>
+        <div class="knum" style="margin-bottom:2px">541</div>
+        <div class="kdesc" style="margin-bottom:10px">of 570 in scope</div>
+        <!-- stacked bar -->
+        <div class="kbar-stack" style="width:100%;height:10px;border-radius:6px;overflow:hidden;display:flex;background:var(--s100);margin-bottom:6px">
+          <div style="width:89.8%;background:var(--gn500);height:100%;transition:width .4s"></div>
+          <div style="width:5.1%;background:#f59e0b;height:100%;transition:width .4s"></div>
+          <div class="kbar-empty" style="width:0.0%;height:100%;transition:width .4s"></div>
+        </div>
+        <!-- pct labels -->
+        <div style="display:flex;gap:10px;margin-bottom:8px">
+          <span class="kbar-pct" style="color:var(--gn600)"><span class="kbar-sq" style="display:inline-block;width:10px;height:10px;border-radius:2px;background:var(--gn500);margin-right:3px;vertical-align:middle"></span>89.8%</span>
+          <span class="kbar-pct" style="color:#b45309"><span class="kbar-sq" style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#f59e0b;margin-right:3px;vertical-align:middle"></span>5.1%</span>
+          
+        </div>
+        <div class="krows">
+          <div class="krow"><span>Deployed</span><span style="color:var(--gn600);font-family:var(--fm)">512</span></div>
+          <div class="krow"><span>Pending</span><span style="color:var(--am600);font-family:var(--fm)">29</span></div>
+          <div class="krow"><span>Failed</span><span style="color:var(--rd500);font-family:var(--fm)">0</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Groovy to Java -->
+    <div class="card">
+      <div class="ch">
+        <div class="ct"><span class="acc acc-pu"></span><i class="pi pi-code"></i> Groovy &#8594; Java</div>
+        <span class="sbadge sb-hi">Attention</span>
+      </div>
+      <div class="kc">
+        <div class="klabel"><i class="pi pi-file-edit"></i> Conversions Migrated</div>
+        <div class="knum" style="margin-bottom:2px">437</div>
+        <div class="kdesc" style="margin-bottom:10px">of 451 in scope</div>
+        <!-- stacked bar -->
+        <div class="kbar-stack" style="width:100%;height:10px;border-radius:6px;overflow:hidden;display:flex;background:var(--s100);margin-bottom:6px">
+          <div style="width:93.8%;background:var(--gn500);height:100%;transition:width .4s"></div>
+          <div class="kbar-empty" style="width:0.0%;height:100%;transition:width .4s"></div>
+          <div style="width:3.1%;background:#ef4444;height:100%;transition:width .4s"></div>
+        </div>
+        <!-- pct labels -->
+        <div style="display:flex;gap:10px;margin-bottom:8px">
+          <span class="kbar-pct" style="color:var(--gn600)"><span class="kbar-sq" style="display:inline-block;width:10px;height:10px;border-radius:2px;background:var(--gn500);margin-right:3px;vertical-align:middle"></span>93.8%</span>
+          
+          <span class="kbar-pct" style="color:#b91c1c"><span class="kbar-sq" style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#ef4444;margin-right:3px;vertical-align:middle"></span>3.1%</span>
+        </div>
+        <div class="krows">
+          <div class="krow"><span>Deployed</span><span style="color:var(--gn600);font-family:var(--fm)">423</span></div>
+          <div class="krow"><span>Pending</span><span style="color:var(--am600);font-family:var(--fm)">0</span></div>
+          <div class="krow"><span>Failed</span><span style="color:var(--rd500);font-family:var(--fm)">14</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Functional Coverage -->
+    <div class="card">
+      <div class="ch">
+        <div class="ct"><span class="acc acc-g"></span><i class="pi pi-sitemap"></i> Functional Coverage</div>
+        <span class="sbadge sb-lo">On Target</span>
+      </div>
+      <div class="kc">
+        <div class="klabel"><i class="pi pi-th-large"></i> Contexts Covered</div>
+        <div class="knum" style="margin-bottom:2px">6/6</div>
+        <div class="kdesc" style="margin-bottom:10px">All contexts validated</div>
+        <!-- stacked bar -->
+        <div class="kbar-stack" style="width:100%;height:10px;border-radius:6px;overflow:hidden;display:flex;background:var(--s100);margin-bottom:6px">
+          <div style="width:100.0%;background:var(--gn500);height:100%;transition:width .4s"></div>
+          <div class="kbar-empty" style="width:0.0%;height:100%;transition:width .4s"></div>
+          <div class="kbar-empty" style="width:0.0%;height:100%;transition:width .4s"></div>
+        </div>
+        <!-- pct labels -->
+        <div style="display:flex;gap:10px;margin-bottom:8px">
+          <span class="kbar-pct" style="color:var(--gn600)"><span class="kbar-sq" style="display:inline-block;width:10px;height:10px;border-radius:2px;background:var(--gn500);margin-right:3px;vertical-align:middle"></span>100.0%</span>
+          
+          
+        </div>
+        <div class="krows">
+          <div class="krow"><span>Source objects</span><span style="color:var(--s700);font-family:var(--fm)">1,847</span></div>
+          <div class="krow"><span>Target parity</span><span style="color:var(--gn600);font-family:var(--fm)">1,802</span></div>
+          <div class="krow"><span>Net new (target)</span><span style="color:var(--blue-600);font-family:var(--fm)">+63</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /kg -->
+  </div><!-- /lazyRow0 -->
+
+  <!-- Object Review + Rollback -->
+  <div class="lazy-row" id="lazyRow1">
+  <div class="row-label"><i class="pi pi-list-check"></i> Object Review &amp; History</div>
+  <div class="g-main">
+
+    <!-- Object Table -->
+    <div class="card">
+      <!-- Completion guard bar -->
+      <div class="ug-bar">
+        <div class="ug-dot"></div>
+        <div class="ug-txt">All batches finalized · No background processes active · Last sync 14:32 UTC</div>
+        <div class="ug-ts">Sync confirmed 14:32:08</div>
+      </div>
+      <!-- Tabs -->
+      <div class="tabs">
+        <div class="tab on"><i class="pi pi-list"></i> All Objects <span class="tbadge">1,847</span></div>
+        <div class="tab"><i class="pi pi-database"></i> Master Data <span class="tbadge">826</span></div>
+        <div class="tab"><i class="pi pi-share-alt"></i> Integration <span class="tbadge">570</span></div>
+        <div class="tab"><i class="pi pi-code"></i> Groovy → Java <span class="tbadge">451</span></div>
+      </div>
+      <!-- Filters -->
+      <div class="fbar">
+        <div class="pinpw">
+          <i class="pi pi-search"></i>
+          <input class="pinp" type="text" placeholder="Search objects…">
+        </div>
+        <select class="psel">
+          <option>All Statuses</option>
+          <option>Deployed</option>
+          <option>Pending</option>
+          <option>Failed</option>
+        </select>
+        <select class="psel">
+          <option>All Contexts</option>
+          <option>Picking</option>
+          <option>Packing</option>
+          <option>Labels</option>
+          <option>Move Commands</option>
+          <option>Config</option>
+        </select>
+        <div class="pchip on"><i class="pi pi-exclamation-circle"></i> Failed Only</div>
+        <div class="pchip"><i class="pi pi-arrow-right-arrow-left"></i> Show Diff</div>
+      </div>
+      <!-- Table -->
+      <div class="pt-wrap">
+      <table class="pt">
+        <thead>
+          <tr>
+            <th>Object <i class="pi pi-sort-alt"></i></th>
+            <th>Category</th>
+            <th>Context</th>
+            <th>Source → Target</th>
+            <th>Status</th>
+            <th style="text-align:center">Notes</th>
+          </tr>
+        </thead>
+        <tbody id="ptBody">
+          <tr>
+            <td>
+              <div class="oname">PICK_WAVE_ALLOC_V3</div>
+              <div class="otype"><i class="pi pi-code" style="font-size:12.74px"></i> Groovy Script</div>
+            </td>
+            <td><span class="mtag mtag-gj"><i class="pi pi-code"></i> Groovy→Java</span></td>
+            <td><span class="fctx"><i class="pi pi-wave-pulse"></i> Picking</span></td>
+            <td>
+              <div class="parity">
+                <span class="src">GroovyV3</span>
+                <span class="arrow">→</span>
+                <span class="tgt">JavaSvc</span>
+              </div>
+            </td>
+            <td><span class="ds ds-dep"><i class="pi pi-check-circle"></i> Deployed</span></td>
+            <td style="text-align:center"><button class="ico-btn"><i class="pi pi-comment"></i></button></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="oname">INTGR_SHIP_HDR_X</div>
+              <div class="otype"><i class="pi pi-arrow-right-arrow-left" style="font-size:12.74px"></i> Interface</div>
+            </td>
+            <td><span class="mtag mtag-il"><i class="pi pi-share-alt"></i> Integration</span></td>
+            <td><span class="fctx"><i class="pi pi-truck"></i> Shipping</span></td>
+            <td>
+              <div class="parity">
+                <span class="src">MOCA v1</span>
+                <span class="arrow">→</span>
+                <span class="tgt new">REST API</span>
+              </div>
+            </td>
+            <td><span class="ds ds-pnd"><i class="pi pi-clock"></i> Pending</span></td>
+            <td style="text-align:center"><button class="ico-btn noted"><i class="pi pi-comment"></i></button></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="oname">MDATA_LOC_ZONE_T</div>
+              <div class="otype"><i class="pi pi-table" style="font-size:12.74px"></i> Config Table</div>
+            </td>
+            <td><span class="mtag mtag-md"><i class="pi pi-database"></i> Master Data</span></td>
+            <td><span class="fctx"><i class="pi pi-map-marker"></i> Config</span></td>
+            <td>
+              <div class="parity">
+                <span class="src">TABLE v2</span>
+                <span class="arrow">→</span>
+                <span class="tgt">TABLE v4</span>
+              </div>
+            </td>
+            <td><span class="ds ds-dep"><i class="pi pi-check-circle"></i> Deployed</span></td>
+            <td style="text-align:center"><button class="ico-btn"><i class="pi pi-comment"></i></button></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="oname">PICK_LABEL_CUST_01</div>
+              <div class="otype"><i class="pi pi-tag" style="font-size:12.74px"></i> Label Template</div>
+            </td>
+            <td><span class="mtag mtag-md"><i class="pi pi-database"></i> Master Data</span></td>
+            <td><span class="fctx"><i class="pi pi-tag"></i> Labels</span></td>
+            <td>
+              <div class="parity">
+                <span class="src">ZPL v1</span>
+                <span class="arrow">→</span>
+                <span class="tgt new">ZPL v2</span>
+              </div>
+            </td>
+            <td><span class="ds ds-dep"><i class="pi pi-check-circle"></i> Deployed</span></td>
+            <td style="text-align:center"><button class="ico-btn"><i class="pi pi-comment"></i></button></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="oname">GJ_PACK_CUSTOM_V2</div>
+              <div class="otype"><i class="pi pi-code" style="font-size:12.74px"></i> Groovy Script</div>
+            </td>
+            <td><span class="mtag mtag-gj"><i class="pi pi-code"></i> Groovy→Java</span></td>
+            <td><span class="fctx"><i class="pi pi-box"></i> Packing</span></td>
+            <td>
+              <div class="parity">
+                <span class="src">GroovyV2</span>
+                <span class="arrow">→</span>
+                <span class="tgt miss">No target</span>
+              </div>
+            </td>
+            <td><span class="ds ds-fai"><i class="pi pi-times-circle"></i> Failed</span></td>
+            <td style="text-align:center"><button class="ico-btn noted"><i class="pi pi-comment"></i></button></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="oname">MOV_CMD_REPLEN_X3</div>
+              <div class="otype"><i class="pi pi-arrows-alt" style="font-size:12.74px"></i> Move Command</div>
+            </td>
+            <td><span class="mtag mtag-il"><i class="pi pi-share-alt"></i> Integration</span></td>
+            <td><span class="fctx"><i class="pi pi-refresh"></i> Move Cmd</span></td>
+            <td>
+              <div class="parity">
+                <span class="src">MOVEv1</span>
+                <span class="arrow">→</span>
+                <span class="tgt">MOVEv3</span>
+              </div>
+            </td>
+            <td><span class="ds ds-dep"><i class="pi pi-check-circle"></i> Deployed</span></td>
+            <td style="text-align:center"><button class="ico-btn"><i class="pi pi-comment"></i></button></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="oname">PICK_ZONE_MAP_V2</div>
+              <div class="otype"><i class="pi pi-table" style="font-size:12.74px"></i> Config Table</div>
+            </td>
+            <td><span class="mtag mtag-md"><i class="pi pi-database"></i> Master Data</span></td>
+            <td><span class="fctx"><i class="pi pi-wave-pulse"></i> Picking</span></td>
+            <td>
+              <div class="parity">
+                <span class="src">TABLE v2</span>
+                <span class="arrow">→</span>
+                <span class="tgt">TABLE v4</span>
+              </div>
+            </td>
+            <td><span class="ds ds-dep"><i class="pi pi-check-circle"></i> Deployed</span></td>
+            <td style="text-align:center"><button class="ico-btn"><i class="pi pi-comment"></i></button></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="oname">SHIP_LABEL_TEMPL_X</div>
+              <div class="otype"><i class="pi pi-tag" style="font-size:12.74px"></i> Label Template</div>
+            </td>
+            <td><span class="mtag mtag-il"><i class="pi pi-share-alt"></i> Integration</span></td>
+            <td><span class="fctx"><i class="pi pi-truck"></i> Shipping</span></td>
+            <td>
+              <div class="parity">
+                <span class="src">ZPL v1</span>
+                <span class="arrow">→</span>
+                <span class="tgt">ZPL v2</span>
+              </div>
+            </td>
+            <td><span class="ds ds-pnd"><i class="pi pi-clock"></i> Pending</span></td>
+            <td style="text-align:center"><button class="ico-btn"><i class="pi pi-comment"></i></button></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="oname">PACK_CUSTOM_LOGIC_V1</div>
+              <div class="otype"><i class="pi pi-code" style="font-size:12.74px"></i> Groovy Script</div>
+            </td>
+            <td><span class="mtag mtag-gj"><i class="pi pi-code"></i> Groovy→Java</span></td>
+            <td><span class="fctx"><i class="pi pi-box"></i> Packing</span></td>
+            <td>
+              <div class="parity">
+                <span class="src">GroovyV1</span>
+                <span class="arrow">→</span>
+                <span class="tgt">JavaSvc</span>
+              </div>
+            </td>
+            <td><span class="ds ds-dep"><i class="pi pi-check-circle"></i> Deployed</span></td>
+            <td style="text-align:center"><button class="ico-btn noted"><i class="pi pi-comment"></i></button></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="oname">MOVE_CMD_REPLEN_V2</div>
+              <div class="otype"><i class="pi pi-arrows-alt" style="font-size:12.74px"></i> Move Command</div>
+            </td>
+            <td><span class="mtag mtag-il"><i class="pi pi-share-alt"></i> Integration</span></td>
+            <td><span class="fctx"><i class="pi pi-refresh"></i> Move Cmd</span></td>
+            <td>
+              <div class="parity">
+                <span class="src">MOVEv2</span>
+                <span class="arrow">→</span>
+                <span class="tgt">MOVEv3</span>
+              </div>
+            </td>
+            <td><span class="ds ds-fai"><i class="pi pi-times-circle"></i> Failed</span></td>
+            <td style="text-align:center"><button class="ico-btn"><i class="pi pi-comment"></i></button></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="oname">INTGR_INV_SYNC_X</div>
+              <div class="otype"><i class="pi pi-arrow-right-arrow-left" style="font-size:12.74px"></i> Interface</div>
+            </td>
+            <td><span class="mtag mtag-md"><i class="pi pi-database"></i> Master Data</span></td>
+            <td><span class="fctx"><i class="pi pi-box"></i> Inventory</span></td>
+            <td>
+              <div class="parity">
+                <span class="src">MOCA v1</span>
+                <span class="arrow">→</span>
+                <span class="tgt new">REST API</span>
+              </div>
+            </td>
+            <td><span class="ds ds-dep"><i class="pi pi-check-circle"></i> Deployed</span></td>
+            <td style="text-align:center"><button class="ico-btn"><i class="pi pi-comment"></i></button></td>
+          </tr>
+          <tr>
+            <td><div class="oname">INV_SYNC_BATCH_V2</div><div class="otype"><i class="pi pi-code" style="font-size:12.74px"></i> Groovy Script</div></td>
+            <td><span class="mtag mtag-gj"><i class="pi pi-code"></i> Groovy→Java</span></td>
+            <td><span class="fctx"><i class="pi pi-box"></i> Inventory</span></td>
+            <td><div class="parity"><span class="src">GroovyV2</span><span class="arrow">→</span><span class="tgt">JavaSvc</span></div></td>
+            <td><span class="ds ds-dep"><i class="pi pi-check-circle"></i> Deployed</span></td>
+            <td style="text-align:center"><button class="ico-btn"><i class="pi pi-comment"></i></button></td>
+          </tr>
+          <tr>
+            <td><div class="oname">PICK_SLOT_ALLOC_X</div><div class="otype"><i class="pi pi-table" style="font-size:12.74px"></i> Config Table</div></td>
+            <td><span class="mtag mtag-md"><i class="pi pi-database"></i> Master Data</span></td>
+            <td><span class="fctx"><i class="pi pi-wave-pulse"></i> Picking</span></td>
+            <td><div class="parity"><span class="src">TABLE v2</span><span class="arrow">→</span><span class="tgt">TABLE v4</span></div></td>
+            <td><span class="ds ds-dep"><i class="pi pi-check-circle"></i> Deployed</span></td>
+            <td style="text-align:center"><button class="ico-btn"><i class="pi pi-comment"></i></button></td>
+          </tr>
+          <tr>
+            <td><div class="oname">SHIP_DOC_PRINT_V1</div><div class="otype"><i class="pi pi-tag" style="font-size:12.74px"></i> Label Template</div></td>
+            <td><span class="mtag mtag-il"><i class="pi pi-share-alt"></i> Integration</span></td>
+            <td><span class="fctx"><i class="pi pi-truck"></i> Shipping</span></td>
+            <td><div class="parity"><span class="src">ZPL v1</span><span class="arrow">→</span><span class="tgt">ZPL v2</span></div></td>
+            <td><span class="ds ds-pnd"><i class="pi pi-clock"></i> Pending</span></td>
+            <td style="text-align:center"><button class="ico-btn"><i class="pi pi-comment"></i></button></td>
+          </tr>
+          <tr>
+            <td><div class="oname">REPLEN_RULE_CUST_X</div><div class="otype"><i class="pi pi-arrows-alt" style="font-size:12.74px"></i> Move Command</div></td>
+            <td><span class="mtag mtag-il"><i class="pi pi-share-alt"></i> Integration</span></td>
+            <td><span class="fctx"><i class="pi pi-refresh"></i> Move Cmd</span></td>
+            <td><div class="parity"><span class="src">MOVEv2</span><span class="arrow">→</span><span class="tgt">MOVEv3</span></div></td>
+            <td><span class="ds ds-dep"><i class="pi pi-check-circle"></i> Deployed</span></td>
+            <td style="text-align:center"><button class="ico-btn noted"><i class="pi pi-comment"></i></button></td>
+          </tr>
+          <tr>
+            <td><div class="oname">PACK_WEIGHT_CALC_V3</div><div class="otype"><i class="pi pi-code" style="font-size:12.74px"></i> Groovy Script</div></td>
+            <td><span class="mtag mtag-gj"><i class="pi pi-code"></i> Groovy→Java</span></td>
+            <td><span class="fctx"><i class="pi pi-box"></i> Packing</span></td>
+            <td><div class="parity"><span class="src">GroovyV3</span><span class="arrow">→</span><span class="tgt">JavaSvc</span></div></td>
+            <td><span class="ds ds-dep"><i class="pi pi-check-circle"></i> Deployed</span></td>
+            <td style="text-align:center"><button class="ico-btn"><i class="pi pi-comment"></i></button></td>
+          </tr>
+          <tr>
+            <td><div class="oname">MDATA_CARRIER_T</div><div class="otype"><i class="pi pi-table" style="font-size:12.74px"></i> Config Table</div></td>
+            <td><span class="mtag mtag-md"><i class="pi pi-database"></i> Master Data</span></td>
+            <td><span class="fctx"><i class="pi pi-truck"></i> Shipping</span></td>
+            <td><div class="parity"><span class="src">TABLE v2</span><span class="arrow">→</span><span class="tgt">TABLE v4</span></div></td>
+            <td><span class="ds ds-dep"><i class="pi pi-check-circle"></i> Deployed</span></td>
+            <td style="text-align:center"><button class="ico-btn"><i class="pi pi-comment"></i></button></td>
+          </tr>
+          <tr>
+            <td><div class="oname">INTGR_ORDER_SYNC_X</div><div class="otype"><i class="pi pi-arrow-right-arrow-left" style="font-size:12.74px"></i> Interface</div></td>
+            <td><span class="mtag mtag-il"><i class="pi pi-share-alt"></i> Integration</span></td>
+            <td><span class="fctx"><i class="pi pi-box"></i> Inventory</span></td>
+            <td><div class="parity"><span class="src">MOCA v1</span><span class="arrow">→</span><span class="tgt new">REST API</span></div></td>
+            <td><span class="ds ds-pnd"><i class="pi pi-clock"></i> Pending</span></td>
+            <td style="text-align:center"><button class="ico-btn"><i class="pi pi-comment"></i></button></td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="tfoot">
+        <div id="ptFootInfo" style="display:flex;align-items:center;gap:5px">Showing 1-7 of 1,847 · All Objects</div>
+        <div class="pgn" id="ptPgn">
+          <button class="pgb" data-pg="prev"><i class="pi pi-angle-left"></i></button>
+          <button class="pgb on" data-pg="1">1</button>
+          <button class="pgb" data-pg="2">2</button>
+          <button class="pgb" data-pg="3">3</button>
+          <button class="pgb" data-pg="dots">…</button>
+          <button class="pgb" data-pg="308">308</button>
+          <button class="pgb" data-pg="next"><i class="pi pi-angle-right"></i></button>
+        </div>
+      </div>
+    </div><!-- /object table card -->
+
+    <!-- Rollback History -->
+    <div class="card">
+      <div class="ch">
+        <div class="ct"><span class="acc acc-am"></span><i class="pi pi-history"></i> Rollback History</div>
+        <span class="rb-current-tag"><i class="pi pi-circle-fill" style="font-size:12.74px"></i> 4 Snapshots</span>
+      </div>
+      <div class="rb-body">
+        <div class="rb-timeline">
+
+          <!-- Snapshot 4 — Current -->
+          <div class="rb-item">
+            <div class="rb-dot-wrap">
+              <div class="rb-dot current"><i class="pi pi-circle-fill" style="font-size:12.74px"></i></div>
+            </div>
+            <div class="rb-content">
+              <div class="rb-ts"><i class="pi pi-calendar"></i> 2026-03-11 · 14:32 UTC</div>
+              <div class="rb-label">Snapshot 4 — Final State</div>
+              <div class="rb-diff">
+                <div class="rb-diff-row">
+                  <span class="rb-diff-k"><i class="pi pi-check-circle" style="font-size:12.74px;color:var(--gn500)"></i> Deployed</span>
+                  <span class="rb-diff-v up"><span class="rb-diff-n">1,802</span><span class="rb-diff-cmp">(+437 vs S3)</span></span>
+                </div>
+                <div class="rb-diff-row">
+                  <span class="rb-diff-k"><i class="pi pi-clock" style="font-size:12.74px;color:var(--am500)"></i> Pending</span>
+                  <span class="rb-diff-v neu"><span class="rb-diff-n">31</span><span class="rb-diff-cmp">(-18 vs S3)</span></span>
+                </div>
+                <div class="rb-diff-row">
+                  <span class="rb-diff-k"><i class="pi pi-times-circle" style="font-size:12.74px;color:var(--rd500)"></i> Failed</span>
+                  <span class="rb-diff-v dn"><span class="rb-diff-n">14</span><span class="rb-diff-cmp">(+14 vs S3)</span></span>
+                </div>
+              </div>
+              <span class="rb-current-tag" style="width:100%;justify-content:center"><i class="pi pi-verified"></i> Current State</span>
+            </div>
+          </div>
+
+          <!-- Snapshot 3 -->
+          <div class="rb-item">
+            <div class="rb-dot-wrap">
+              <div class="rb-dot stable"><i class="pi pi-check" style="font-size:12.74px"></i></div>
+            </div>
+            <div class="rb-content">
+              <div class="rb-ts"><i class="pi pi-calendar"></i> 2026-03-11 · 11:14 UTC</div>
+              <div class="rb-label">Snapshot 3 — Post Batch 3</div>
+              <div class="rb-diff">
+                <div class="rb-diff-row">
+                  <span class="rb-diff-k"><i class="pi pi-check-circle" style="font-size:12.74px;color:var(--gn500)"></i> Deployed</span>
+                  <span class="rb-diff-v up"><span class="rb-diff-n">1,365</span><span class="rb-diff-cmp">(+612 vs S2)</span></span>
+                </div>
+                <div class="rb-diff-row">
+                  <span class="rb-diff-k"><i class="pi pi-clock" style="font-size:12.74px;color:var(--am500)"></i> Pending</span>
+                  <span class="rb-diff-v neu"><span class="rb-diff-n">49</span><span class="rb-diff-cmp">(-7 vs S2)</span></span>
+                </div>
+                <div class="rb-diff-row">
+                  <span class="rb-diff-k"><i class="pi pi-times-circle" style="font-size:12.74px;color:var(--rd500)"></i> Failed</span>
+                  <span class="rb-diff-v neu">0</span>
+                </div>
+              </div>
+              <button class="rb-restore-btn"><i class="pi pi-undo"></i> Restore to this snapshot</button>
+            </div>
+          </div>
+
+          <!-- Snapshot 2 — Warning -->
+          <div class="rb-item">
+            <div class="rb-dot-wrap">
+              <div class="rb-dot warn"><i class="pi pi-exclamation-triangle" style="font-size:12.74px"></i></div>
+            </div>
+            <div class="rb-content">
+              <div class="rb-ts"><i class="pi pi-calendar"></i> 2026-03-10 · 17:45 UTC</div>
+              <div class="rb-label">Snapshot 2 — Post Batch 2 <span style="font-size:12.74px;color:var(--am600)">(Sync incident)</span></div>
+              <div class="rb-diff">
+                <div class="rb-diff-row">
+                  <span class="rb-diff-k"><i class="pi pi-check-circle" style="font-size:12.74px;color:var(--gn500)"></i> Deployed</span>
+                  <span class="rb-diff-v up"><span class="rb-diff-n">753</span><span class="rb-diff-cmp">(+401 vs S1)</span></span>
+                </div>
+                <div class="rb-diff-row">
+                  <span class="rb-diff-k"><i class="pi pi-clock" style="font-size:12.74px;color:var(--am500)"></i> Pending</span>
+                  <span class="rb-diff-v neu">56</span>
+                </div>
+                <div class="rb-diff-row">
+                  <span class="rb-diff-k"><i class="pi pi-times-circle" style="font-size:12.74px;color:var(--rd500)"></i> Failed</span>
+                  <span class="rb-diff-v dn"><span class="rb-diff-n">3</span><span class="rb-diff-cmp">(network)</span></span>
+                </div>
+              </div>
+              <button class="rb-restore-btn"><i class="pi pi-undo"></i> Restore to this snapshot</button>
+            </div>
+          </div>
+
+          <!-- Snapshot 1 -->
+          <div class="rb-item">
+            <div class="rb-dot-wrap">
+              <div class="rb-dot stable"><i class="pi pi-check" style="font-size:12.74px"></i></div>
+            </div>
+            <div class="rb-content">
+              <div class="rb-ts"><i class="pi pi-calendar"></i> 2026-03-10 · 09:00 UTC</div>
+              <div class="rb-label">Snapshot 1 — Baseline</div>
+              <div class="rb-diff">
+                <div class="rb-diff-row">
+                  <span class="rb-diff-k"><i class="pi pi-check-circle" style="font-size:12.74px;color:var(--gn500)"></i> Deployed</span>
+                  <span class="rb-diff-v neu">352</span>
+                </div>
+                <div class="rb-diff-row">
+                  <span class="rb-diff-k"><i class="pi pi-clock" style="font-size:12.74px;color:var(--am500)"></i> Pending</span>
+                  <span class="rb-diff-v neu">1,495</span>
+                </div>
+                <div class="rb-diff-row">
+                  <span class="rb-diff-k"><i class="pi pi-times-circle" style="font-size:12.74px;color:var(--rd500)"></i> Failed</span>
+                  <span class="rb-diff-v neu">0</span>
+                </div>
+              </div>
+              <button class="rb-restore-btn"><i class="pi pi-undo"></i> Restore to this snapshot</button>
+            </div>
+          </div>
+
+        </div><!-- /rb-timeline -->
+      </div><!-- /rb-body -->
+    </div><!-- /rollback card -->
+
+  </div><!-- /g-main -->
+  </div><!-- /lazyRow1 -->
+
+  <!-- Governance & Export -->
+  <div class="lazy-row" id="lazyRow2">
+  <div class="row-label"><i class="pi pi-shield"></i> Governance &amp; Outputs</div>
+  <div class="gov-grid">
+    <!-- Annotations -->
+    <div class="card">
+      <div class="ch">
+        <div class="ct"><span class="acc acc-g"></span><i class="pi pi-comments"></i> Post-Execution Annotations · HITL Review</div>
+        <button class="btn-o"><i class="pi pi-plus-circle"></i> Add Note</button>
+      </div>
+      <div class="ann-body">
+        <div class="ann ann-g">
+          <div class="ann-meta"><i class="pi pi-microchip-ai"></i> ASCEND System · AI · Auto-detected · <span class="ann-obj">GJ_PACK_CUSTOM_V2</span></div>
+          <div class="ann-txt">Groovy-to-Java conversion failed — no equivalent Java method signature found in target BY release. Manual re-mapping with development team required before retry.</div>
+          <div class="ann-foot"><span class="dtag" style="background:var(--rd50);color:var(--rd600);border:1px solid rgba(184,48,48,.2)"><i class="pi pi-times-circle"></i> Conversion Failed</span></div>
+        </div>
+        <div class="ann ann-am">
+          <div class="ann-meta"><i class="pi pi-user"></i> J. Ramírez · Senior Consultant · 32 min ago · <span class="ann-obj">INTGR_SHIP_HDR_X</span></div>
+          <div class="ann-txt">Interface pending — target REST endpoint not yet exposed. Awaiting infrastructure team confirmation. Estimated resolution: +4 hours.</div>
+          <div class="ann-foot"><span class="dtag dt-rb"><i class="pi pi-clock"></i> Blocked · Infra</span></div>
+        </div>
+        <div class="ann ann-b">
+          <div class="ann-meta"><i class="pi pi-user"></i> M. Torres · Arch. Lead · 1h ago · <span class="ann-obj">PICK_WAVE_ALLOC_V3</span></div>
+          <div class="ann-txt">Conversion verified in target environment. Wave allocation behavior matches source spec. Cleared for final sign-off.</div>
+          <div class="ann-foot"><span class="dtag dt-dep"><i class="pi pi-check-circle"></i> Verified · Ready</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Migration Summary + CTA -->
+    <div class="card">
+      <div class="ch">
+        <div class="ct"><span class="acc acc-b"></span><i class="pi pi-clipboard"></i> Migration Summary</div>
+      </div>
+      <div class="sum-body">
+        <div class="cta-lbl"><i class="pi pi-chart-bar"></i> Final Scope</div>
+        <div class="sum-row"><span class="sum-k"><i class="pi pi-database"></i> Total objects</span><span class="sum-v" style="color:var(--blue-600)">1,847</span></div>
+        <div class="sum-row"><span class="sum-k"><i class="pi pi-check-circle"></i> Deployed</span><span class="sum-v" style="color:var(--gn600)">1,802</span></div>
+        <div class="sum-row"><span class="sum-k"><i class="pi pi-clock"></i> Pending review</span><span class="sum-v" style="color:var(--am600)">31</span></div>
+        <div class="sum-row"><span class="sum-k"><i class="pi pi-times-circle"></i> Failed</span><span class="sum-v" style="color:var(--rd500)">14</span></div>
+        <div class="sum-row"><span class="sum-k"><i class="pi pi-history"></i> Snapshots</span><span class="sum-v" style="color:var(--s600)">4</span></div>
+        <div class="div"></div>
+        <div class="cta-lbl"><i class="pi pi-camera"></i> Dashboard Export</div>
+        <button class="btn-capture" onclick="triggerCapture()">
+          <i class="pi pi-camera"></i>
+          Capture Dashboard
+        </button>
+        <div class="capture-note">
+          <i class="pi pi-info-circle"></i>
+          Saves current dashboard state.
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /gov-grid -->
+  </div><!-- /lazyRow2 -->
+
+  <div style="height:20px"></div>
+</div><!-- /main -->
+
+<script>
+/* Tab switching */
+document.querySelectorAll('.tab').forEach(t=>{
+  t.addEventListener('click',()=>{
+    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('on'));
+    t.classList.add('on');
+  });
+});
+
+/* Chip toggle */
+document.querySelectorAll('.pchip').forEach(c=>c.addEventListener('click',()=>c.classList.toggle('on')));
+
+/* Table pagination: show only rows that fit per page, no vertical scroll */
+(function(){
+  var ROWS_PER_PAGE=7;
+  var TOTAL=1847;
+  var tb=document.getElementById('ptBody');
+  var info=document.getElementById('ptFootInfo');
+  var pgn=document.getElementById('ptPgn');
+  if(!tb||!info||!pgn)return;
+  var rows=Array.from(tb.querySelectorAll('tr'));
+  var totalRows=rows.length;
+  var totalPages=Math.ceil(totalRows/ROWS_PER_PAGE);
+  var page=1;
+  function render(){
+    var start=(page-1)*ROWS_PER_PAGE;
+    var end=Math.min(start+ROWS_PER_PAGE,totalRows);
+    rows.forEach(function(r,i){
+      r.style.display=(i>=start&&i<end)?'':'none';
+    });
+    var a=totalRows>0?start+1:0,b=end;
+    info.textContent='Showing '+(totalRows>0?a+'-'+b:'0')+' of '+TOTAL+' · All Objects';
+    pgn.querySelectorAll('.pgb').forEach(function(b){
+      var p=b.getAttribute('data-pg');
+      if(p==='prev'||p==='next'||p==='dots')return;
+      b.classList.toggle('on',parseInt(p,10)===page);
+    });
+  }
+  pgn.addEventListener('click',function(e){
+    var b=e.target.closest('.pgb');
+    if(!b)return;
+    var p=b.getAttribute('data-pg');
+    if(p==='prev'){if(page>1){page--;render();}}
+    else if(p==='next'){if(page<totalPages){page++;render();}}
+    else if(p!=='dots'){var n=parseInt(p,10);if(n>=1&&n<=totalPages){page=n;render();}}
+  });
+  render();
+})();
+
+/* Capture button simulation */
+function triggerCapture(){
+  const btn=document.querySelector('.btn-capture');
+  const orig=btn.innerHTML;
+  btn.innerHTML='<i class="pi pi-spin pi-spinner"></i> Capturing…';
+  btn.disabled=true;
+  setTimeout(()=>{
+    btn.innerHTML='<i class="pi pi-check"></i> Captured — 2026-03-11 14:35 UTC';
+    btn.style.background='var(--blue-700)';
+    setTimeout(()=>{btn.innerHTML=orig;btn.disabled=false;btn.style.background='';},3500);
+  },1600);
+}
+
+/* Hamburger menu toggle */
+(function(){
+  var btn=document.getElementById('hamBtn');
+  var dd=document.getElementById('hamDropdown');
+  if(!btn||!dd)return;
+  btn.addEventListener('click',function(e){
+    e.stopPropagation();
+    var open=dd.classList.toggle('open');
+    btn.setAttribute('aria-expanded',String(open));
+  });
+  document.addEventListener('click',function(){
+    dd.classList.remove('open');
+    btn.setAttribute('aria-expanded','false');
+  });
+})();
+
+/* ── Lazy-reveal: staggered entrance for section rows ────────────────── */
+(function(){
+  var kg=document.getElementById('lazyRow0');
+  if(kg)setTimeout(function(){kg.classList.add('revealed');},80);
+  var below=['lazyRow1','lazyRow2'];
+  if(!('IntersectionObserver' in window)){
+    below.forEach(function(id){
+      var el=document.getElementById(id);
+      if(el)el.classList.add('revealed');
+    });
+    return;
+  }
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(entry.isIntersecting){
+        entry.target.classList.add('revealed');
+        io.unobserve(entry.target);
+      }
+    });
+  },{threshold:0.07,rootMargin:'0px 0px -40px 0px'});
+  below.forEach(function(id){
+    var el=document.getElementById(id);
+    if(el)io.observe(el);
+  });
+})();
+</script>
+</body>
+</html>
