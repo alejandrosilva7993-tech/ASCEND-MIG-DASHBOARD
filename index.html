@@ -141,7 +141,7 @@ body>*{flex-shrink:0}
 .g-main .parity,.g-main .parity .src,.g-main .parity .arrow,.g-main .parity .tgt,.g-main .fctx,.g-main .ico-btn,
 .g-main .tfoot,.g-main .pgb,.g-main .ug-txt,.g-main .ug-ts,
 .g-main .rb-dot,.g-main .rb-dot.warn i,.g-main .rb-ts,.g-main .rb-label,.g-main .rb-diff-row,
-.g-main .rb-diff-k,.g-main .rb-diff-k i,.g-main .rb-diff-v,.g-main .rb-restore-btn,.g-main .rb-restore-btn i,.g-main .rb-current-tag{font-size:12.74px}
+.g-main .rb-diff-k,.g-main .rb-diff-k i,.g-main .rb-diff-v,.g-main .rb-current-tag{font-size:12.74px}
 .g-main .pt th,.g-main .pt td,.g-main .ds,.g-main .tfoot,.g-main .tbadge,.g-main .tab{font-size:12px}
 .g-main .oname{font-size:11px;font-weight:600}
 
@@ -287,12 +287,6 @@ body>*{flex-shrink:0}
   display:flex;flex-direction:row;align-items:center;gap:4px;flex-shrink:0;min-width:0;text-align:right;justify-content:flex-end}
 .rb-diff-v .rb-diff-cmp{font-weight:400;color:var(--s400);font-size:11px;white-space:nowrap}
 .rb-diff-v.up{color:var(--s700)}.rb-diff-v.dn{color:var(--s700)}.rb-diff-v.neu{color:var(--s700)}
-.rb-restore-btn{width:100%;padding:8px 10px;border-radius:var(--r6);border:1px solid var(--s200);margin-top:4px;
-  background:#fff;color:var(--s500);font-size:12px;font-weight:800;cursor:pointer;
-  font-family:var(--ff);display:flex;align-items:center;gap:5px;justify-content:center;
-  transition:all .15s}
-.rb-restore-btn:hover{border-color:var(--am400);color:var(--am600);background:var(--am50)}
-.rb-restore-btn i{font-size:12px}
 .rb-current-tag{display:inline-flex;align-items:center;gap:4px;padding:2px 6px;
   border-radius:10px;background:var(--blue-50);border:1px solid var(--blue-200);
   font-size:12px;font-weight:800;color:var(--blue-600)}
@@ -1204,7 +1198,6 @@ body.chat-open .steps-band{width:100%!important;max-width:100%!important;overflo
                   <span class="rb-diff-v neu">0</span>
                 </div>
               </div>
-              <button class="rb-restore-btn"><i class="pi pi-undo"></i> Restore to this snapshot</button>
             </div>
           </div>
 
@@ -1230,7 +1223,6 @@ body.chat-open .steps-band{width:100%!important;max-width:100%!important;overflo
                   <span class="rb-diff-v dn"><span class="rb-diff-n">3</span><span class="rb-diff-cmp">(network)</span></span>
                 </div>
               </div>
-              <button class="rb-restore-btn"><i class="pi pi-undo"></i> Restore to this snapshot</button>
             </div>
           </div>
 
@@ -1256,7 +1248,6 @@ body.chat-open .steps-band{width:100%!important;max-width:100%!important;overflo
                   <span class="rb-diff-v neu">0</span>
                 </div>
               </div>
-              <button class="rb-restore-btn"><i class="pi pi-undo"></i> Restore to this snapshot</button>
             </div>
           </div>
 
