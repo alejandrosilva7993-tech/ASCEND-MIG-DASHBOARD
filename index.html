@@ -132,6 +132,11 @@ body>*{flex-shrink:0}
 
 /* ── MAIN CONTENT GRID ── */
 .g-main{display:grid;grid-template-columns:1fr 380px;gap:14px;align-items:stretch}
+/* ── ROLLBACK + GOVERNANCE GRID ── */
+.rb-gov-grid{display:grid;grid-template-columns:1fr 380px;gap:14px;align-items:stretch;min-height:480px}
+.rb-gov-grid .card{display:flex;flex-direction:column;height:100%;min-height:420px;max-height:520px}
+/* ── TABLE FULL WIDTH ── */
+.table-full-card{display:flex;flex-direction:column;min-height:400px;max-height:560px}
 /* Compact layout in Object Review + Rollback History */
 .g-main .card{display:flex;flex-direction:column;min-height:0;max-height:520px}
 .g-main .card .ch{padding:9px 16px;min-height:42px}
@@ -298,7 +303,7 @@ body>*{flex-shrink:0}
 .lazy-row.revealed{opacity:1;transform:none}
 
 /* ── GOVERNANCE / EXPORT PANEL ── */
-.gov-grid{display:grid;grid-template-columns:1fr 380px;gap:14px}
+.gov-grid{display:grid;grid-template-columns:1fr;gap:14px}
 .card-summary .sum-body{padding:18px}
 .card-summary .sum-row{padding:10px 0;border-bottom-color:var(--s200)}
 .card-summary .sum-row:has(+ .div){border-bottom:none}
@@ -308,7 +313,7 @@ body>*{flex-shrink:0}
 .card-summary .cta-lbl{color:var(--s700);font-family:var(--ff);font-size:14px;letter-spacing:.5px;text-transform:none}
 .card-summary .cta-lbl i{font-size:14px}
 .card-summary .btn-capture{padding:14px 18px;font-size:14px}
-.card-summary .capture-note{font-size:14px;font-weight:600;color:var(--s600)}
+.card-summary .capture-note{font-size:12px;font-weight:400;color:var(--s400)}
 .card-summary .capture-note i{font-size:14px}
 /* Icon colors in Smart Summary */
 .card-summary .sum-k .pi-database{color:var(--blue-600)}
@@ -354,9 +359,8 @@ body>*{flex-shrink:0}
   justify-content:center;box-shadow:0 4px 14px rgba(37,99,235,.35);transition:all .2s}
 .btn-capture:hover{background:var(--blue-700);box-shadow:0 6px 20px rgba(37,99,235,.45);transform:translateY(-1px)}
 .btn-capture i{font-size:15px}
-.capture-note{display:flex;align-items:center;gap:6px;margin-top:9px;padding:7px 11px;
-  border-radius:var(--r6);background:var(--s50);border:1px solid var(--s200);
-  font-size:13px;font-weight:600;color:var(--s500)}
+.capture-note{display:flex;align-items:center;gap:5px;margin-top:14px;
+  font-size:12px;font-weight:500;color:var(--s400)}
 .capture-note i{font-size:13px;color:var(--s400);flex-shrink:0}
 
 /* ── UNCERTAINTY GUARD ── */
@@ -514,6 +518,7 @@ body.chat-open .steps-band{width:100%!important;max-width:100%!important;overflo
   .p-steps-link{padding:10px 7px;gap:5px}
   .kg{grid-template-columns:1fr 1fr;gap:10px}
   .g-main{grid-template-columns:1fr}
+  .rb-gov-grid{grid-template-columns:1fr}
   .gov-grid{grid-template-columns:1fr}
   .main{padding:22px 14px 14px}
   .tab,.tbadge{font-size:11px!important}
@@ -533,12 +538,14 @@ body.chat-open .steps-band{width:100%!important;max-width:100%!important;overflo
 @media (max-width: 750px) {
   .kg{grid-template-columns:1fr}
   .g-main{grid-template-columns:1fr}
+  .rb-gov-grid{grid-template-columns:1fr}
   .gov-grid{grid-template-columns:1fr}
 }
 /* ── Con chat desplegado: 1 columna cuando el espacio efectivo es estrecho ── */
 @media (max-width: 950px) {
   body.chat-open .kg{grid-template-columns:1fr}
   body.chat-open .g-main{grid-template-columns:1fr}
+  body.chat-open .rb-gov-grid{grid-template-columns:1fr}
   body.chat-open .gov-grid{grid-template-columns:1fr}
 }
 
@@ -581,7 +588,6 @@ body.chat-open .steps-band{width:100%!important;max-width:100%!important;overflo
   .ch{padding:10px 14px!important}
   .kc{padding:13px 14px!important}
   .cb-area{padding:12px 14px}
-  .ann-meta{flex-wrap:wrap;gap:4px}
   .fbar{flex-wrap:wrap}
   .pt td,.pt th{font-size:11px!important;padding:8px 10px!important}
   .pt{min-width:560px}
@@ -591,6 +597,132 @@ body.chat-open .steps-band{width:100%!important;max-width:100%!important;overflo
   .tbadge{padding:0 3px}
   .tab i{font-size:9px!important}
 }
+
+/* ── ASK AI BUTTONS ── */
+.btn-ai-section{display:inline-flex;align-items:center;gap:5px;padding:4px 11px;
+  border-radius:20px;border:1px solid rgba(59,130,246,.3);
+  background:var(--blue-50);color:var(--blue-600);
+  font-size:11px;font-weight:700;font-family:var(--ff);cursor:pointer;
+  transition:all .15s;white-space:nowrap}
+.btn-ai-section:hover{background:var(--blue-100);border-color:var(--blue-400);box-shadow:0 0 0 2px rgba(59,130,246,.1)}
+.btn-row-ai{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;
+  border-radius:16px;border:1px solid rgba(59,130,246,.25);
+  background:var(--blue-50);color:var(--blue-600);
+  font-size:11px;font-weight:700;font-family:var(--ff);cursor:pointer;
+  transition:all .15s;white-space:nowrap;line-height:1.3}
+.btn-row-ai:hover{background:var(--blue-100);border-color:var(--blue-400)}
+.btn-row-ai .btn-ai-icon{width:12px;height:12px}
+.btn-ai-icon{width:14px;height:14px;object-fit:contain;flex-shrink:0;
+  filter:brightness(0) saturate(100%) invert(24%) sepia(96%) saturate(1200%) hue-rotate(214deg) brightness(95%)}
+
+/* ── RESTORE SNAPSHOT ── */
+.snap-restore-wrap{position:relative}
+.snap-restore-btn{display:flex;align-items:center;gap:5px;padding:5px 11px;border-radius:var(--r6);
+  border:1px solid var(--s300);background:#fff;color:var(--s600);font-size:13px;font-weight:700;
+  cursor:pointer;font-family:var(--ff);transition:all .15s;white-space:nowrap}
+.snap-restore-btn:hover{border-color:var(--blue-400);color:var(--blue-600);background:var(--blue-50)}
+.snap-restore-btn i{font-size:13px}
+.snap-dd{position:absolute;top:calc(100% + 6px);right:0;min-width:300px;
+  background:#fff;border:1px solid var(--s200);border-radius:var(--r8);
+  box-shadow:0 8px 24px rgba(15,23,42,.14);z-index:300;display:none;flex-direction:column;overflow:hidden}
+.snap-dd.open{display:flex}
+.snap-dd-header{padding:9px 14px;font-size:12px;font-weight:800;letter-spacing:.6px;
+  text-transform:uppercase;color:var(--s400);border-bottom:1px solid var(--s100);background:var(--s50)}
+.snap-dd-item{display:flex;align-items:center;gap:10px;padding:11px 14px;cursor:pointer;
+  border-bottom:1px solid var(--s100);transition:background .12s;font-family:var(--ff)}
+.snap-dd-item:last-child{border-bottom:none}
+.snap-dd-item:hover{background:var(--blue-50)}
+.snap-dd-item.current{background:var(--gn50);cursor:default}
+.snap-dd-item.current:hover{background:var(--gn50)}
+.snap-dd-id{font-size:11px;font-weight:800;font-family:var(--ff);padding:2px 6px;
+  border-radius:4px;background:var(--blue-100);color:var(--blue-700);flex-shrink:0;letter-spacing:.4px}
+.snap-dd-item.current .snap-dd-id{background:var(--gn100);color:var(--gn700)}
+.snap-dd-info{flex:1;min-width:0}
+.snap-dd-label{font-size:13px;font-weight:700;color:var(--s700);line-height:1.2}
+.snap-dd-ts{font-size:12px;color:var(--s400);font-weight:500;margin-top:2px}
+.snap-dd-tag{font-size:11px;font-weight:700;padding:1px 6px;border-radius:8px;flex-shrink:0}
+.snap-dd-tag.current-tag{background:var(--gn50);color:var(--gn600);border:1px solid rgba(82,138,106,.2)}
+
+/* ── SNAPSHOT CONFIRM MODAL ── */
+.snap-modal-overlay{position:fixed;inset:0;background:rgba(15,23,42,.45);z-index:1200;
+  display:none;align-items:center;justify-content:center;backdrop-filter:blur(2px)}
+.snap-modal-overlay.open{display:flex}
+.snap-modal{background:#fff;border-radius:var(--r12);box-shadow:0 20px 60px rgba(15,23,42,.18);
+  max-width:420px;width:calc(100% - 32px);overflow:hidden;display:flex;flex-direction:column}
+.snap-modal-hd{display:flex;align-items:center;justify-content:space-between;
+  padding:11px 18px;border-bottom:1px solid var(--s150);background:var(--s0);min-height:46px}
+.snap-modal-title{font-size:13px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;
+  color:var(--s600)}
+.snap-modal-title .acc{width:3px;height:14px;border-radius:2px;background:var(--am500);flex-shrink:0}
+.snap-modal-close{width:32px;height:32px;border:none;background:transparent;border-radius:var(--r6);
+  color:var(--s500);cursor:pointer;display:flex;align-items:center;justify-content:center;
+  font-size:18px;transition:all .15s}
+.snap-modal-close:hover{background:var(--s200);color:var(--s700)}
+.snap-modal-body{padding:18px 20px 20px;display:flex;flex-direction:column;gap:14px}
+.snap-modal-sub{font-size:13px;color:var(--s500);line-height:1.55}
+.snap-modal-info{background:var(--s50);border:1px solid var(--s200);border-radius:var(--r6);
+  padding:10px 12px;display:flex;flex-direction:column;gap:6px}
+.snap-modal-info-row{display:flex;justify-content:space-between;font-size:13px;padding:4px 0;
+  border-bottom:1px solid var(--s100)}
+.snap-modal-info-row:last-child{border-bottom:none;padding-bottom:0}
+.snap-modal-info-k{color:var(--s500);font-weight:600}
+.snap-modal-info-v{color:var(--s700);font-weight:700;font-family:var(--ff)}
+.snap-modal-warn{display:flex;align-items:flex-start;gap:10px;padding:12px 14px;
+  border-radius:var(--r8);background:var(--am50);border:1px solid rgba(200,136,0,.25);
+  border-left:4px solid var(--am500);font-size:13px;color:var(--am700);line-height:1.45;font-weight:600}
+.snap-modal-warn i{font-size:14px;color:var(--am600);flex-shrink:0;margin-top:1px}
+.snap-modal-actions{display:flex;gap:10px}
+.snap-modal-confirm{flex:1;padding:11px 16px;border-radius:var(--r8);border:none;
+  background:var(--blue-600);color:#fff;font-size:13px;font-weight:800;cursor:pointer;
+  font-family:var(--ff);display:flex;align-items:center;justify-content:center;gap:6px;
+  box-shadow:0 4px 14px rgba(37,99,235,.3);transition:all .15s}
+.snap-modal-confirm:hover{background:var(--blue-700)}
+.snap-modal-cancel{flex:1;padding:11px 16px;border-radius:var(--r8);
+  border:1px solid var(--s300);background:#fff;color:var(--s600);font-size:13px;font-weight:700;
+  cursor:pointer;font-family:var(--ff);transition:all .15s}
+.snap-modal-cancel:hover{border-color:var(--blue-400);color:var(--blue-600);background:var(--blue-50)}
+
+/* ── FAILED TESTS MODAL ── */
+.ftail-overlay{position:fixed;inset:0;background:rgba(15,23,42,.45);z-index:1200;
+  display:none;align-items:center;justify-content:center;backdrop-filter:blur(2px)}
+.ftail-overlay.open{display:flex}
+.ftail-modal{background:#fff;border-radius:var(--r12);box-shadow:0 20px 60px rgba(15,23,42,.18);
+  max-width:540px;width:calc(100% - 32px);max-height:80vh;display:flex;flex-direction:column;overflow:hidden}
+.ftail-hd{display:flex;align-items:center;justify-content:space-between;padding:11px 18px;
+  border-bottom:1px solid var(--s150);background:var(--s0);min-height:46px}
+.ftail-title{font-size:13px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--s600)}
+.ftail-title .acc{width:3px;height:14px;border-radius:2px;background:var(--rd600);flex-shrink:0}
+.ftail-close{width:32px;height:32px;border:none;background:transparent;border-radius:var(--r6);
+  color:var(--s500);cursor:pointer;display:flex;align-items:center;justify-content:center;
+  font-size:18px;transition:all .15s}
+.ftail-close:hover{background:var(--s200);color:var(--s700)}
+.ftail-body{overflow-y:auto;padding:14px 18px;flex:1;display:flex;flex-direction:column;gap:8px}
+.ftail-item{background:var(--s50);border:1px solid var(--s200);border-radius:var(--r6);
+  padding:10px 12px}
+.ftail-item-name{font-size:12px;font-weight:800;color:var(--s800);font-family:var(--ff);margin-bottom:4px}
+.ftail-item-err{font-size:12px;color:var(--rd600);line-height:1.5;margin-bottom:6px}
+.ftail-item-meta{display:flex;gap:8px;flex-wrap:wrap}
+.ftail-item-tag{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:8px;
+  font-size:11px;font-weight:700;background:var(--s100);color:var(--s600);border:1px solid var(--s200)}
+
+/* ── KPI 2-col when only 2 cards ── */
+.kg-2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.kg-2 .card{border-radius:var(--r12)}
+@media (max-width:750px){.kg-2{grid-template-columns:1fr}}
+@media (max-width:1100px){body.chat-open .kg-2{grid-template-columns:1fr}}
+
+/* ── SUMMARY GROUP TABLE ── */
+.sum-grp-table{width:100%;border-collapse:collapse;margin:10px 0 14px}
+.sum-grp-table th{font-size:11px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;
+  color:var(--s400);padding:5px 8px;text-align:center;border-bottom:1px solid var(--s200)}
+.sum-grp-table th:first-child{text-align:left}
+.sum-grp-table td{padding:7px 8px;font-size:12px;font-weight:700;text-align:center;
+  border-bottom:1px solid var(--s100);font-family:var(--ff)}
+.sum-grp-table td:first-child{text-align:left;font-size:12px;font-weight:700;color:var(--s600);font-family:var(--ff)}
+.sum-grp-table tr:last-child td{border-bottom:none}
+.sum-grp-dep{color:var(--gn600)}
+.sum-grp-pnd{color:var(--am600)}
+.sum-grp-fai{color:var(--rd600)}
 </style>
 </head>
 <body>
@@ -607,6 +739,43 @@ body.chat-open .steps-band{width:100%!important;max-width:100%!important;overflo
 
   <div class="nav-r">
     <div class="snap-badge"><span class="sdot"></span><i class="pi pi-shield"></i> Intelligent snapshot · Verified</div>
+    <div class="snap-restore-wrap" id="snapRestoreWrap">
+      <button class="snap-restore-btn" id="snapRestoreBtn" aria-expanded="false">
+        <i class="pi pi-history"></i> Restore Snapshot
+      </button>
+      <div class="snap-dd" id="snapDd">
+        <div class="snap-dd-header">Select a snapshot to restore</div>
+        <div class="snap-dd-item" data-snap="S-004" data-label="Snapshot 4 — Final State" data-ts="2026-03-11 · 14:32 UTC" data-dep="1,802" data-pnd="31" data-fai="14" style="cursor:default">
+          <span class="snap-dd-id">S-004</span>
+          <div class="snap-dd-info">
+            <div class="snap-dd-label">Snapshot 4 — Final State</div>
+            <div class="snap-dd-ts">2026-03-11 · 14:32 UTC</div>
+          </div>
+          <span class="snap-dd-tag current-tag"><i class="pi pi-verified" style="font-size:11px"></i> Current</span>
+        </div>
+        <div class="snap-dd-item" data-snap="S-003" data-label="Snapshot 3 — Post Batch 3" data-ts="2026-03-11 · 11:14 UTC" data-dep="1,365" data-pnd="49" data-fai="0">
+          <span class="snap-dd-id">S-003</span>
+          <div class="snap-dd-info">
+            <div class="snap-dd-label">Snapshot 3 — Post Batch 3</div>
+            <div class="snap-dd-ts">2026-03-11 · 11:14 UTC</div>
+          </div>
+        </div>
+        <div class="snap-dd-item" data-snap="S-002" data-label="Snapshot 2 — Post Batch 2" data-ts="2026-03-10 · 17:45 UTC" data-dep="753" data-pnd="56" data-fai="3">
+          <span class="snap-dd-id">S-002</span>
+          <div class="snap-dd-info">
+            <div class="snap-dd-label">Snapshot 2 — Post Batch 2 <span style="color:var(--am600);font-size:12px">(Sync incident)</span></div>
+            <div class="snap-dd-ts">2026-03-10 · 17:45 UTC</div>
+          </div>
+        </div>
+        <div class="snap-dd-item" data-snap="S-001" data-label="Snapshot 1 — Baseline" data-ts="2026-03-10 · 09:00 UTC" data-dep="352" data-pnd="1,495" data-fai="0">
+          <span class="snap-dd-id">S-001</span>
+          <div class="snap-dd-info">
+            <div class="snap-dd-label">Snapshot 1 — Baseline</div>
+            <div class="snap-dd-ts">2026-03-10 · 09:00 UTC</div>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="nav-menu-item">
       <button class="btn-o"><i class="pi pi-cog"></i> Config</button>
       <button class="btn-o"><i class="pi pi-building"></i> Acme Logistics</button>
@@ -661,157 +830,98 @@ body.chat-open .steps-band{width:100%!important;max-width:100%!important;overflo
 
   <!-- KPI Row -->
   <div class="lazy-row" id="lazyRow0">
-  <div class="row-label"><i class="pi pi-chart-bar"></i> Streamlined Deployment Summary</div>
-  <div class="kg">
+  <div class="row-label">Streamlined Deployment Summary</div>
+  <div class="kg-2">
 
-    <!-- Master Data -->
+    <!-- Automated Testing -->
     <div class="card">
       <div class="ch">
-        <div class="ct"><span class="acc acc-b"></span> Master Data</div>
-        <span class="sbadge sb-lo">Deployed</span>
+        <div class="ct"><span class="acc acc-g"></span> Automated Testing</div>
+        <button type="button" class="btn-ai-section" onclick="askAiSection('Automated Testing — test results and failures')"><img src="Icono bombilla 24dp (2).svg" class="btn-ai-icon" alt=""> Ask AI</button>
       </div>
       <div class="kc">
-        <div class="klabel"><i class="pi pi-box"></i> Objects migrated</div>
-        <div class="knum" style="margin-bottom:2px">824</div>
-        <div class="kdesc" style="margin-bottom:10px">826 in optimized scope</div>
-        <!-- stacked bar -->
+        <div class="klabel"><i class="pi pi-check-circle"></i> Tests executed</div>
+        <div class="knum" style="margin-bottom:2px">248</div>
+        <div class="kdesc" style="margin-bottom:10px">Last run: 2026-03-11 · 14:28 UTC</div>
+        <!-- stacked bar: passed / failed -->
         <div class="kbar-stack" style="width:100%;height:10px;border-radius:6px;overflow:hidden;display:flex;background:var(--s300);margin-bottom:6px">
-          <div style="width:99.5%;background:var(--gn500);height:100%;transition:width .4s"></div>
-          <div style="width:0.2%;background:#f59e0b;height:100%;transition:width .4s"></div>
-          <div class="kbar-empty" style="width:0.0%;height:100%;transition:width .4s"></div>
+          <div style="width:94.4%;background:var(--gn500);height:100%;transition:width .4s"></div>
+          <div style="width:5.6%;background:var(--rd500);height:100%;transition:width .4s"></div>
         </div>
         <!-- pct labels -->
         <div style="display:flex;gap:10px;margin-bottom:8px">
-          <span class="kbar-pct" style="color:var(--gn600)"><span class="kbar-sq" style="display:inline-block;width:10px;height:10px;border-radius:2px;background:var(--gn500);margin-right:3px;vertical-align:middle"></span>99.5%</span>
-          <span class="kbar-pct" style="color:#b45309"><span class="kbar-sq" style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#f59e0b;margin-right:3px;vertical-align:middle"></span>0.2%</span>
-          
+          <span class="kbar-pct" style="color:var(--gn600)"><span class="kbar-sq" style="display:inline-block;width:10px;height:10px;border-radius:2px;background:var(--gn500);margin-right:3px;vertical-align:middle"></span>94.4% Passed</span>
+          <span class="kbar-pct" style="color:var(--rd600)"><span class="kbar-sq" style="display:inline-block;width:10px;height:10px;border-radius:2px;background:var(--rd500);margin-right:3px;vertical-align:middle"></span>5.6% Failed</span>
         </div>
-        <div class="krows">
-          <div class="krow"><span>Deployed</span><span style="color:var(--gn600);font-family:var(--ff)">822</span></div>
-          <div class="krow"><span>Pending</span><span style="color:var(--am600);font-family:var(--ff)">2</span></div>
-          <div class="krow"><span>Failed</span><span style="color:var(--rd600);font-family:var(--ff)">0</span></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Integration Layer -->
-    <div class="card">
-      <div class="ch">
-        <div class="ct"><span class="acc acc-am"></span> Integration Layer</div>
-        <span class="sbadge sb-me">Pending</span>
-      </div>
-      <div class="kc">
-        <div class="klabel"><i class="pi pi-arrow-right-arrow-left"></i> Interfaces migrated</div>
-        <div class="knum" style="margin-bottom:2px">541</div>
-        <div class="kdesc" style="margin-bottom:10px">570 in optimized scope</div>
-        <!-- stacked bar -->
-        <div class="kbar-stack" style="width:100%;height:10px;border-radius:6px;overflow:hidden;display:flex;background:var(--s300);margin-bottom:6px">
-          <div style="width:89.8%;background:var(--gn500);height:100%;transition:width .4s"></div>
-          <div style="width:5.1%;background:#f59e0b;height:100%;transition:width .4s"></div>
-          <div class="kbar-empty" style="width:0.0%;height:100%;transition:width .4s"></div>
-        </div>
-        <!-- pct labels -->
-        <div style="display:flex;gap:10px;margin-bottom:8px">
-          <span class="kbar-pct" style="color:var(--gn600)"><span class="kbar-sq" style="display:inline-block;width:10px;height:10px;border-radius:2px;background:var(--gn500);margin-right:3px;vertical-align:middle"></span>89.8%</span>
-          <span class="kbar-pct" style="color:#b45309"><span class="kbar-sq" style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#f59e0b;margin-right:3px;vertical-align:middle"></span>5.1%</span>
-          
-        </div>
-        <div class="krows">
-          <div class="krow"><span>Deployed</span><span style="color:var(--gn600);font-family:var(--ff)">512</span></div>
-          <div class="krow"><span>Pending</span><span style="color:var(--am600);font-family:var(--ff)">29</span></div>
-          <div class="krow"><span>Failed</span><span style="color:var(--rd600);font-family:var(--ff)">0</span></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Components -->
-    <div class="card">
-      <div class="ch">
-        <div class="ct"><span class="acc acc-pu"></span> Components</div>
-        <span class="sbadge sb-hi">Attention</span>
-      </div>
-      <div class="kc">
-        <div class="klabel"><i class="pi pi-file-edit"></i> Conversions migrated</div>
-        <div class="knum" style="margin-bottom:2px">437</div>
-        <div class="kdesc" style="margin-bottom:10px">451 in optimized scope</div>
-        <!-- stacked bar -->
-        <div class="kbar-stack" style="width:100%;height:10px;border-radius:6px;overflow:hidden;display:flex;background:var(--s300);margin-bottom:6px">
-          <div style="width:93.8%;background:var(--gn500);height:100%;transition:width .4s"></div>
-          <div class="kbar-empty" style="width:0.0%;height:100%;transition:width .4s"></div>
-          <div style="width:3.1%;background:var(--rd600);height:100%;transition:width .4s"></div>
-        </div>
-        <!-- pct labels -->
-        <div style="display:flex;gap:10px;margin-bottom:8px">
-          <span class="kbar-pct" style="color:var(--gn600)"><span class="kbar-sq" style="display:inline-block;width:10px;height:10px;border-radius:2px;background:var(--gn500);margin-right:3px;vertical-align:middle"></span>93.8%</span>
-          
-          <span class="kbar-pct" style="color:var(--rd600)"><span class="kbar-sq" style="display:inline-block;width:10px;height:10px;border-radius:2px;background:var(--rd600);margin-right:3px;vertical-align:middle"></span>3.1%</span>
-        </div>
-        <div class="krows">
-          <div class="krow"><span>Deployed</span><span style="color:var(--gn600);font-family:var(--ff)">423</span></div>
-          <div class="krow"><span>Pending</span><span style="color:var(--am600);font-family:var(--ff)">0</span></div>
+        <div class="krows" style="margin-bottom:12px">
+          <div class="krow"><span>Passed</span><span style="color:var(--gn600);font-family:var(--ff)">234</span></div>
           <div class="krow"><span>Failed</span><span style="color:var(--rd600);font-family:var(--ff)">14</span></div>
+          <div class="krow"><span>Execution time</span><span style="color:var(--s600);font-family:var(--ff)">4m 18s</span></div>
         </div>
+        <button class="btn-o" style="width:100%;justify-content:center;color:var(--rd600);border-color:rgba(184,48,48,.3);background:var(--rd50)" onclick="openFailedTests()">
+          View Failed Details (14)
+        </button>
       </div>
     </div>
 
-    <!-- Functional Coverage -->
+    <!-- Test Coverage -->
     <div class="card">
       <div class="ch">
-        <div class="ct"><span class="acc acc-g"></span> Functional Coverage</div>
-        <span class="sbadge sb-lo">On Target</span>
+        <div class="ct"><span class="acc acc-b"></span> Test Coverage</div>
+        <button type="button" class="btn-ai-section" onclick="askAiSection('Test Coverage — coverage metrics and gaps')"><img src="Icono bombilla 24dp (2).svg" class="btn-ai-icon" alt=""> Ask AI</button>
       </div>
       <div class="kc">
-        <div class="klabel"><i class="pi pi-th-large"></i> Contexts validated</div>
-        <div class="knum" style="margin-bottom:2px">6/6</div>
-        <div class="kdesc" style="margin-bottom:10px">All contexts verified</div>
-        <!-- stacked bar -->
+        <div class="klabel"><i class="pi pi-shield"></i> Project coverage</div>
+        <div class="knum" style="margin-bottom:2px">78%</div>
+        <div class="kdesc" style="margin-bottom:10px">Of total artifacts coverable by automated tests</div>
+        <!-- coverage bar -->
         <div class="kbar-stack" style="width:100%;height:10px;border-radius:6px;overflow:hidden;display:flex;background:var(--s300);margin-bottom:6px">
-          <div style="width:100.0%;background:var(--gn500);height:100%;transition:width .4s"></div>
-          <div class="kbar-empty" style="width:0.0%;height:100%;transition:width .4s"></div>
-          <div class="kbar-empty" style="width:0.0%;height:100%;transition:width .4s"></div>
+          <div style="width:78%;background:var(--blue-500);height:100%;transition:width .4s"></div>
         </div>
-        <!-- pct labels -->
         <div style="display:flex;gap:10px;margin-bottom:8px">
-          <span class="kbar-pct" style="color:var(--gn600)"><span class="kbar-sq" style="display:inline-block;width:10px;height:10px;border-radius:2px;background:var(--gn500);margin-right:3px;vertical-align:middle"></span>100.0%</span>
-          
-          
+          <span class="kbar-pct" style="color:var(--blue-600)"><span class="kbar-sq" style="display:inline-block;width:10px;height:10px;border-radius:2px;background:var(--blue-500);margin-right:3px;vertical-align:middle"></span>78% Covered</span>
+          <span class="kbar-pct" style="color:var(--s500)"><span class="kbar-sq" style="display:inline-block;width:10px;height:10px;border-radius:2px;background:var(--s300);margin-right:3px;vertical-align:middle"></span>22% Not coverable</span>
         </div>
         <div class="krows">
-          <div class="krow"><span>Source objects</span><span style="color:var(--s700);font-family:var(--ff)">1,847</span></div>
-          <div class="krow"><span>Target parity</span><span style="color:var(--gn600);font-family:var(--ff)">1,802</span></div>
-          <div class="krow"><span>Net new (target)</span><span style="color:var(--blue-600);font-family:var(--ff)">+63</span></div>
+          <div class="krow"><span>Artifacts covered</span><span style="color:var(--blue-600);font-family:var(--ff)">1,441</span></div>
+          <div class="krow"><span>Not coverable</span><span style="color:var(--s500);font-family:var(--ff)">406</span></div>
+          <div class="krow"><span>Coverage target</span><span style="color:var(--gn600);font-family:var(--ff)">80%</span></div>
         </div>
       </div>
     </div>
 
-  </div><!-- /kg -->
+  </div><!-- /kg-2 -->
   </div><!-- /lazyRow0 -->
 
-  <!-- Object Review + Rollback -->
+  <!-- Artifact Review + Rollback -->
   <div class="lazy-row" id="lazyRow1">
-  <div class="row-label"><i class="pi pi-list-check"></i> Assisted Object Review &amp; History</div>
-  <div class="g-main">
-
-    <!-- Object Table -->
-    <div class="card">
+  <div class="row-label"><i class="pi pi-list-check"></i> Assisted Artifact Review &amp; History</div>
+  <!-- Artifact Table -->
+  <div class="card">
       <!-- Completion guard bar -->
       <div class="ug-bar">
         <div class="ug-dot"></div>
         <div class="ug-txt">Automated batches finalized · No background processes active</div>
         <div class="ug-ts">Sync confirmed 14:32:08 UTC</div>
       </div>
+      <!-- Card header with Ask AI -->
+      <div class="ch" style="border-top:none;border-bottom:1px solid var(--s150)">
+        <div class="ct"><span class="acc acc-b"></span> Artifact List</div>
+        <button type="button" class="btn-ai-section" onclick="askAiSection('Artifact Review — migration status per artifact')"><img src="Icono bombilla 24dp (2).svg" class="btn-ai-icon" alt=""> Ask AI</button>
+      </div>
       <!-- Tabs -->
       <div class="tabs">
-        <div class="tab on"><i class="pi pi-list"></i> All Objects <span class="tbadge">1,847</span></div>
-        <div class="tab"><i class="pi pi-database"></i> Master Data <span class="tbadge">826</span></div>
-        <div class="tab"><i class="pi pi-share-alt"></i> Integration <span class="tbadge">570</span></div>
-        <div class="tab"><i class="pi pi-code"></i> Components <span class="tbadge">451</span></div>
+        <div class="tab on"><i class="pi pi-list"></i> All Artifacts <span class="tbadge">1,847</span></div>
+        <div class="tab"><i class="pi pi-box"></i> Inventory <span class="tbadge">526</span></div>
+        <div class="tab"><i class="pi pi-truck"></i> Shipping <span class="tbadge">722</span></div>
+        <div class="tab"><i class="pi pi-wave-pulse"></i> Wave Mgmt <span class="tbadge">330</span></div>
+        <div class="tab"><i class="pi pi-users"></i> Labor Mgmt <span class="tbadge">269</span></div>
       </div>
       <!-- Filters -->
       <div class="fbar">
         <div class="pinpw">
           <i class="pi pi-search"></i>
-          <input class="pinp" type="text" placeholder="Search objects…">
+          <input class="pinp" type="text" placeholder="Search artifacts…">
         </div>
         <select class="psel">
           <option>All Statuses</option>
@@ -820,12 +930,11 @@ body.chat-open .steps-band{width:100%!important;max-width:100%!important;overflo
           <option>Failed</option>
         </select>
         <select class="psel">
-          <option>All Contexts</option>
-          <option>Picking</option>
-          <option>Packing</option>
-          <option>Labels</option>
-          <option>Move Commands</option>
-          <option>Config</option>
+          <option>All Functional Groups</option>
+          <option>Inventory</option>
+          <option>Shipping</option>
+          <option>Wave Mgmt</option>
+          <option>Labor Mgmt</option>
         </select>
       </div>
       <!-- Table -->
@@ -833,9 +942,9 @@ body.chat-open .steps-band{width:100%!important;max-width:100%!important;overflo
       <table class="pt">
         <thead>
           <tr>
-            <th>Object</th>
+            <th>Artifact</th>
             <th>Status</th>
-            <th>Notes</th>
+            <th></th>
             <th></th>
           </tr>
         </thead>
@@ -843,14 +952,14 @@ body.chat-open .steps-band{width:100%!important;max-width:100%!important;overflo
           <tr class="pt-row" data-row-index="0" data-expanded="false">
             <td><div class="oname">PICK_WAVE_ALLOC_V3</div></td>
             <td><span class="ds ds-dep"><i class="pi pi-check-circle"></i> Deployed</span></td>
-            <td><button class="ico-btn pt-note-btn" type="button" aria-label="View note" data-note="—"><i class="pi pi-comment"></i></button></td>
+            <td style="white-space:nowrap"><button type="button" class="btn-row-ai" onclick="askAiSection(this.closest('tr').querySelector('.oname')?.textContent||'artifact')"><img src="Icono bombilla 24dp (2).svg" class="btn-ai-icon" alt=""> Ask AI</button></td>
             <td><button class="pt-toggle" type="button" aria-label="Expand" aria-expanded="false"><i class="pi pi-chevron-down"></i></button></td>
           </tr>
           <tr class="pt-expanded" data-row-index="0" hidden>
             <td colspan="4">
               <div class="pt-detail">
                 <div class="pt-detail-row"><span class="pt-detail-k">Type</span><span>Component</span></div>
-                <div class="pt-detail-row"><span class="pt-detail-k">Category</span><span class="mtag mtag-gj"><i class="pi pi-code"></i> Components</span></div>
+                <div class="pt-detail-row"><span class="pt-detail-k">Functional Group</span><span class="mtag" style="background:rgba(236,72,153,.09);color:#d84d7a;border-color:rgba(236,72,153,.28)"><i class="pi pi-wave-pulse"></i> Wave Mgmt</span></div>
                 <div class="pt-detail-row"><span class="pt-detail-k">Context</span><span class="fctx"><i class="pi pi-wave-pulse"></i> Picking</span></div>
                 <div class="pt-detail-row"><span class="pt-detail-k">Source → Target</span><span class="parity"><span class="src">GroovyV3</span><span class="arrow">→</span><span class="tgt">JavaSvc</span></span></div>
               </div>
@@ -859,14 +968,14 @@ body.chat-open .steps-band{width:100%!important;max-width:100%!important;overflo
           <tr class="pt-row" data-row-index="1" data-expanded="false">
             <td><div class="oname">INTGR_SHIP_HDR_X</div></td>
             <td><span class="ds ds-pnd"><i class="pi pi-clock"></i> Pending</span></td>
-            <td><button class="ico-btn pt-note-btn" type="button" aria-label="View note" data-note="Interface pending — target REST endpoint not yet exposed. Awaiting infrastructure team confirmation."><i class="pi pi-comment"></i></button></td>
+            <td style="white-space:nowrap"><button type="button" class="btn-row-ai" onclick="askAiSection(this.closest('tr').querySelector('.oname')?.textContent||'artifact')"><img src="Icono bombilla 24dp (2).svg" class="btn-ai-icon" alt=""> Ask AI</button></td>
             <td><button class="pt-toggle" type="button" aria-label="Expand" aria-expanded="false"><i class="pi pi-chevron-down"></i></button></td>
           </tr>
           <tr class="pt-expanded" data-row-index="1" hidden>
             <td colspan="4">
               <div class="pt-detail">
                 <div class="pt-detail-row"><span class="pt-detail-k">Type</span><span>Interface</span></div>
-                <div class="pt-detail-row"><span class="pt-detail-k">Category</span><span class="mtag mtag-il"><i class="pi pi-share-alt"></i> Integration</span></div>
+                <div class="pt-detail-row"><span class="pt-detail-k">Functional Group</span><span class="mtag" style="background:rgba(124,82,184,.09);color:#6b4dab;border-color:rgba(124,82,184,.24)"><i class="pi pi-truck"></i> Shipping</span></div>
                 <div class="pt-detail-row"><span class="pt-detail-k">Context</span><span class="fctx"><i class="pi pi-truck"></i> Shipping</span></div>
                 <div class="pt-detail-row"><span class="pt-detail-k">Source → Target</span><span class="parity"><span class="src">MOCA v1</span><span class="arrow">→</span><span class="tgt new">REST API</span></span></div>
               </div>
@@ -875,14 +984,14 @@ body.chat-open .steps-band{width:100%!important;max-width:100%!important;overflo
           <tr class="pt-row" data-row-index="2" data-expanded="false">
             <td><div class="oname">MDATA_LOC_ZONE_T</div></td>
             <td><span class="ds ds-dep"><i class="pi pi-check-circle"></i> Deployed</span></td>
-            <td><button class="ico-btn pt-note-btn" type="button" aria-label="View note" data-note="—"><i class="pi pi-comment"></i></button></td>
+            <td style="white-space:nowrap"><button type="button" class="btn-row-ai" onclick="askAiSection(this.closest('tr').querySelector('.oname')?.textContent||'artifact')"><img src="Icono bombilla 24dp (2).svg" class="btn-ai-icon" alt=""> Ask AI</button></td>
             <td><button class="pt-toggle" type="button" aria-label="Expand" aria-expanded="false"><i class="pi pi-chevron-down"></i></button></td>
           </tr>
           <tr class="pt-expanded" data-row-index="2" hidden>
             <td colspan="4">
               <div class="pt-detail">
                 <div class="pt-detail-row"><span class="pt-detail-k">Type</span><span>Config Table</span></div>
-                <div class="pt-detail-row"><span class="pt-detail-k">Category</span><span class="mtag mtag-md"><i class="pi pi-database"></i> Master Data</span></div>
+                <div class="pt-detail-row"><span class="pt-detail-k">Functional Group</span><span class="mtag" style="background:rgba(236,72,153,.09);color:#d84d7a;border-color:rgba(236,72,153,.28)"><i class="pi pi-wave-pulse"></i> Wave Mgmt</span></div>
                 <div class="pt-detail-row"><span class="pt-detail-k">Context</span><span class="fctx"><i class="pi pi-map-marker"></i> Config</span></div>
                 <div class="pt-detail-row"><span class="pt-detail-k">Source → Target</span><span class="parity"><span class="src">TABLE v2</span><span class="arrow">→</span><span class="tgt">TABLE v4</span></span></div>
               </div>
@@ -891,14 +1000,14 @@ body.chat-open .steps-band{width:100%!important;max-width:100%!important;overflo
           <tr class="pt-row" data-row-index="3" data-expanded="false">
             <td><div class="oname">PICK_LABEL_CUST_01</div></td>
             <td><span class="ds ds-dep"><i class="pi pi-check-circle"></i> Deployed</span></td>
-            <td><button class="ico-btn pt-note-btn" type="button" aria-label="View note" data-note="—"><i class="pi pi-comment"></i></button></td>
+            <td style="white-space:nowrap"><button type="button" class="btn-row-ai" onclick="askAiSection(this.closest('tr').querySelector('.oname')?.textContent||'artifact')"><img src="Icono bombilla 24dp (2).svg" class="btn-ai-icon" alt=""> Ask AI</button></td>
             <td><button class="pt-toggle" type="button" aria-label="Expand" aria-expanded="false"><i class="pi pi-chevron-down"></i></button></td>
           </tr>
           <tr class="pt-expanded" data-row-index="3" hidden>
             <td colspan="4">
               <div class="pt-detail">
                 <div class="pt-detail-row"><span class="pt-detail-k">Type</span><span>Label Template</span></div>
-                <div class="pt-detail-row"><span class="pt-detail-k">Category</span><span class="mtag mtag-md"><i class="pi pi-database"></i> Master Data</span></div>
+                <div class="pt-detail-row"><span class="pt-detail-k">Functional Group</span><span class="mtag" style="background:rgba(124,82,184,.09);color:#6b4dab;border-color:rgba(124,82,184,.24)"><i class="pi pi-truck"></i> Shipping</span></div>
                 <div class="pt-detail-row"><span class="pt-detail-k">Context</span><span class="fctx"><i class="pi pi-tag"></i> Labels</span></div>
                 <div class="pt-detail-row"><span class="pt-detail-k">Source → Target</span><span class="parity"><span class="src">ZPL v1</span><span class="arrow">→</span><span class="tgt new">ZPL v2</span></span></div>
               </div>
@@ -907,14 +1016,14 @@ body.chat-open .steps-band{width:100%!important;max-width:100%!important;overflo
           <tr class="pt-row" data-row-index="4" data-expanded="false">
             <td><div class="oname">GJ_PACK_CUSTOM_V2</div></td>
             <td><span class="ds ds-fai"><i class="pi pi-times-circle"></i> Failed</span></td>
-            <td><button class="ico-btn pt-note-btn" type="button" aria-label="View note" data-note="Component conversion failed — no equivalent method signature found in target BY release. Manual re-mapping required."><i class="pi pi-comment"></i></button></td>
+            <td style="white-space:nowrap"><button type="button" class="btn-row-ai" onclick="askAiSection(this.closest('tr').querySelector('.oname')?.textContent||'artifact')"><img src="Icono bombilla 24dp (2).svg" class="btn-ai-icon" alt=""> Ask AI</button></td>
             <td><button class="pt-toggle" type="button" aria-label="Expand" aria-expanded="false"><i class="pi pi-chevron-down"></i></button></td>
           </tr>
           <tr class="pt-expanded" data-row-index="4" hidden>
             <td colspan="4">
               <div class="pt-detail">
                 <div class="pt-detail-row"><span class="pt-detail-k">Type</span><span>Component</span></div>
-                <div class="pt-detail-row"><span class="pt-detail-k">Category</span><span class="mtag mtag-gj"><i class="pi pi-code"></i> Components</span></div>
+                <div class="pt-detail-row"><span class="pt-detail-k">Functional Group</span><span class="mtag" style="background:rgba(124,82,184,.09);color:#6b4dab;border-color:rgba(124,82,184,.24)"><i class="pi pi-truck"></i> Shipping</span></div>
                 <div class="pt-detail-row"><span class="pt-detail-k">Context</span><span class="fctx"><i class="pi pi-box"></i> Packing</span></div>
                 <div class="pt-detail-row"><span class="pt-detail-k">Source → Target</span><span class="parity"><span class="src">GroovyV2</span><span class="arrow">→</span><span class="tgt miss">No target</span></span></div>
               </div>
@@ -923,14 +1032,14 @@ body.chat-open .steps-band{width:100%!important;max-width:100%!important;overflo
           <tr class="pt-row" data-row-index="5" data-expanded="false">
             <td><div class="oname">MOV_CMD_REPLEN_X3</div></td>
             <td><span class="ds ds-dep"><i class="pi pi-check-circle"></i> Deployed</span></td>
-            <td><button class="ico-btn pt-note-btn" type="button" aria-label="View note" data-note="—"><i class="pi pi-comment"></i></button></td>
+            <td style="white-space:nowrap"><button type="button" class="btn-row-ai" onclick="askAiSection(this.closest('tr').querySelector('.oname')?.textContent||'artifact')"><img src="Icono bombilla 24dp (2).svg" class="btn-ai-icon" alt=""> Ask AI</button></td>
             <td><button class="pt-toggle" type="button" aria-label="Expand" aria-expanded="false"><i class="pi pi-chevron-down"></i></button></td>
           </tr>
           <tr class="pt-expanded" data-row-index="5" hidden>
             <td colspan="4">
               <div class="pt-detail">
                 <div class="pt-detail-row"><span class="pt-detail-k">Type</span><span>Move Command</span></div>
-                <div class="pt-detail-row"><span class="pt-detail-k">Category</span><span class="mtag mtag-il"><i class="pi pi-share-alt"></i> Integration</span></div>
+                <div class="pt-detail-row"><span class="pt-detail-k">Functional Group</span><span class="mtag" style="background:rgba(236,72,153,.09);color:#d84d7a;border-color:rgba(236,72,153,.28)"><i class="pi pi-wave-pulse"></i> Wave Mgmt</span></div>
                 <div class="pt-detail-row"><span class="pt-detail-k">Context</span><span class="fctx"><i class="pi pi-refresh"></i> Move Cmd</span></div>
                 <div class="pt-detail-row"><span class="pt-detail-k">Source → Target</span><span class="parity"><span class="src">MOVEv1</span><span class="arrow">→</span><span class="tgt">MOVEv3</span></span></div>
               </div>
@@ -939,14 +1048,14 @@ body.chat-open .steps-band{width:100%!important;max-width:100%!important;overflo
           <tr class="pt-row" data-row-index="6" data-expanded="false">
             <td><div class="oname">PICK_ZONE_MAP_V2</div></td>
             <td><span class="ds ds-dep"><i class="pi pi-check-circle"></i> Deployed</span></td>
-            <td><button class="ico-btn pt-note-btn" type="button" aria-label="View note" data-note="—"><i class="pi pi-comment"></i></button></td>
+            <td style="white-space:nowrap"><button type="button" class="btn-row-ai" onclick="askAiSection(this.closest('tr').querySelector('.oname')?.textContent||'artifact')"><img src="Icono bombilla 24dp (2).svg" class="btn-ai-icon" alt=""> Ask AI</button></td>
             <td><button class="pt-toggle" type="button" aria-label="Expand" aria-expanded="false"><i class="pi pi-chevron-down"></i></button></td>
           </tr>
           <tr class="pt-expanded" data-row-index="6" hidden>
             <td colspan="4">
               <div class="pt-detail">
                 <div class="pt-detail-row"><span class="pt-detail-k">Type</span><span>Config Table</span></div>
-                <div class="pt-detail-row"><span class="pt-detail-k">Category</span><span class="mtag mtag-md"><i class="pi pi-database"></i> Master Data</span></div>
+                <div class="pt-detail-row"><span class="pt-detail-k">Functional Group</span><span class="mtag" style="background:rgba(236,72,153,.09);color:#d84d7a;border-color:rgba(236,72,153,.28)"><i class="pi pi-wave-pulse"></i> Wave Mgmt</span></div>
                 <div class="pt-detail-row"><span class="pt-detail-k">Context</span><span class="fctx"><i class="pi pi-wave-pulse"></i> Picking</span></div>
                 <div class="pt-detail-row"><span class="pt-detail-k">Source → Target</span><span class="parity"><span class="src">TABLE v2</span><span class="arrow">→</span><span class="tgt">TABLE v4</span></span></div>
               </div>
@@ -961,7 +1070,7 @@ body.chat-open .steps-band{width:100%!important;max-width:100%!important;overflo
             <td colspan="4">
               <div class="pt-detail">
                 <div class="pt-detail-row"><span class="pt-detail-k">Type</span><span>Label Template</span></div>
-                <div class="pt-detail-row"><span class="pt-detail-k">Category</span><span class="mtag mtag-il"><i class="pi pi-share-alt"></i> Integration</span></div>
+                <div class="pt-detail-row"><span class="pt-detail-k">Functional Group</span><span class="mtag" style="background:rgba(124,82,184,.09);color:#6b4dab;border-color:rgba(124,82,184,.24)"><i class="pi pi-truck"></i> Shipping</span></div>
                 <div class="pt-detail-row"><span class="pt-detail-k">Context</span><span class="fctx"><i class="pi pi-truck"></i> Shipping</span></div>
                 <div class="pt-detail-row"><span class="pt-detail-k">Source → Target</span><span class="parity"><span class="src">ZPL v1</span><span class="arrow">→</span><span class="tgt">ZPL v2</span></span></div>
               </div>
@@ -970,14 +1079,14 @@ body.chat-open .steps-band{width:100%!important;max-width:100%!important;overflo
           <tr class="pt-row" data-row-index="8" data-expanded="false">
             <td><div class="oname">PACK_CUSTOM_LOGIC_V1</div></td>
             <td><span class="ds ds-dep"><i class="pi pi-check-circle"></i> Deployed</span></td>
-            <td><button class="ico-btn pt-note-btn" type="button" aria-label="View note" data-note="Conversion verified in target environment. Wave allocation behavior matches source spec. Cleared for final sign-off."><i class="pi pi-comment"></i></button></td>
+            <td style="white-space:nowrap"><button type="button" class="btn-row-ai" onclick="askAiSection(this.closest('tr').querySelector('.oname')?.textContent||'artifact')"><img src="Icono bombilla 24dp (2).svg" class="btn-ai-icon" alt=""> Ask AI</button></td>
             <td><button class="pt-toggle" type="button" aria-label="Expand" aria-expanded="false"><i class="pi pi-chevron-down"></i></button></td>
           </tr>
           <tr class="pt-expanded" data-row-index="8" hidden>
             <td colspan="4">
               <div class="pt-detail">
                 <div class="pt-detail-row"><span class="pt-detail-k">Type</span><span>Component</span></div>
-                <div class="pt-detail-row"><span class="pt-detail-k">Category</span><span class="mtag mtag-gj"><i class="pi pi-code"></i> Components</span></div>
+                <div class="pt-detail-row"><span class="pt-detail-k">Functional Group</span><span class="mtag" style="background:rgba(124,82,184,.09);color:#6b4dab;border-color:rgba(124,82,184,.24)"><i class="pi pi-truck"></i> Shipping</span></div>
                 <div class="pt-detail-row"><span class="pt-detail-k">Context</span><span class="fctx"><i class="pi pi-box"></i> Packing</span></div>
                 <div class="pt-detail-row"><span class="pt-detail-k">Source → Target</span><span class="parity"><span class="src">GroovyV1</span><span class="arrow">→</span><span class="tgt">JavaSvc</span></span></div>
               </div>
@@ -992,7 +1101,7 @@ body.chat-open .steps-band{width:100%!important;max-width:100%!important;overflo
             <td colspan="4">
               <div class="pt-detail">
                 <div class="pt-detail-row"><span class="pt-detail-k">Type</span><span>Move Command</span></div>
-                <div class="pt-detail-row"><span class="pt-detail-k">Category</span><span class="mtag mtag-il"><i class="pi pi-share-alt"></i> Integration</span></div>
+                <div class="pt-detail-row"><span class="pt-detail-k">Functional Group</span><span class="mtag" style="background:rgba(236,72,153,.09);color:#d84d7a;border-color:rgba(236,72,153,.28)"><i class="pi pi-wave-pulse"></i> Wave Mgmt</span></div>
                 <div class="pt-detail-row"><span class="pt-detail-k">Context</span><span class="fctx"><i class="pi pi-refresh"></i> Move Cmd</span></div>
                 <div class="pt-detail-row"><span class="pt-detail-k">Source → Target</span><span class="parity"><span class="src">MOVEv2</span><span class="arrow">→</span><span class="tgt">MOVEv3</span></span></div>
               </div>
@@ -1001,14 +1110,14 @@ body.chat-open .steps-band{width:100%!important;max-width:100%!important;overflo
           <tr class="pt-row" data-row-index="10" data-expanded="false">
             <td><div class="oname">INTGR_INV_SYNC_X</div></td>
             <td><span class="ds ds-dep"><i class="pi pi-check-circle"></i> Deployed</span></td>
-            <td><button class="ico-btn pt-note-btn" type="button" aria-label="View note" data-note="—"><i class="pi pi-comment"></i></button></td>
+            <td style="white-space:nowrap"><button type="button" class="btn-row-ai" onclick="askAiSection(this.closest('tr').querySelector('.oname')?.textContent||'artifact')"><img src="Icono bombilla 24dp (2).svg" class="btn-ai-icon" alt=""> Ask AI</button></td>
             <td><button class="pt-toggle" type="button" aria-label="Expand" aria-expanded="false"><i class="pi pi-chevron-down"></i></button></td>
           </tr>
           <tr class="pt-expanded" data-row-index="10" hidden>
             <td colspan="4">
               <div class="pt-detail">
                 <div class="pt-detail-row"><span class="pt-detail-k">Type</span><span>Interface</span></div>
-                <div class="pt-detail-row"><span class="pt-detail-k">Category</span><span class="mtag mtag-md"><i class="pi pi-database"></i> Master Data</span></div>
+                <div class="pt-detail-row"><span class="pt-detail-k">Functional Group</span><span class="mtag" style="background:rgba(96,165,250,.09);color:#3d6bc8;border-color:rgba(96,165,250,.22)"><i class="pi pi-box"></i> Inventory</span></div>
                 <div class="pt-detail-row"><span class="pt-detail-k">Context</span><span class="fctx"><i class="pi pi-box"></i> Inventory</span></div>
                 <div class="pt-detail-row"><span class="pt-detail-k">Source → Target</span><span class="parity"><span class="src">MOCA v1</span><span class="arrow">→</span><span class="tgt new">REST API</span></span></div>
               </div>
@@ -1017,14 +1126,14 @@ body.chat-open .steps-band{width:100%!important;max-width:100%!important;overflo
           <tr class="pt-row" data-row-index="11" data-expanded="false">
             <td><div class="oname">INV_SYNC_BATCH_V2</div></td>
             <td><span class="ds ds-dep"><i class="pi pi-check-circle"></i> Deployed</span></td>
-            <td><button class="ico-btn pt-note-btn" type="button" aria-label="View note" data-note="—"><i class="pi pi-comment"></i></button></td>
+            <td style="white-space:nowrap"><button type="button" class="btn-row-ai" onclick="askAiSection(this.closest('tr').querySelector('.oname')?.textContent||'artifact')"><img src="Icono bombilla 24dp (2).svg" class="btn-ai-icon" alt=""> Ask AI</button></td>
             <td><button class="pt-toggle" type="button" aria-label="Expand" aria-expanded="false"><i class="pi pi-chevron-down"></i></button></td>
           </tr>
           <tr class="pt-expanded" data-row-index="11" hidden>
             <td colspan="4">
               <div class="pt-detail">
                 <div class="pt-detail-row"><span class="pt-detail-k">Type</span><span>Component</span></div>
-                <div class="pt-detail-row"><span class="pt-detail-k">Category</span><span class="mtag mtag-gj"><i class="pi pi-code"></i> Components</span></div>
+                <div class="pt-detail-row"><span class="pt-detail-k">Functional Group</span><span class="mtag" style="background:rgba(96,165,250,.09);color:#3d6bc8;border-color:rgba(96,165,250,.22)"><i class="pi pi-box"></i> Inventory</span></div>
                 <div class="pt-detail-row"><span class="pt-detail-k">Context</span><span class="fctx"><i class="pi pi-box"></i> Inventory</span></div>
                 <div class="pt-detail-row"><span class="pt-detail-k">Source → Target</span><span class="parity"><span class="src">GroovyV2</span><span class="arrow">→</span><span class="tgt">JavaSvc</span></span></div>
               </div>
@@ -1033,14 +1142,14 @@ body.chat-open .steps-band{width:100%!important;max-width:100%!important;overflo
           <tr class="pt-row" data-row-index="12" data-expanded="false">
             <td><div class="oname">PICK_SLOT_ALLOC_X</div></td>
             <td><span class="ds ds-dep"><i class="pi pi-check-circle"></i> Deployed</span></td>
-            <td><button class="ico-btn pt-note-btn" type="button" aria-label="View note" data-note="—"><i class="pi pi-comment"></i></button></td>
+            <td style="white-space:nowrap"><button type="button" class="btn-row-ai" onclick="askAiSection(this.closest('tr').querySelector('.oname')?.textContent||'artifact')"><img src="Icono bombilla 24dp (2).svg" class="btn-ai-icon" alt=""> Ask AI</button></td>
             <td><button class="pt-toggle" type="button" aria-label="Expand" aria-expanded="false"><i class="pi pi-chevron-down"></i></button></td>
           </tr>
           <tr class="pt-expanded" data-row-index="12" hidden>
             <td colspan="4">
               <div class="pt-detail">
                 <div class="pt-detail-row"><span class="pt-detail-k">Type</span><span>Config Table</span></div>
-                <div class="pt-detail-row"><span class="pt-detail-k">Category</span><span class="mtag mtag-md"><i class="pi pi-database"></i> Master Data</span></div>
+                <div class="pt-detail-row"><span class="pt-detail-k">Functional Group</span><span class="mtag" style="background:rgba(236,72,153,.09);color:#d84d7a;border-color:rgba(236,72,153,.28)"><i class="pi pi-wave-pulse"></i> Wave Mgmt</span></div>
                 <div class="pt-detail-row"><span class="pt-detail-k">Context</span><span class="fctx"><i class="pi pi-wave-pulse"></i> Picking</span></div>
                 <div class="pt-detail-row"><span class="pt-detail-k">Source → Target</span><span class="parity"><span class="src">TABLE v2</span><span class="arrow">→</span><span class="tgt">TABLE v4</span></span></div>
               </div>
@@ -1055,7 +1164,7 @@ body.chat-open .steps-band{width:100%!important;max-width:100%!important;overflo
             <td colspan="4">
               <div class="pt-detail">
                 <div class="pt-detail-row"><span class="pt-detail-k">Type</span><span>Label Template</span></div>
-                <div class="pt-detail-row"><span class="pt-detail-k">Category</span><span class="mtag mtag-il"><i class="pi pi-share-alt"></i> Integration</span></div>
+                <div class="pt-detail-row"><span class="pt-detail-k">Functional Group</span><span class="mtag" style="background:rgba(124,82,184,.09);color:#6b4dab;border-color:rgba(124,82,184,.24)"><i class="pi pi-truck"></i> Shipping</span></div>
                 <div class="pt-detail-row"><span class="pt-detail-k">Context</span><span class="fctx"><i class="pi pi-truck"></i> Shipping</span></div>
                 <div class="pt-detail-row"><span class="pt-detail-k">Source → Target</span><span class="parity"><span class="src">ZPL v1</span><span class="arrow">→</span><span class="tgt">ZPL v2</span></span></div>
               </div>
@@ -1064,14 +1173,14 @@ body.chat-open .steps-band{width:100%!important;max-width:100%!important;overflo
           <tr class="pt-row" data-row-index="14" data-expanded="false">
             <td><div class="oname">REPLEN_RULE_CUST_X</div></td>
             <td><span class="ds ds-dep"><i class="pi pi-check-circle"></i> Deployed</span></td>
-            <td><button class="ico-btn pt-note-btn" type="button" aria-label="View note" data-note="Move command validated. Ready for deployment."><i class="pi pi-comment"></i></button></td>
+            <td style="white-space:nowrap"><button type="button" class="btn-row-ai" onclick="askAiSection(this.closest('tr').querySelector('.oname')?.textContent||'artifact')"><img src="Icono bombilla 24dp (2).svg" class="btn-ai-icon" alt=""> Ask AI</button></td>
             <td><button class="pt-toggle" type="button" aria-label="Expand" aria-expanded="false"><i class="pi pi-chevron-down"></i></button></td>
           </tr>
           <tr class="pt-expanded" data-row-index="14" hidden>
             <td colspan="4">
               <div class="pt-detail">
                 <div class="pt-detail-row"><span class="pt-detail-k">Type</span><span>Move Command</span></div>
-                <div class="pt-detail-row"><span class="pt-detail-k">Category</span><span class="mtag mtag-il"><i class="pi pi-share-alt"></i> Integration</span></div>
+                <div class="pt-detail-row"><span class="pt-detail-k">Functional Group</span><span class="mtag" style="background:rgba(236,72,153,.09);color:#d84d7a;border-color:rgba(236,72,153,.28)"><i class="pi pi-wave-pulse"></i> Wave Mgmt</span></div>
                 <div class="pt-detail-row"><span class="pt-detail-k">Context</span><span class="fctx"><i class="pi pi-refresh"></i> Move Cmd</span></div>
                 <div class="pt-detail-row"><span class="pt-detail-k">Source → Target</span><span class="parity"><span class="src">MOVEv2</span><span class="arrow">→</span><span class="tgt">MOVEv3</span></span></div>
               </div>
@@ -1080,14 +1189,14 @@ body.chat-open .steps-band{width:100%!important;max-width:100%!important;overflo
           <tr class="pt-row" data-row-index="15" data-expanded="false">
             <td><div class="oname">PACK_WEIGHT_CALC_V3</div></td>
             <td><span class="ds ds-dep"><i class="pi pi-check-circle"></i> Deployed</span></td>
-            <td><button class="ico-btn pt-note-btn" type="button" aria-label="View note" data-note="—"><i class="pi pi-comment"></i></button></td>
+            <td style="white-space:nowrap"><button type="button" class="btn-row-ai" onclick="askAiSection(this.closest('tr').querySelector('.oname')?.textContent||'artifact')"><img src="Icono bombilla 24dp (2).svg" class="btn-ai-icon" alt=""> Ask AI</button></td>
             <td><button class="pt-toggle" type="button" aria-label="Expand" aria-expanded="false"><i class="pi pi-chevron-down"></i></button></td>
           </tr>
           <tr class="pt-expanded" data-row-index="15" hidden>
             <td colspan="4">
               <div class="pt-detail">
                 <div class="pt-detail-row"><span class="pt-detail-k">Type</span><span>Component</span></div>
-                <div class="pt-detail-row"><span class="pt-detail-k">Category</span><span class="mtag mtag-gj"><i class="pi pi-code"></i> Components</span></div>
+                <div class="pt-detail-row"><span class="pt-detail-k">Functional Group</span><span class="mtag" style="background:rgba(124,82,184,.09);color:#6b4dab;border-color:rgba(124,82,184,.24)"><i class="pi pi-truck"></i> Shipping</span></div>
                 <div class="pt-detail-row"><span class="pt-detail-k">Context</span><span class="fctx"><i class="pi pi-box"></i> Packing</span></div>
                 <div class="pt-detail-row"><span class="pt-detail-k">Source → Target</span><span class="parity"><span class="src">GroovyV3</span><span class="arrow">→</span><span class="tgt">JavaSvc</span></span></div>
               </div>
@@ -1096,14 +1205,14 @@ body.chat-open .steps-band{width:100%!important;max-width:100%!important;overflo
           <tr class="pt-row" data-row-index="16" data-expanded="false">
             <td><div class="oname">MDATA_CARRIER_T</div></td>
             <td><span class="ds ds-dep"><i class="pi pi-check-circle"></i> Deployed</span></td>
-            <td><button class="ico-btn pt-note-btn" type="button" aria-label="View note" data-note="—"><i class="pi pi-comment"></i></button></td>
+            <td style="white-space:nowrap"><button type="button" class="btn-row-ai" onclick="askAiSection(this.closest('tr').querySelector('.oname')?.textContent||'artifact')"><img src="Icono bombilla 24dp (2).svg" class="btn-ai-icon" alt=""> Ask AI</button></td>
             <td><button class="pt-toggle" type="button" aria-label="Expand" aria-expanded="false"><i class="pi pi-chevron-down"></i></button></td>
           </tr>
           <tr class="pt-expanded" data-row-index="16" hidden>
             <td colspan="4">
               <div class="pt-detail">
                 <div class="pt-detail-row"><span class="pt-detail-k">Type</span><span>Config Table</span></div>
-                <div class="pt-detail-row"><span class="pt-detail-k">Category</span><span class="mtag mtag-md"><i class="pi pi-database"></i> Master Data</span></div>
+                <div class="pt-detail-row"><span class="pt-detail-k">Functional Group</span><span class="mtag" style="background:rgba(124,82,184,.09);color:#6b4dab;border-color:rgba(124,82,184,.24)"><i class="pi pi-truck"></i> Shipping</span></div>
                 <div class="pt-detail-row"><span class="pt-detail-k">Context</span><span class="fctx"><i class="pi pi-truck"></i> Shipping</span></div>
                 <div class="pt-detail-row"><span class="pt-detail-k">Source → Target</span><span class="parity"><span class="src">TABLE v2</span><span class="arrow">→</span><span class="tgt">TABLE v4</span></span></div>
               </div>
@@ -1118,7 +1227,7 @@ body.chat-open .steps-band{width:100%!important;max-width:100%!important;overflo
             <td colspan="4">
               <div class="pt-detail">
                 <div class="pt-detail-row"><span class="pt-detail-k">Type</span><span>Interface</span></div>
-                <div class="pt-detail-row"><span class="pt-detail-k">Category</span><span class="mtag mtag-il"><i class="pi pi-share-alt"></i> Integration</span></div>
+                <div class="pt-detail-row"><span class="pt-detail-k">Functional Group</span><span class="mtag" style="background:rgba(96,165,250,.09);color:#3d6bc8;border-color:rgba(96,165,250,.22)"><i class="pi pi-box"></i> Inventory</span></div>
                 <div class="pt-detail-row"><span class="pt-detail-k">Context</span><span class="fctx"><i class="pi pi-box"></i> Inventory</span></div>
                 <div class="pt-detail-row"><span class="pt-detail-k">Source → Target</span><span class="parity"><span class="src">MOCA v1</span><span class="arrow">→</span><span class="tgt new">REST API</span></span></div>
               </div>
@@ -1128,7 +1237,7 @@ body.chat-open .steps-band{width:100%!important;max-width:100%!important;overflo
       </table>
       </div>
       <div class="tfoot">
-        <div id="ptFootInfo" style="display:flex;align-items:center;gap:5px">Showing 1-7 of 1,847 · All Objects</div>
+        <div id="ptFootInfo" style="display:flex;align-items:center;gap:5px">Showing 1-7 of 1,847 · All Artifacts</div>
         <div class="pgn" id="ptPgn">
           <button class="pgb" data-pg="prev"><i class="pi pi-angle-left"></i></button>
           <button class="pgb on" data-pg="1">1</button>
@@ -1139,13 +1248,22 @@ body.chat-open .steps-band{width:100%!important;max-width:100%!important;overflo
           <button class="pgb" data-pg="next"><i class="pi pi-angle-right"></i></button>
         </div>
       </div>
-    </div><!-- /object table card -->
+  </div><!-- /object table card -->
+  </div><!-- /lazyRow1 -->
 
+  <div class="lazy-row" id="lazyRow2">
+  <div class="row-label"><i class="pi pi-shield"></i> Governance &amp; Intelligent Outputs</div>
+  <div class="rb-gov-grid">
+
+    <!-- Rollback History (left) -->
     <!-- Rollback History -->
     <div class="card">
       <div class="ch">
         <div class="ct"><span class="acc acc-am"></span> Rollback History</div>
-        <span class="rb-current-tag"><i class="pi pi-circle-fill" style="font-size:12.74px"></i> 4 snapshots</span>
+        <div style="display:flex;align-items:center;gap:8px">
+          <button type="button" class="btn-ai-section" onclick="askAiSection('Rollback History — snapshot comparison and regression risk')"><img src="Icono bombilla 24dp (2).svg" class="btn-ai-icon" alt=""> Ask AI</button>
+          <span style="font-size:12px;font-weight:700;color:var(--s400);display:inline-flex;align-items:center;gap:4px"><i class="pi pi-history" style="font-size:12px"></i> 4 snapshots</span>
+        </div>
       </div>
       <div class="rb-body">
         <div class="rb-timeline">
@@ -1255,63 +1373,55 @@ body.chat-open .steps-band{width:100%!important;max-width:100%!important;overflo
       </div><!-- /rb-body -->
     </div><!-- /rollback card -->
 
-  </div><!-- /g-main -->
-  </div><!-- /lazyRow1 -->
-
-  <!-- Governance & Export -->
-  <div class="lazy-row" id="lazyRow2">
-  <div class="row-label"><i class="pi pi-shield"></i> Governance &amp; Intelligent Outputs</div>
-  <div class="gov-grid">
-    <!-- Annotations -->
-    <div class="card">
-      <div class="ch">
-        <div class="ct"><span class="acc acc-g"></span> Post-Execution Annotations</div>
-        <button class="btn-o"><i class="pi pi-plus-circle"></i> Add Note</button>
-      </div>
-      <div class="ann-body">
-        <div class="ann ann-g">
-          <div class="ann-meta"><i class="pi pi-microchip-ai"></i> ASCEND · Auto-detected · Flagged for human review · <span class="ann-obj">GJ_PACK_CUSTOM_V2</span></div>
-          <div class="ann-txt">Component conversion failed — no equivalent method signature found in target BY release. Manual re-mapping with development team required before retry.</div>
-          <div class="ann-foot"><span class="dtag" style="background:var(--rd50);color:var(--rd600);border:1px solid rgba(184,48,48,.2)"><i class="pi pi-times-circle"></i> Conversion Failed</span></div>
-        </div>
-        <div class="ann ann-am">
-          <div class="ann-meta"><i class="pi pi-user"></i> J. Ramírez · Senior Consultant · 32 min ago · <span class="ann-obj">INTGR_SHIP_HDR_X</span></div>
-          <div class="ann-txt">Interface pending — target REST endpoint not yet exposed. Awaiting infrastructure team confirmation. Estimated resolution: +4 hours.</div>
-          <div class="ann-foot"><span class="dtag dt-rb"><i class="pi pi-clock"></i> Blocked · Infra</span></div>
-        </div>
-        <div class="ann ann-b">
-          <div class="ann-meta"><i class="pi pi-user"></i> M. Torres · Arch. Lead · 1h ago · <span class="ann-obj">PICK_WAVE_ALLOC_V3</span></div>
-          <div class="ann-txt">Conversion verified in target environment. Wave allocation behavior matches source spec. Cleared for final sign-off.</div>
-          <div class="ann-foot"><span class="dtag dt-dep"><i class="pi pi-check-circle"></i> Verified · Ready</span></div>
-        </div>
-      </div>
-    </div>
+    <!-- Governance & Smart Summary (right) -->
+    <div>
 
     <!-- Migration Summary + CTA -->
     <div class="card card-summary">
       <div class="ch">
         <div class="ct"><span class="acc acc-b"></span> Smart Summary</div>
+        <button type="button" class="btn-ai-section" onclick="askAiSection('Smart Summary — migration status by functional group')"><img src="Icono bombilla 24dp (2).svg" class="btn-ai-icon" alt=""> Ask AI</button>
       </div>
       <div class="sum-body">
         <div class="cta-lbl">Final Scope</div>
-        <div class="sum-row"><span class="sum-k"><i class="pi pi-database"></i> Total objects</span><span class="sum-v" style="color:var(--blue-600)">1,847</span></div>
-        <div class="sum-chart">
-          <div class="sum-chart-row">
-            <span class="sum-chart-lbl">Deployed</span>
-            <div class="sum-chart-bar-wrap"><div class="sum-chart-bar" style="width:97.6%;background:var(--gn500)"></div></div>
-            <span class="sum-chart-val">1,802</span>
-          </div>
-          <div class="sum-chart-row">
-            <span class="sum-chart-lbl">Pending</span>
-            <div class="sum-chart-bar-wrap"><div class="sum-chart-bar" style="width:1.7%;background:var(--am500);min-width:4px"></div></div>
-            <span class="sum-chart-val">31</span>
-          </div>
-          <div class="sum-chart-row">
-            <span class="sum-chart-lbl">Failed</span>
-            <div class="sum-chart-bar-wrap"><div class="sum-chart-bar" style="width:0.76%;background:var(--rd600);min-width:4px"></div></div>
-            <span class="sum-chart-val">14</span>
-          </div>
-        </div>
+        <div class="sum-row"><span class="sum-k"><i class="pi pi-database"></i> Total artifacts</span><span class="sum-v" style="color:var(--blue-600)">1,847</span></div>
+        <div class="sum-row" style="border-bottom:none;padding-bottom:4px"><span class="sum-k"><i class="pi pi-th-large"></i> Status by Functional Group</span></div>
+        <table class="sum-grp-table">
+          <thead>
+            <tr>
+              <th>Functional Group</th>
+              <th style="color:var(--gn600)"><i class="pi pi-check-circle"></i></th>
+              <th style="color:var(--am600)"><i class="pi pi-clock"></i></th>
+              <th style="color:var(--rd600)"><i class="pi pi-times-circle"></i></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><i class="pi pi-box" style="color:var(--blue-400);margin-right:4px"></i>Inventory</td>
+              <td class="sum-grp-dep">508</td>
+              <td class="sum-grp-pnd">12</td>
+              <td class="sum-grp-fai">6</td>
+            </tr>
+            <tr>
+              <td><i class="pi pi-truck" style="color:var(--pu400);margin-right:4px"></i>Shipping</td>
+              <td class="sum-grp-dep">704</td>
+              <td class="sum-grp-pnd">10</td>
+              <td class="sum-grp-fai">8</td>
+            </tr>
+            <tr>
+              <td><i class="pi pi-wave-pulse" style="color:var(--or500);margin-right:4px"></i>Wave Mgmt</td>
+              <td class="sum-grp-dep">326</td>
+              <td class="sum-grp-pnd">4</td>
+              <td class="sum-grp-fai">0</td>
+            </tr>
+            <tr>
+              <td><i class="pi pi-users" style="color:var(--gn600);margin-right:4px"></i>Labor Mgmt</td>
+              <td class="sum-grp-dep">264</td>
+              <td class="sum-grp-pnd">5</td>
+              <td class="sum-grp-fai">0</td>
+            </tr>
+          </tbody>
+        </table>
         <div class="sum-row"><span class="sum-k"><i class="pi pi-history"></i> Snapshots</span><span class="sum-v" style="color:var(--s600)">4</span></div>
         <div class="div"></div>
         <button class="btn-capture" onclick="triggerCapture()">
@@ -1325,7 +1435,9 @@ body.chat-open .steps-band{width:100%!important;max-width:100%!important;overflo
       </div>
     </div>
 
-  </div><!-- /gov-grid -->
+      </div>
+
+  </div><!-- /rb-gov-grid -->
   </div><!-- /lazyRow2 -->
 
   <div style="height:20px"></div>
@@ -1333,6 +1445,107 @@ body.chat-open .steps-band{width:100%!important;max-width:100%!important;overflo
 </div><!-- /content-wrap -->
 
 <div id="ptNotePopup" class="pt-note-popup" role="tooltip"></div>
+
+<!-- Snapshot Confirm Modal -->
+<div class="snap-modal-overlay" id="snapModalOverlay">
+  <div class="snap-modal" role="dialog" aria-modal="true">
+    <div class="snap-modal-hd">
+      <div class="snap-modal-title" id="snapModalTitle">Restore Snapshot S-003?</div>
+      <button class="snap-modal-close" id="snapModalCloseBtn" aria-label="Close"><i class="pi pi-times"></i></button>
+    </div>
+    <div class="snap-modal-body">
+      <div class="snap-modal-sub">You are about to restore the migration state to a previous snapshot. Review the details below before confirming.</div>
+      <div class="snap-modal-info">
+        <div class="snap-modal-info-row">
+          <span class="snap-modal-info-k">Snapshot ID</span>
+          <span class="snap-modal-info-v" id="snapModalId">S-003</span>
+        </div>
+        <div class="snap-modal-info-row">
+          <span class="snap-modal-info-k">Label</span>
+          <span class="snap-modal-info-v" id="snapModalLabel">Snapshot 3 — Post Batch 3</span>
+        </div>
+        <div class="snap-modal-info-row">
+          <span class="snap-modal-info-k">Timestamp</span>
+          <span class="snap-modal-info-v" id="snapModalTs">2026-03-11 · 11:14 UTC</span>
+        </div>
+        <div class="snap-modal-info-row">
+          <span class="snap-modal-info-k">Deployed</span>
+          <span class="snap-modal-info-v sum-grp-dep" id="snapModalDep">1,365</span>
+        </div>
+      </div>
+      <div class="snap-modal-warn">
+        <i class="pi pi-exclamation-triangle"></i>
+        The current state (S-004 — Final State) will be replaced. This action cannot be undone. A new snapshot will be created automatically before restoring.
+      </div>
+      <div class="snap-modal-actions">
+        <button class="snap-modal-cancel" id="snapModalCancel">Cancel</button>
+        <button class="snap-modal-confirm" id="snapModalConfirm"><i class="pi pi-history"></i> Confirm Restore</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Failed Tests Modal -->
+<div class="ftail-overlay" id="ftailOverlay">
+  <div class="ftail-modal" role="dialog" aria-modal="true">
+    <div class="ftail-hd">
+      <div class="ftail-title">Failed Tests — 14 failures</div>
+      <button class="ftail-close" id="ftailClose" aria-label="Close"><i class="pi pi-times"></i></button>
+    </div>
+    <div class="ftail-body">
+      <div class="ftail-item">
+        <div class="ftail-item-name">GJ_PACK_CUSTOM_V2 · Test: method-signature-mapping</div>
+        <div class="ftail-item-err">No equivalent method signature found in target BY release. Manual re-mapping required.</div>
+        <div class="ftail-item-meta">
+          <span class="ftail-item-tag"><i class="pi pi-code" style="font-size:11px"></i> Components</span>
+          <span class="ftail-item-tag"><i class="pi pi-box" style="font-size:11px"></i> Packing</span>
+        </div>
+      </div>
+      <div class="ftail-item">
+        <div class="ftail-item-name">MOVE_CMD_REPLEN_V2 · Test: target-endpoint-availability</div>
+        <div class="ftail-item-err">Target endpoint not available in sandbox. Connection timeout after 30s.</div>
+        <div class="ftail-item-meta">
+          <span class="ftail-item-tag"><i class="pi pi-share-alt" style="font-size:11px"></i> Integration</span>
+          <span class="ftail-item-tag"><i class="pi pi-refresh" style="font-size:11px"></i> Move Cmd</span>
+        </div>
+      </div>
+      <div class="ftail-item">
+        <div class="ftail-item-name">PICK_LABEL_CUST_01 · Test: output-format-validation</div>
+        <div class="ftail-item-err">ZPL output format mismatch. Expected ZPL v2 structure, received legacy v1 tokens.</div>
+        <div class="ftail-item-meta">
+          <span class="ftail-item-tag"><i class="pi pi-database" style="font-size:11px"></i> Master Data</span>
+          <span class="ftail-item-tag"><i class="pi pi-tag" style="font-size:11px"></i> Labels</span>
+        </div>
+      </div>
+      <div class="ftail-item">
+        <div class="ftail-item-name">REPLEN_RULE_CUST_X · Test: rule-execution-integrity</div>
+        <div class="ftail-item-err">Rule engine returned unexpected null result for replenishment threshold calculation.</div>
+        <div class="ftail-item-meta">
+          <span class="ftail-item-tag"><i class="pi pi-share-alt" style="font-size:11px"></i> Integration</span>
+          <span class="ftail-item-tag"><i class="pi pi-refresh" style="font-size:11px"></i> Move Cmd</span>
+        </div>
+      </div>
+      <div class="ftail-item">
+        <div class="ftail-item-name">INV_SYNC_BATCH_V2 · Test: delta-sync-consistency</div>
+        <div class="ftail-item-err">Delta sync produced 3 duplicate records in target staging. Deduplication logic missing.</div>
+        <div class="ftail-item-meta">
+          <span class="ftail-item-tag"><i class="pi pi-code" style="font-size:11px"></i> Components</span>
+          <span class="ftail-item-tag"><i class="pi pi-box" style="font-size:11px"></i> Inventory</span>
+        </div>
+      </div>
+      <div class="ftail-item">
+        <div class="ftail-item-name">+9 additional failures</div>
+        <div class="ftail-item-err" style="color:var(--s500)">See full test report for complete details. All failures are confined to the Components functional group.</div>
+        <div class="ftail-item-meta">
+          <span class="ftail-item-tag"><i class="pi pi-file-export" style="font-size:11px"></i> Export full report</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Confetti overlay -->
+<div class="fab-chat-confetti" id="fabChatConfetti" aria-hidden="true" style="position:fixed;inset:0;pointer-events:none;z-index:2000;overflow:hidden"></div>
 
 <!-- FAB AI Assistant -->
 <div class="fab-ai-wrap" id="fabAiWrap">
@@ -1342,15 +1555,14 @@ body.chat-open .steps-band{width:100%!important;max-width:100%!important;overflo
   </button>
   <div class="fab-ai-bubbles" id="fabAiBubbles">
     <button type="button" class="fab-bubble">Summarize migration status</button>
-    <button type="button" class="fab-bubble">Identify critical pending objects</button>
+    <button type="button" class="fab-bubble">Identify critical pending artifacts</button>
     <button type="button" class="fab-bubble">Review snapshots for rollback</button>
-    <button type="button" class="fab-bubble">Explain parity differences</button>
+    <button type="button" class="fab-bubble">Explain test failures</button>
   </div>
 </div>
 
 <!-- Chat agente conversacional -->
 <div class="fab-chat" id="fabChat" role="dialog" aria-label="Chat with ASCEND Assistant">
-  <div class="fab-chat-confetti" id="fabChatConfetti" aria-hidden="true"></div>
   <div class="fab-chat-hd">
     <h3><i class="pi pi-lightbulb" style="margin-right:8px;color:var(--or500)"></i>ASCEND Assistant</h3>
     <button class="fab-chat-close" id="fabChatClose" aria-label="Close chat"><i class="pi pi-times"></i></button>
@@ -1360,9 +1572,9 @@ body.chat-open .steps-band{width:100%!important;max-width:100%!important;overflo
   </div>
   <div class="fab-chat-actions" id="fabChatActions">
     <button type="button" class="fab-chat-action">Summarize migration status</button>
-    <button type="button" class="fab-chat-action">Identify critical pending objects</button>
+    <button type="button" class="fab-chat-action">Identify critical pending artifacts</button>
     <button type="button" class="fab-chat-action">Review snapshots for rollback</button>
-    <button type="button" class="fab-chat-action">Explain parity differences</button>
+    <button type="button" class="fab-chat-action">Explain test failures</button>
   </div>
   <div class="fab-chat-input-wrap">
     <input type="text" class="fab-chat-input" id="fabChatInput" placeholder="Type your message…" autocomplete="off">
@@ -1549,14 +1761,7 @@ function triggerCapture(){
   var notificationShown=false;
   var wrap=document.getElementById('fabAiWrap');
   setTimeout(function(){
-    if(badge){badge.classList.add('show');}
-    if(wrap){wrap.classList.add('has-notification');}
-    if(btn){
-      btn.classList.add('shake');
-      setTimeout(function(){btn.classList.remove('shake');},500);
-    }
-    if(navigator.vibrate){navigator.vibrate([100,50,100]);}
-    if(chatMsgs){addMsg('',false,true);}
+    addMsg('',false,true);
     notificationShown=true;
   },5000);
   btn.addEventListener('click',function(e){
@@ -1565,25 +1770,7 @@ function triggerCapture(){
     document.body.classList.add('chat-open');
     btn.setAttribute('aria-expanded','true');
     if(chatInput)chatInput.focus();
-    if(badge&&notificationShown){badge.classList.remove('show');}
-    if(wrap){wrap.classList.remove('has-notification');}
-    if(notificationShown){
-      chat.classList.add('celebrate');
-      setTimeout(function(){chat.classList.remove('celebrate');},600);
-      var confettiEl=document.getElementById('fabChatConfetti');
-      if(confettiEl){
-        var colors=['var(--gn500)','var(--gn600)','var(--blue-500)','var(--blue-400)','var(--or500)','var(--or400)'];
-        for(var i=0;i<14;i++){
-          var cf=document.createElement('div');
-          cf.className='cf';
-          cf.style.left=(5+Math.random()*90)+'%';
-          cf.style.animationDelay=(Math.random()*0.3)+'s';
-          cf.style.background=colors[Math.floor(Math.random()*colors.length)];
-          confettiEl.appendChild(cf);
-        }
-        setTimeout(function(){confettiEl.innerHTML='';},2800);
-      }
-    }
+
   });
   if(chatClose)chatClose.addEventListener('click',function(){
     chat.classList.remove('open');
@@ -1594,8 +1781,22 @@ function triggerCapture(){
     if(isNotification){
       var toast=document.createElement('div');
       toast.className='fab-chat-toast';
+      toast.style.cssText='position:fixed;top:80px;right:24px;z-index:1500;max-width:380px;width:calc(100% - 48px);opacity:0;transform:translateY(-12px);transition:opacity .35s,transform .35s;box-shadow:0 8px 32px rgba(15,23,42,.18);border-radius:var(--r12);overflow:hidden';
       toast.innerHTML='<div class="cb-icon"><i class="pi pi-verified"></i></div><div><div class="cb-title">Assisted migration complete — no background processes pending</div><div class="cb-sub">Automated batches finalized · Deployment confirmed · System stable as of 14:32 UTC</div></div>';
-      if(chatMsgs){chatMsgs.insertBefore(toast,chatMsgs.firstChild);}
+      document.body.appendChild(toast);
+      requestAnimationFrame(function(){toast.style.opacity='1';toast.style.transform='translateY(0)';});
+      setTimeout(function(){
+        var colors2=['var(--gn500)','var(--gn600)','var(--blue-500)','var(--blue-400)','var(--or500)','var(--or400)'];
+        for(var j=0;j<16;j++){
+          var cf2=document.createElement('div');
+          cf2.style.cssText='position:absolute;width:6px;height:6px;border-radius:1px;top:0;opacity:0;animation:cf-fall 2.2s ease-out forwards';
+          cf2.style.left=(5+Math.random()*90)+'%';
+          cf2.style.animationDelay=(Math.random()*.5)+'s';
+          cf2.style.background=colors2[Math.floor(Math.random()*colors2.length)];
+          toast.appendChild(cf2);
+        }
+      },350);
+      setTimeout(function(){toast.style.opacity='0';toast.style.transform='translateY(-8px)';setTimeout(function(){if(toast.parentNode)toast.parentNode.removeChild(toast);},400);},6000);
       return;
     }
     var div=document.createElement('div');
@@ -1632,6 +1833,90 @@ function triggerCapture(){
     });
   });
 })();
+
+/* ── Snapshot Restore Dropdown ── */
+(function(){
+  var btn=document.getElementById('snapRestoreBtn');
+  var dd=document.getElementById('snapDd');
+  var wrap=document.getElementById('snapRestoreWrap');
+  if(!btn||!dd)return;
+  btn.addEventListener('click',function(e){
+    e.stopPropagation();
+    var open=dd.classList.contains('open');
+    dd.classList.toggle('open');
+    btn.setAttribute('aria-expanded',!open);
+  });
+  document.addEventListener('click',function(e){
+    if(!wrap.contains(e.target)){dd.classList.remove('open');btn.setAttribute('aria-expanded','false');}
+  });
+  var items=dd.querySelectorAll('.snap-dd-item');
+  items.forEach(function(item){
+    if(item.querySelector('.current-tag'))return;
+    item.addEventListener('click',function(){
+      dd.classList.remove('open');
+      btn.setAttribute('aria-expanded','false');
+      var snapId=item.getAttribute('data-snap');
+      var snapLabel=item.getAttribute('data-label');
+      var snapTs=item.getAttribute('data-ts');
+      var snapDep=item.getAttribute('data-dep');
+      document.getElementById('snapModalTitle').textContent='Restore Snapshot '+snapId+'?';
+      document.getElementById('snapModalId').textContent=snapId;
+      document.getElementById('snapModalLabel').textContent=snapLabel;
+      document.getElementById('snapModalTs').textContent=snapTs;
+      document.getElementById('snapModalDep').textContent=snapDep+' deployed';
+      document.getElementById('snapModalOverlay').classList.add('open');
+    });
+  });
+  var overlay=document.getElementById('snapModalOverlay');
+  var cancelBtn=document.getElementById('snapModalCancel');
+  var confirmBtn=document.getElementById('snapModalConfirm');
+  var closeBtn=document.getElementById('snapModalCloseBtn');
+  function closeSnapModal(){overlay.classList.remove('open');}
+  if(cancelBtn)cancelBtn.addEventListener('click',closeSnapModal);
+  if(closeBtn)closeBtn.addEventListener('click',closeSnapModal);
+  if(overlay)overlay.addEventListener('click',function(e){if(e.target===overlay)closeSnapModal();});
+  if(confirmBtn)confirmBtn.addEventListener('click',function(){
+    overlay.classList.remove('open');
+    var toast=document.createElement('div');
+    toast.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--am50);border:1px solid rgba(200,136,0,.3);border-radius:8px;padding:12px 20px;font-size:13px;font-weight:700;color:var(--am700);z-index:9999;box-shadow:0 4px 20px rgba(15,23,42,.15);display:flex;align-items:center;gap:8px';
+    toast.innerHTML='<i class="pi pi-history" style="font-size:15px"></i> Snapshot restore initiated — system reverting...';
+    document.body.appendChild(toast);
+    setTimeout(function(){toast.style.opacity='0';toast.style.transition='opacity .4s';setTimeout(function(){toast.remove();},400);},3500);
+  });
+})();
+
+/* ── Failed Tests Modal ── */
+function openFailedTests(){
+  document.getElementById('ftailOverlay').classList.add('open');
+}
+(function(){
+  var overlay=document.getElementById('ftailOverlay');
+  var closeBtn=document.getElementById('ftailClose');
+  if(closeBtn)closeBtn.addEventListener('click',function(){overlay.classList.remove('open');});
+  if(overlay)overlay.addEventListener('click',function(e){if(e.target===overlay)overlay.classList.remove('open');});
+})();
+
+/* ── Ask AI by section ── */
+function askAiSection(section){
+  var chat=document.getElementById('fabChat');
+  var chatMsgs=document.getElementById('fabChatMsgs');
+  var chatInput=document.getElementById('fabChatInput');
+  if(!chat||!chatMsgs)return;
+  chat.classList.add('open');
+  document.body.classList.add('chat-open');
+  var btnEl=document.getElementById('fabAiBtn');
+  if(btnEl)btnEl.setAttribute('aria-expanded','true');
+  var userDiv=document.createElement('div');
+  userDiv.className='fab-chat-msg user';
+  userDiv.textContent='Tell me about: '+section;
+  chatMsgs.appendChild(userDiv);
+  var botDiv=document.createElement('div');
+  botDiv.className='fab-chat-msg bot';
+  botDiv.textContent='Analyzing '+section+'… In a live environment, ASCEND would surface insights and recommendations from this section here.';
+  chatMsgs.appendChild(botDiv);
+  chatMsgs.scrollTop=chatMsgs.scrollHeight;
+  if(chatInput)chatInput.focus();
+}
 </script>
 </body>
 </html>
