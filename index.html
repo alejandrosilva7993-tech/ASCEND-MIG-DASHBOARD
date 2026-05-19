@@ -180,16 +180,17 @@ body>*{flex-shrink:0}
 .pchip i{font-size:13px}
 
 /* ── TABLE ── */
-.pt-wrap{overflow-x:auto;overflow-y:auto;min-height:0;min-width:0;flex:1;display:flex;flex-direction:column;-webkit-overflow-scrolling:touch;min-height:280px}
-.pt{width:100%;min-width:400px;border-collapse:collapse;table-layout:auto}
+.pt-wrap{overflow-x:auto;overflow-y:auto;min-height:0;min-width:0;flex:1;display:flex;flex-direction:column;-webkit-overflow-scrolling:touch}
+.pt{width:100%;min-width:600px;border-collapse:collapse;table-layout:fixed}
 .pt th{text-align:left;padding:8px 12px;font-size:12px;font-weight:800;letter-spacing:1px;
   color:var(--s400);background:var(--s50);
   border-bottom:1px solid var(--s200);white-space:nowrap;
   position:sticky;top:0;z-index:2;box-shadow:0 1px 0 var(--s200)}
-.pt th:first-child{padding-left:16px;min-width:180px}
-.pt th:nth-child(2){min-width:100px}
-.pt th:nth-child(3){width:40px;min-width:40px}
-.pt th:nth-child(4){width:44px;min-width:44px}
+.pt th:first-child{padding-left:16px}
+.pt th:nth-child(2){width:320px}
+.pt th:nth-child(3){width:110px}
+.pt th:nth-child(4){width:44px}
+.pt td{overflow:hidden}
 .pt-expanded td{padding:0;vertical-align:top;border-bottom:1px solid var(--s100)}
 .pt-expanded td .pt-detail{background:#fff;border:1px solid var(--s200);border-radius:var(--r6);
   margin:4px 16px 8px;padding:12px 16px;max-width:100%;box-sizing:border-box;overflow-x:hidden;
@@ -668,9 +669,9 @@ body.chat-open .steps-band{width:100%!important;max-width:100%!important;overflo
 .snap-modal-info-k{color:var(--s500);font-weight:600}
 .snap-modal-info-v{color:var(--s700);font-weight:700;font-family:var(--ff)}
 .snap-modal-warn{display:flex;align-items:flex-start;gap:10px;padding:12px 14px;
-  border-radius:var(--r8);background:var(--am50);border:1px solid rgba(200,136,0,.25);
-  border-left:4px solid var(--am500);font-size:13px;color:var(--am700);line-height:1.45;font-weight:600}
-.snap-modal-warn i{font-size:14px;color:var(--am600);flex-shrink:0;margin-top:1px}
+  border-radius:var(--r8);background:var(--rd50);border:1px solid rgba(217,64,64,.22);
+  border-left:4px solid var(--rd500);font-size:13px;color:var(--rd600);line-height:1.45;font-weight:600}
+.snap-modal-warn i{font-size:14px;color:var(--rd600);flex-shrink:0;margin-top:1px}
 .snap-modal-actions{display:flex;gap:10px}
 .snap-modal-confirm{flex:1;padding:11px 16px;border-radius:var(--r8);border:none;
   background:var(--blue-600);color:#fff;font-size:13px;font-weight:800;cursor:pointer;
@@ -681,6 +682,66 @@ body.chat-open .steps-band{width:100%!important;max-width:100%!important;overflo
   border:1px solid var(--s300);background:#fff;color:var(--s600);font-size:13px;font-weight:700;
   cursor:pointer;font-family:var(--ff);transition:all .15s}
 .snap-modal-cancel:hover{border-color:var(--blue-400);color:var(--blue-600);background:var(--blue-50)}
+
+/* ── MBI BADGE ── */
+.mbi-badge{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:10px;
+  font-size:10px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;
+  background:var(--s100);color:var(--s500);border:1px solid var(--s200);margin-left:6px}
+
+/* ── ARTIFACT 3-LEVEL ACCORDION: Process Group → Functional Group → Artifact ── */
+
+/* Level 1: Process Group row */
+.fg-pg-tr>td{background:rgba(59,130,246,.05);padding:9px 16px;
+  border-bottom:2px solid var(--blue-100);border-top:1px solid var(--blue-100);
+  cursor:pointer;user-select:none;transition:background .12s;vertical-align:middle}
+.fg-pg-tr:hover>td{background:rgba(59,130,246,.09)}
+.fg-pg-label{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:800;
+  letter-spacing:.5px;text-transform:uppercase;color:var(--blue-700)}
+.fg-pg-count{padding:1px 7px;border-radius:10px;font-size:11px;font-weight:700;
+  background:var(--blue-100);color:var(--blue-600)}
+.fg-pg-chevron{font-size:10px;transition:transform .2s;color:var(--blue-500);margin-right:2px}
+/* Status pills inside process group header */
+.fg-pg-pills{display:inline-flex;align-items:center;gap:5px;flex-wrap:nowrap}
+.fg-pg-pill{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:20px;
+  font-size:12px;font-weight:700;white-space:nowrap}
+.fg-pg-pill--dep{background:var(--gn50);color:var(--gn600);border:1px solid rgba(82,138,106,.25)}
+.fg-pg-pill--pnd{background:var(--am50);color:var(--am700);border:1px solid rgba(204,136,0,.3)}
+.fg-pg-pill--fai{background:var(--rd50);color:var(--rd600);border:1px solid rgba(217,64,64,.2)}
+
+/* Level 2: Functional Group row */
+.fg-group-tr>td{background:var(--s50);padding:5px 12px;border-bottom:1px solid var(--s200);
+  cursor:pointer;user-select:none;transition:background .12s;vertical-align:middle}
+.fg-group-tr>td:first-child{padding-left:28px}
+.fg-group-tr:hover>td{background:var(--s100)}
+.fg-group-label{display:flex;align-items:center;gap:8px;font-size:11px;font-weight:800;
+  letter-spacing:.7px;text-transform:uppercase;color:var(--s600)}
+.fg-group-count{padding:1px 7px;border-radius:10px;font-size:11px;font-weight:700;
+  background:var(--s200);color:var(--s500)}
+.fg-group-chevron{font-size:9px;transition:transform .2s;color:var(--s400)}
+
+/* Level 3: Artifact row */
+.fg-member-tr td:first-child{padding-left:36px}
+
+/* Tab pending badge */
+.tab-pnd-badge{display:inline-flex;align-items:center;gap:2px;padding:1px 6px;border-radius:8px;
+  font-size:10px;font-weight:800;background:var(--am50);color:var(--am700);
+  border:1px solid rgba(204,136,0,.3);margin-left:4px;white-space:nowrap}
+
+/* ── SNAP CONFIRM INPUT ── */
+.snap-confirm-wrap{display:flex;flex-direction:column;gap:6px}
+.snap-confirm-lbl{font-size:13px;color:var(--s600);font-weight:500;line-height:1.55}
+.snap-confirm-lbl code{background:var(--s100);border:1px solid var(--s200);border-radius:4px;
+  padding:1px 6px;font-family:monospace;font-size:12px;color:var(--s800);font-weight:700}
+.snap-confirm-inp{width:100%;height:36px;border-radius:var(--r6);border:1px solid var(--s300);
+  color:var(--s700);font-size:13px;padding:0 12px;font-family:monospace;outline:none;
+  transition:border-color .15s,box-shadow .15s;letter-spacing:.5px}
+.snap-confirm-inp:focus{border-color:var(--blue-400);box-shadow:0 0 0 2px rgba(59,130,246,.15)}
+.snap-confirm-inp.matched{border-color:var(--rd500)!important;box-shadow:0 0 0 2px rgba(184,48,48,.15)!important}
+.snap-modal-confirm:disabled{background:var(--s200)!important;color:var(--s400)!important;
+  cursor:not-allowed!important;box-shadow:none!important;transform:none!important}
+.snap-modal-confirm.ready{background:var(--rd500)!important;
+  box-shadow:0 4px 14px rgba(184,48,48,.3)!important}
+.snap-modal-confirm.ready:hover{background:var(--rd600)!important}
 
 /* ── FAILED TESTS MODAL ── */
 .ftail-overlay{position:fixed;inset:0;background:rgba(15,23,42,.45);z-index:1200;
@@ -836,7 +897,7 @@ body.chat-open .steps-band{width:100%!important;max-width:100%!important;overflo
     <!-- Automated Testing -->
     <div class="card">
       <div class="ch">
-        <div class="ct"><span class="acc acc-g"></span> Automated Testing</div>
+        <div class="ct"><span class="acc acc-g"></span> Automated Testing<span class="mbi-badge">MBI</span></div>
         <button type="button" class="btn-ai-section" onclick="askAiSection('Automated Testing — test results and failures')"><img src="Icono bombilla 24dp (2).svg" class="btn-ai-icon" alt=""> Ask AI</button>
       </div>
       <div class="kc">
@@ -895,7 +956,7 @@ body.chat-open .steps-band{width:100%!important;max-width:100%!important;overflo
 
   <!-- Artifact Review + Rollback -->
   <div class="lazy-row" id="lazyRow1">
-  <div class="row-label"><i class="pi pi-list-check"></i> Assisted Artifact Review &amp; History</div>
+  <div class="row-label"><i class="pi pi-list-check"></i> Process Group Review</div>
   <!-- Artifact Table -->
   <div class="card">
       <!-- Completion guard bar -->
@@ -906,16 +967,8 @@ body.chat-open .steps-band{width:100%!important;max-width:100%!important;overflo
       </div>
       <!-- Card header with Ask AI -->
       <div class="ch" style="border-top:none;border-bottom:1px solid var(--s150)">
-        <div class="ct"><span class="acc acc-b"></span> Artifact List</div>
+        <div class="ct"><span class="acc acc-b"></span> Overview</div>
         <button type="button" class="btn-ai-section" onclick="askAiSection('Artifact Review — migration status per artifact')"><img src="Icono bombilla 24dp (2).svg" class="btn-ai-icon" alt=""> Ask AI</button>
-      </div>
-      <!-- Tabs -->
-      <div class="tabs">
-        <div class="tab on"><i class="pi pi-list"></i> All Artifacts <span class="tbadge">1,847</span></div>
-        <div class="tab"><i class="pi pi-box"></i> Inventory <span class="tbadge">526</span></div>
-        <div class="tab"><i class="pi pi-truck"></i> Shipping <span class="tbadge">722</span></div>
-        <div class="tab"><i class="pi pi-wave-pulse"></i> Wave Mgmt <span class="tbadge">330</span></div>
-        <div class="tab"><i class="pi pi-users"></i> Labor Mgmt <span class="tbadge">269</span></div>
       </div>
       <!-- Filters -->
       <div class="fbar">
@@ -929,12 +982,11 @@ body.chat-open .steps-band{width:100%!important;max-width:100%!important;overflo
           <option>Pending</option>
           <option>Failed</option>
         </select>
-        <select class="psel">
-          <option>All Functional Groups</option>
-          <option>Inventory</option>
-          <option>Shipping</option>
-          <option>Wave Mgmt</option>
-          <option>Labor Mgmt</option>
+        <select class="psel" id="pgFilter">
+          <option value="">All Process Groups</option>
+          <option value="Picking">Picking</option>
+          <option value="Shipping">Shipping</option>
+          <option value="Inventory">Inventory</option>
         </select>
       </div>
       <!-- Table -->
@@ -942,20 +994,14 @@ body.chat-open .steps-band{width:100%!important;max-width:100%!important;overflo
       <table class="pt">
         <thead>
           <tr>
-            <th>Artifact</th>
+            <th>Process Group</th>
             <th>Status</th>
             <th></th>
             <th></th>
           </tr>
         </thead>
-        <tbody id="ptBody">
-          <tr class="pt-row" data-row-index="0" data-expanded="false">
-            <td><div class="oname">PICK_WAVE_ALLOC_V3</div></td>
-            <td><span class="ds ds-dep"><i class="pi pi-check-circle"></i> Deployed</span></td>
-            <td style="white-space:nowrap"><button type="button" class="btn-row-ai" onclick="askAiSection(this.closest('tr').querySelector('.oname')?.textContent||'artifact')"><img src="Icono bombilla 24dp (2).svg" class="btn-ai-icon" alt=""> Ask AI</button></td>
-            <td><button class="pt-toggle" type="button" aria-label="Expand" aria-expanded="false"><i class="pi pi-chevron-down"></i></button></td>
-          </tr>
-          <tr class="pt-expanded" data-row-index="0" hidden>
+        <tbody id="ptBody"><!-- JS rendered -->
+          <tr style="display:none" data-row-index="0" hidden>
             <td colspan="4">
               <div class="pt-detail">
                 <div class="pt-detail-row"><span class="pt-detail-k">Type</span><span>Component</span></div>
@@ -1252,7 +1298,7 @@ body.chat-open .steps-band{width:100%!important;max-width:100%!important;overflo
   </div><!-- /lazyRow1 -->
 
   <div class="lazy-row" id="lazyRow2">
-  <div class="row-label"><i class="pi pi-shield"></i> Governance &amp; Intelligent Outputs</div>
+  <div class="row-label"><i class="pi pi-shield"></i> History &amp; Governance Outputs</div>
   <div class="rb-gov-grid">
 
     <!-- Rollback History (left) -->
@@ -1385,7 +1431,7 @@ body.chat-open .steps-band{width:100%!important;max-width:100%!important;overflo
       <div class="sum-body">
         <div class="cta-lbl">Final Scope</div>
         <div class="sum-row"><span class="sum-k"><i class="pi pi-database"></i> Total artifacts</span><span class="sum-v" style="color:var(--blue-600)">1,847</span></div>
-        <div class="sum-row" style="border-bottom:none;padding-bottom:4px"><span class="sum-k"><i class="pi pi-th-large"></i> Status by Functional Group</span></div>
+        <div class="sum-row" style="border-bottom:none;padding-bottom:4px"><span class="sum-k"><i class="pi pi-th-large"></i> Status by Process Group</span></div>
         <table class="sum-grp-table">
           <thead>
             <tr>
@@ -1397,28 +1443,22 @@ body.chat-open .steps-band{width:100%!important;max-width:100%!important;overflo
           </thead>
           <tbody>
             <tr>
-              <td><i class="pi pi-box" style="color:var(--blue-400);margin-right:4px"></i>Inventory</td>
-              <td class="sum-grp-dep">508</td>
-              <td class="sum-grp-pnd">12</td>
-              <td class="sum-grp-fai">6</td>
+              <td><i class="pi pi-list-check" style="color:var(--blue-500);margin-right:4px"></i>Picking</td>
+              <td class="sum-grp-dep">948</td>
+              <td class="sum-grp-pnd">16</td>
+              <td class="sum-grp-fai">9</td>
             </tr>
             <tr>
-              <td><i class="pi pi-truck" style="color:var(--pu400);margin-right:4px"></i>Shipping</td>
-              <td class="sum-grp-dep">704</td>
-              <td class="sum-grp-pnd">10</td>
+              <td><i class="pi pi-truck" style="color:var(--blue-500);margin-right:4px"></i>Shipping</td>
+              <td class="sum-grp-dep">576</td>
+              <td class="sum-grp-pnd">17</td>
               <td class="sum-grp-fai">8</td>
             </tr>
             <tr>
-              <td><i class="pi pi-wave-pulse" style="color:var(--or500);margin-right:4px"></i>Wave Mgmt</td>
-              <td class="sum-grp-dep">326</td>
-              <td class="sum-grp-pnd">4</td>
-              <td class="sum-grp-fai">0</td>
-            </tr>
-            <tr>
-              <td><i class="pi pi-users" style="color:var(--gn600);margin-right:4px"></i>Labor Mgmt</td>
-              <td class="sum-grp-dep">264</td>
-              <td class="sum-grp-pnd">5</td>
-              <td class="sum-grp-fai">0</td>
+              <td><i class="pi pi-box" style="color:var(--blue-500);margin-right:4px"></i>Inventory</td>
+              <td class="sum-grp-dep">249</td>
+              <td class="sum-grp-pnd">18</td>
+              <td class="sum-grp-fai">6</td>
             </tr>
           </tbody>
         </table>
@@ -1477,9 +1517,13 @@ body.chat-open .steps-band{width:100%!important;max-width:100%!important;overflo
         <i class="pi pi-exclamation-triangle"></i>
         The current state (S-004 — Final State) will be replaced. This action cannot be undone. A new snapshot will be created automatically before restoring.
       </div>
+      <div class="snap-confirm-wrap">
+        <label class="snap-confirm-lbl" for="snapConfirmInp">To confirm, type <code id="snapConfirmTarget">S-003</code> below:</label>
+        <input type="text" id="snapConfirmInp" class="snap-confirm-inp" placeholder="Type snapshot ID…" autocomplete="off" spellcheck="false">
+      </div>
       <div class="snap-modal-actions">
         <button class="snap-modal-cancel" id="snapModalCancel">Cancel</button>
-        <button class="snap-modal-confirm" id="snapModalConfirm"><i class="pi pi-history"></i> Confirm Restore</button>
+        <button class="snap-modal-confirm" id="snapModalConfirm" disabled><i class="pi pi-history"></i> Confirm Restore</button>
       </div>
     </div>
   </div>
@@ -1583,14 +1627,285 @@ body.chat-open .steps-band{width:100%!important;max-width:100%!important;overflo
 </div>
 
 <script>
-/* Tab switching */
-document.querySelectorAll('.tab').forEach(t=>{
-  t.addEventListener('click',()=>{
-    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('on'));
-    t.classList.add('on');
-  });
-});
+/* ── Artifact data — hierarchy: Process Group → Functional Group → Artifact ── */
+/*
+  ppg = Process Group  : Picking | Shipping | Inventory
+  pg  = Functional Group (sub-process within the process group)
+*/
+var ARTIFACTS=[
+  /* ── PICKING ── */
+  {name:'PICK_WAVE_ALLOC_V3',  status:'dep', type:'Component',    ppg:'Picking',   pg:'Wave Planning',   src:'GroovyV3', tgt:'JavaSvc',  tgtCls:''},
+  {name:'MDATA_LOC_ZONE_T',    status:'dep', type:'Config Table',  ppg:'Picking',   pg:'Allocation',      src:'TABLE v2', tgt:'TABLE v4', tgtCls:''},
+  {name:'PICK_ZONE_MAP_V2',    status:'dep', type:'Config Table',  ppg:'Picking',   pg:'Wave Planning',   src:'TABLE v2', tgt:'TABLE v4', tgtCls:''},
+  {name:'PICK_SLOT_ALLOC_X',   status:'dep', type:'Config Table',  ppg:'Picking',   pg:'Slotting',        src:'TABLE v2', tgt:'TABLE v4', tgtCls:''},
+  {name:'MOV_CMD_REPLEN_X3',   status:'dep', type:'Move Command',  ppg:'Picking',   pg:'Replenishment',   src:'MOVEv1',   tgt:'MOVEv3',   tgtCls:''},
+  {name:'MOVE_CMD_REPLEN_V2',  status:'fai', type:'Move Command',  ppg:'Picking',   pg:'Replenishment',   src:'MOVEv2',   tgt:'MOVEv3',   tgtCls:''},
+  {name:'REPLEN_RULE_CUST_X',  status:'dep', type:'Move Command',  ppg:'Picking',   pg:'Replenishment',   src:'MOVEv2',   tgt:'MOVEv3',   tgtCls:''},
+  {name:'PICK_LABEL_CUST_01',  status:'dep', type:'Label Template',ppg:'Picking',   pg:'Labels / Reports',src:'ZPL v1',   tgt:'ZPL v2',   tgtCls:'new'},
+  {name:'LABOR_TASK_MGMT_V2',  status:'dep', type:'Component',    ppg:'Picking',   pg:'Labor / LMS',     src:'GroovyV2', tgt:'JavaSvc',  tgtCls:''},
+  {name:'SHIFT_SCHED_ALLOC_X', status:'dep', type:'Interface',    ppg:'Picking',   pg:'Labor / LMS',     src:'MOCA v1',  tgt:'REST API', tgtCls:'new'},
+  {name:'LABOR_RULE_CUST_V1',  status:'pnd', type:'Config Table',  ppg:'Picking',   pg:'Labor / LMS',     src:'TABLE v2', tgt:'TABLE v4', tgtCls:''},
+  {name:'PROD_STD_RATE_V2',    status:'dep', type:'Component',    ppg:'Picking',   pg:'Labor / LMS',     src:'GroovyV2', tgt:'JavaSvc',  tgtCls:''},
+  {name:'SHIFT_PATTERN_T',     status:'dep', type:'Config Table',  ppg:'Picking',   pg:'Labor / LMS',     src:'TABLE v2', tgt:'TABLE v4', tgtCls:''},
+  /* ── SHIPPING ── */
+  {name:'INTGR_SHIP_HDR_X',    status:'pnd', type:'Interface',    ppg:'Shipping',  pg:'Loads',           src:'MOCA v1',  tgt:'REST API', tgtCls:'new'},
+  {name:'GJ_PACK_CUSTOM_V2',   status:'fai', type:'Component',    ppg:'Shipping',  pg:'Loads',           src:'GroovyV2', tgt:'No target',tgtCls:'miss'},
+  {name:'PACK_CUSTOM_LOGIC_V1',status:'dep', type:'Component',    ppg:'Shipping',  pg:'Door Activity',   src:'GroovyV1', tgt:'JavaSvc',  tgtCls:''},
+  {name:'SHIP_LABEL_TEMPL_X',  status:'pnd', type:'Label Template',ppg:'Shipping', pg:'Shipment Delivery',src:'ZPL v1',  tgt:'ZPL v2',   tgtCls:''},
+  {name:'SHIP_DOC_PRINT_V1',   status:'pnd', type:'Label Template',ppg:'Shipping', pg:'Shipment Delivery',src:'ZPL v1',  tgt:'ZPL v2',   tgtCls:''},
+  {name:'PACK_WEIGHT_CALC_V3', status:'dep', type:'Component',    ppg:'Shipping',  pg:'Cut Station',     src:'GroovyV3', tgt:'JavaSvc',  tgtCls:''},
+  {name:'MDATA_CARRIER_T',     status:'dep', type:'Config Table',  ppg:'Shipping',  pg:'Transport Equipment',src:'TABLE v2',tgt:'TABLE v4',tgtCls:''},
+  {name:'APPT_SCHED_INT_V2',   status:'dep', type:'Interface',    ppg:'Shipping',  pg:'Appointments',    src:'MOCA v1',  tgt:'REST API', tgtCls:'new'},
+  {name:'WORK_QUEUE_RULE_V1',  status:'pnd', type:'Config Table',  ppg:'Shipping',  pg:'Work Queue',      src:'TABLE v2', tgt:'TABLE v4', tgtCls:''},
+  /* ── INVENTORY ── */
+  {name:'INTGR_INV_SYNC_X',    status:'dep', type:'Interface',    ppg:'Inventory', pg:'Inventory',       src:'MOCA v1',  tgt:'REST API', tgtCls:'new'},
+  {name:'INV_SYNC_BATCH_V2',   status:'dep', type:'Component',    ppg:'Inventory', pg:'Inventory',       src:'GroovyV2', tgt:'JavaSvc',  tgtCls:''},
+  {name:'INTGR_ORDER_SYNC_X',  status:'pnd', type:'Interface',    ppg:'Inventory', pg:'Inventory Issues',src:'MOCA v1',  tgt:'REST API', tgtCls:'new'},
+  {name:'INV_CYCLE_COUNT_V3',  status:'dep', type:'Component',    ppg:'Inventory', pg:'Counts',          src:'GroovyV3', tgt:'JavaSvc',  tgtCls:''},
+  {name:'INV_ADJ_REASON_T',    status:'dep', type:'Config Table',  ppg:'Inventory', pg:'Adjustments',     src:'TABLE v2', tgt:'TABLE v4', tgtCls:''},
+  {name:'FPRINT_ZONE_MAP_V2',  status:'dep', type:'Config Table',  ppg:'Inventory', pg:'Footprints',      src:'TABLE v2', tgt:'TABLE v4', tgtCls:''},
+  {name:'INV_ISSUE_LOG_V1',    status:'pnd', type:'Component',    ppg:'Inventory', pg:'Inventory Issues',src:'GroovyV1', tgt:'JavaSvc',  tgtCls:''}
+];
 
+/* Process Group metadata — icon & accent color (uniform per process group) */
+var PPG_META={
+  'Picking':   {icon:'pi-list-check', color:'var(--blue-700)'},
+  'Shipping':  {icon:'pi-truck',      color:'var(--blue-700)'},
+  'Inventory': {icon:'pi-box',        color:'var(--blue-700)'}
+};
+/* PPG order for All Artifacts view */
+var PPG_ORDER=['Picking','Shipping','Inventory'];
+
+/* Functional Group metadata — all icons use SAME neutral color */
+var PG_META={
+  'Wave Planning':       {icon:'pi-wave-pulse'},
+  'Allocation':          {icon:'pi-sliders-h'},
+  'Replenishment':       {icon:'pi-refresh'},
+  'Pick List':           {icon:'pi-list'},
+  'RF Picking':          {icon:'pi-mobile'},
+  'Voice Picking':       {icon:'pi-volume-up'},
+  'Pick Exceptions':     {icon:'pi-exclamation-circle'},
+  'Cartonization':       {icon:'pi-box'},
+  'Slotting':            {icon:'pi-map-marker'},
+  'Labor / LMS':         {icon:'pi-users'},
+  'Labels / Reports':    {icon:'pi-tag'},
+  'Door Activity':       {icon:'pi-home'},
+  'Appointments':        {icon:'pi-calendar'},
+  'Loads':               {icon:'pi-truck'},
+  'Transport Equipment': {icon:'pi-car'},
+  'Work Queue':          {icon:'pi-list-check'},
+  'Shipment Delivery':   {icon:'pi-send'},
+  'Cut Station':         {icon:'pi-scissors'},
+  'Inventory':           {icon:'pi-database'},
+  'Inventory Issues':    {icon:'pi-exclamation-triangle'},
+  'Footprints':          {icon:'pi-map'},
+  'Adjustments':         {icon:'pi-pencil'},
+  'Counts':              {icon:'pi-sort-numeric-up'}
+};
+var FG_ICON_COLOR='var(--s500)'; /* uniform color for all functional group icons */
+
+/* Totals per process group (scaled to full 1,847 dataset) */
+var PPG_TOTALS={
+  'all':1847,'Picking':973,'Shipping':601,'Inventory':273
+};
+
+/* ── Compute status counts for a set of artifacts ── */
+function countStatuses(items){
+  var dep=0,pnd=0,fai=0;
+  items.forEach(function(a){
+    if(a.status==='dep')dep++;
+    else if(a.status==='pnd')pnd++;
+    else if(a.status==='fai')fai++;
+  });
+  return {dep:dep,pnd:pnd,fai:fai};
+}
+
+/* ── Build status pills HTML for Process Group headers ── */
+function statusPillsHtml(counts){
+  var html='<span class="fg-pg-pills">';
+  if(counts.dep>0)html+='<span class="fg-pg-pill fg-pg-pill--dep"><i class="pi pi-check-circle"></i>'+counts.dep+' deployed</span>';
+  if(counts.pnd>0)html+='<span class="fg-pg-pill fg-pg-pill--pnd"><i class="pi pi-clock"></i>'+counts.pnd+' pending</span>';
+  if(counts.fai>0)html+='<span class="fg-pg-pill fg-pg-pill--fai"><i class="pi pi-times-circle"></i>'+counts.fai+' failed</span>';
+  html+='</span>';
+  return html;
+}
+
+/* ── Render the artifact table with 3-level collapsible accordion ──
+   Level 1 (Process Group)   — collapsed by default, click to expand
+   Level 2 (Functional Group) — collapsed by default once PG is expanded
+   Level 3 (Artifact)         — visible once both parent levels are expanded
+   ppgFilter : 'all' | 'Picking' | 'Shipping' | 'Inventory'
+*/
+function renderArtifactTable(ppgFilter){
+  var tb=document.getElementById('ptBody');
+  var info=document.getElementById('ptFootInfo');
+  if(!tb)return;
+  tb.innerHTML='';
+
+  var filtered=ppgFilter==='all'
+    ?ARTIFACTS
+    :ARTIFACTS.filter(function(a){return a.ppg===ppgFilter;});
+
+  var ppgList=ppgFilter==='all'?PPG_ORDER:[ppgFilter];
+
+  ppgList.forEach(function(ppgName){
+    var ppgItems=filtered.filter(function(a){return a.ppg===ppgName;});
+    if(!ppgItems.length)return;
+
+    var ppgMeta=PPG_META[ppgName]||{icon:'pi-folder',color:'var(--blue-700)'};
+    var ppgCounts=countStatuses(ppgItems);
+    var pgid='ppg-'+ppgName.replace(/\s+/g,'-');
+    var ppgCollapsed=true; /* Process Groups start COLLAPSED */
+
+    /* ── Level 1: Process Group header (collapsible) ── */
+    var ppgTr=document.createElement('tr');
+    ppgTr.className='fg-pg-tr';
+    ppgTr.innerHTML=
+      '<td><div class="fg-pg-label">'+
+        '<i class="pi pi-chevron-right fg-pg-chevron" style="font-size:10px;transition:transform .2s;color:var(--blue-500);margin-right:2px"></i>'+
+        '<i class="pi '+ppgMeta.icon+'" style="color:'+ppgMeta.color+'"></i>'+
+        ppgName+
+        '<span class="fg-pg-count">'+ppgItems.length+'</span>'+
+      '</div></td>'+
+      '<td style="white-space:nowrap">'+statusPillsHtml(ppgCounts)+'</td>'+
+      '<td></td>'+
+      '<td></td>';
+
+    ppgTr.addEventListener('click',function(){
+      ppgCollapsed=!ppgCollapsed;
+      var chev=ppgTr.querySelector('.fg-pg-chevron');
+      if(chev)chev.style.transform=ppgCollapsed?'':'rotate(90deg)';
+      tb.querySelectorAll('[data-pgid="'+pgid+'"]').forEach(function(r){
+        r.style.display=ppgCollapsed?'none':'';
+      });
+    });
+    tb.appendChild(ppgTr);
+
+    /* Build Functional Group → [artifacts] map */
+    var fgMap={};
+    var fgOrder=[];
+    ppgItems.forEach(function(a){
+      if(!fgMap[a.pg]){fgMap[a.pg]=[];fgOrder.push(a.pg);}
+      fgMap[a.pg].push(a);
+    });
+    fgOrder=fgOrder.filter(function(v,i){return fgOrder.indexOf(v)===i;});
+
+    fgOrder.forEach(function(fgName){
+      var members=fgMap[fgName];
+      var gid='fg-'+ppgName.replace(/\s+/g,'-')+'-'+fgName.replace(/\s+/g,'-');
+      var fgMeta=PG_META[fgName]||{icon:'pi-tag'};
+      var collapsed=true; /* Functional Groups also start collapsed */
+
+      /* ── Level 2: Functional Group sub-header ── */
+      var groupTr=document.createElement('tr');
+      groupTr.className='fg-group-tr';
+      groupTr.setAttribute('data-pgid',pgid);
+      groupTr.style.display='none'; /* hidden until PG expands */
+      groupTr.innerHTML=
+        '<td><div class="fg-group-label">'+
+          '<i class="pi pi-chevron-right fg-group-chevron" style="font-size:9px;transition:transform .2s;color:var(--s400)"></i>'+
+          '<i class="pi '+fgMeta.icon+'" style="color:'+FG_ICON_COLOR+'"></i>'+
+          fgName+
+          '<span class="fg-group-count">'+members.length+'</span>'+
+        '</div></td>'+
+        '<td></td>'+
+        '<td style="white-space:nowrap"><button type="button" class="btn-row-ai" onclick="event.stopPropagation();askAiSection(\'Functional Group: '+fgName+'\')"><img src="Icono bombilla 24dp (2).svg" class="btn-ai-icon" alt=""> Ask AI</button></td>'+
+        '<td></td>';
+
+      groupTr.addEventListener('click',function(e){
+        e.stopPropagation();
+        collapsed=!collapsed;
+        var chev=groupTr.querySelector('.fg-group-chevron');
+        if(chev)chev.style.transform=collapsed?'':'rotate(90deg)';
+        tb.querySelectorAll('[data-gid="'+gid+'"]').forEach(function(r){
+          r.style.display=collapsed?'none':'';
+        });
+      });
+      tb.appendChild(groupTr);
+
+      /* ── Level 3: Individual Artifacts ── */
+      members.forEach(function(a,mi){
+        var rid=gid+'-'+mi;
+        var sIcon={dep:'pi-check-circle',pnd:'pi-clock',fai:'pi-times-circle'}[a.status]||'pi-circle';
+        var sLabel={dep:'Deployed',pnd:'Pending',fai:'Failed'}[a.status]||a.status;
+
+        var tr=document.createElement('tr');
+        tr.className='pt-row fg-member-tr';
+        tr.setAttribute('data-expanded','false');
+        tr.setAttribute('data-gid',gid);
+        tr.setAttribute('data-pgid',pgid);
+        tr.style.display='none'; /* hidden until FG expands */
+        tr.innerHTML=
+          '<td><div class="oname">'+a.name+'</div></td>'+
+          '<td><span class="ds ds-'+a.status+'"><i class="pi '+sIcon+'"></i> '+sLabel+'</span></td>'+
+          '<td style="white-space:nowrap"><button type="button" class="btn-row-ai" onclick="event.stopPropagation();askAiSection(\''+a.name+'\')"><img src="Icono bombilla 24dp (2).svg" class="btn-ai-icon" alt=""> Ask AI</button></td>'+
+          '<td><button class="pt-toggle" type="button" aria-label="Expand" aria-expanded="false"><i class="pi pi-chevron-down"></i></button></td>';
+
+        tr.addEventListener('click',function(e){
+          if(e.target.closest('.btn-row-ai'))return;
+          var exp=tr.getAttribute('data-expanded')==='true';
+          tb.querySelectorAll('.pt-row[data-expanded="true"]').forEach(function(r){
+            if(r!==tr){
+              r.setAttribute('data-expanded','false');
+              var dt=tb.querySelector('.fg-detail-tr[data-rid="'+r.getAttribute('data-rid')+'"]');
+              if(dt){dt.hidden=true;dt.style.display='none';}
+              var btn=r.querySelector('.pt-toggle i');
+              if(btn)btn.style.transform='';
+            }
+          });
+          tr.setAttribute('data-expanded',exp?'false':'true');
+          tr.setAttribute('data-rid',rid);
+          var detailTr=tb.querySelector('.fg-detail-tr[data-rid="'+rid+'"]');
+          if(detailTr){detailTr.hidden=exp;detailTr.style.display=exp?'none':'';}
+          var icon=tr.querySelector('.pt-toggle i');
+          if(icon)icon.style.transform=exp?'':'rotate(180deg)';
+        });
+        tr.setAttribute('data-rid',rid);
+        tb.appendChild(tr);
+
+        /* Detail expand row */
+        var dt=document.createElement('tr');
+        dt.className='pt-expanded fg-detail-tr';
+        dt.setAttribute('data-rid',rid);
+        dt.setAttribute('data-gid',gid);
+        dt.setAttribute('data-pgid',pgid);
+        dt.hidden=true;
+        dt.innerHTML='<td colspan="4"><div class="pt-detail">'+
+          '<div class="pt-detail-row"><span class="pt-detail-k">Type</span><span>'+a.type+'</span></div>'+
+          '<div class="pt-detail-row"><span class="pt-detail-k">Process Group</span>'+
+            '<span class="fctx"><i class="pi '+ppgMeta.icon+'" style="color:var(--blue-600)"></i> '+ppgName+'</span></div>'+
+          '<div class="pt-detail-row"><span class="pt-detail-k">Functional Group</span>'+
+            '<span class="mtag" style="background:var(--s100);color:var(--s600);border-color:var(--s200)">'+
+            '<i class="pi '+(fgMeta.icon||'pi-tag')+'" style="color:'+FG_ICON_COLOR+'"></i> '+fgName+'</span></div>'+
+          '<div class="pt-detail-row"><span class="pt-detail-k">Source → Target</span>'+
+            '<span class="parity"><span class="src">'+a.src+'</span><span class="arrow">→</span>'+
+            '<span class="tgt'+(a.tgtCls?' '+a.tgtCls:'')+'">'+a.tgt+'</span></span></div>'+
+          '</div></td>';
+        tb.appendChild(dt);
+      });
+    });
+  });
+
+  /* Update footer */
+  if(info){
+    var total=PPG_TOTALS[ppgFilter]||filtered.length;
+    info.textContent='Showing '+filtered.length+' of '+total+' · '+(ppgFilter==='all'?'All Artifacts':ppgFilter);
+  }
+  var pgn=document.getElementById('ptPgn');
+  if(pgn)pgn.style.display='none';
+}
+
+/* ── pgFilter dropdown — filter which process group is shown ── */
+(function(){
+  var sel=document.getElementById('pgFilter');
+  if(!sel)return;
+  sel.addEventListener('change',function(){
+    renderArtifactTable(sel.value||'all');
+  });
+})();
+
+/* Initialize artifact table — all process groups, each collapsed */
+renderArtifactTable('all');
 
 /* Note popup */
 (function(){
@@ -1617,80 +1932,6 @@ document.querySelectorAll('.tab').forEach(t=>{
   });
 })();
 
-/* Table row expand/collapse — only one detail open at a time; card grows to show all rows */
-(function(){
-  var tb=document.getElementById('ptBody');
-  if(!tb)return;
-  tb.addEventListener('click',function(e){
-    if(e.target.closest('.pt-note-btn'))return;
-    var targetRow=e.target.closest('.pt-row')||(e.target.closest('.pt-toggle')&&e.target.closest('.pt-toggle').closest('.pt-row'));
-    if(!targetRow)return;
-    var idx=targetRow.getAttribute('data-row-index');
-    var expanded=targetRow.getAttribute('data-expanded')==='true';
-    var detailRow=tb.querySelector('.pt-expanded[data-row-index="'+idx+'"]');
-    var toggleBtn=targetRow.querySelector('.pt-toggle');
-    if(expanded){
-      targetRow.setAttribute('data-expanded','false');
-      if(detailRow)detailRow.hidden=true;
-      if(toggleBtn){toggleBtn.setAttribute('aria-expanded','false');toggleBtn.setAttribute('aria-label','Expand');}
-    }else{
-      /* Collapse any other expanded row first */
-      tb.querySelectorAll('.pt-row[data-expanded="true"]').forEach(function(r){
-        if(r!==targetRow){
-          r.setAttribute('data-expanded','false');
-          var otherDetail=tb.querySelector('.pt-expanded[data-row-index="'+r.getAttribute('data-row-index')+'"]');
-          if(otherDetail)otherDetail.hidden=true;
-          var otherBtn=r.querySelector('.pt-toggle');
-          if(otherBtn){otherBtn.setAttribute('aria-expanded','false');otherBtn.setAttribute('aria-label','Expand');}
-        }
-      });
-      targetRow.setAttribute('data-expanded','true');
-      if(detailRow)detailRow.hidden=false;
-      if(toggleBtn){toggleBtn.setAttribute('aria-expanded','true');toggleBtn.setAttribute('aria-label','Collapse');}
-    }
-  });
-})();
-
-/* Table pagination: show only logical rows per page (each pt-row + pt-expanded = 1 logical row) */
-(function(){
-  var ROWS_PER_PAGE=7;
-  var TOTAL=1847;
-  var tb=document.getElementById('ptBody');
-  var info=document.getElementById('ptFootInfo');
-  var pgn=document.getElementById('ptPgn');
-  if(!tb||!info||!pgn)return;
-  var rows=Array.from(tb.querySelectorAll('tr'));
-  var maxIdx=Math.max.apply(null,rows.map(function(r){var i=r.getAttribute('data-row-index');return i!=null?parseInt(i,10):-1}).filter(function(x){return x>=0}));
-  var totalLogicalRows=maxIdx>=0?maxIdx+1:0;
-  var totalPages=Math.ceil(totalLogicalRows/ROWS_PER_PAGE)||1;
-  var page=1;
-  function render(){
-    var start=(page-1)*ROWS_PER_PAGE;
-    var end=Math.min(start+ROWS_PER_PAGE,totalLogicalRows);
-    rows.forEach(function(r){
-      var idx=r.getAttribute('data-row-index');
-      if(idx==null){r.style.display='';return;}
-      var i=parseInt(idx,10);
-      r.style.display=(i>=start&&i<end)?'':'none';
-    });
-    var a=totalLogicalRows>0?start+1:0,b=end;
-    info.textContent='Showing '+(totalLogicalRows>0?a+'-'+b:'0')+' of '+TOTAL+' · All Objects';
-    pgn.querySelectorAll('.pgb').forEach(function(b){
-      var p=b.getAttribute('data-pg');
-      if(p==='prev'||p==='next'||p==='dots')return;
-      b.classList.toggle('on',parseInt(p,10)===page);
-    });
-  }
-  pgn.addEventListener('click',function(e){
-    var b=e.target.closest('.pgb');
-    if(!b)return;
-    var p=b.getAttribute('data-pg');
-    if(p==='prev'){if(page>1){page--;render();}}
-    else if(p==='next'){if(page<totalPages){page++;render();}}
-    else if(p!=='dots'){var n=parseInt(p,10);if(n>=1&&n<=totalPages){page=n;render();}}
-  });
-  render();
-})();
 
 /* Capture button simulation */
 function triggerCapture(){
@@ -1849,39 +2090,62 @@ function triggerCapture(){
   document.addEventListener('click',function(e){
     if(!wrap.contains(e.target)){dd.classList.remove('open');btn.setAttribute('aria-expanded','false');}
   });
+
+  var overlay=document.getElementById('snapModalOverlay');
+  var cancelBtn=document.getElementById('snapModalCancel');
+  var confirmBtn=document.getElementById('snapModalConfirm');
+  var closeBtn=document.getElementById('snapModalCloseBtn');
+  var confirmInp=document.getElementById('snapConfirmInp');
+  var confirmTarget=document.getElementById('snapConfirmTarget');
+  var currentSnapId='';
+
+  function resetConfirmInput(){
+    if(confirmInp){confirmInp.value='';confirmInp.classList.remove('matched');}
+    if(confirmBtn){confirmBtn.disabled=true;confirmBtn.classList.remove('ready');}
+  }
+  function closeSnapModal(){overlay.classList.remove('open');resetConfirmInput();}
+
+  /* Confirm input: enable button only when typed ID matches exactly */
+  if(confirmInp){
+    confirmInp.addEventListener('input',function(){
+      var matches=confirmInp.value===currentSnapId;
+      confirmInp.classList.toggle('matched',matches);
+      if(confirmBtn){
+        confirmBtn.disabled=!matches;
+        confirmBtn.classList.toggle('ready',matches);
+      }
+    });
+  }
+
   var items=dd.querySelectorAll('.snap-dd-item');
   items.forEach(function(item){
     if(item.querySelector('.current-tag'))return;
     item.addEventListener('click',function(){
       dd.classList.remove('open');
       btn.setAttribute('aria-expanded','false');
-      var snapId=item.getAttribute('data-snap');
+      currentSnapId=item.getAttribute('data-snap');
       var snapLabel=item.getAttribute('data-label');
       var snapTs=item.getAttribute('data-ts');
       var snapDep=item.getAttribute('data-dep');
-      document.getElementById('snapModalTitle').textContent='Restore Snapshot '+snapId+'?';
-      document.getElementById('snapModalId').textContent=snapId;
+      document.getElementById('snapModalTitle').textContent='Restore Snapshot '+currentSnapId+'?';
+      document.getElementById('snapModalId').textContent=currentSnapId;
       document.getElementById('snapModalLabel').textContent=snapLabel;
       document.getElementById('snapModalTs').textContent=snapTs;
       document.getElementById('snapModalDep').textContent=snapDep+' deployed';
-      document.getElementById('snapModalOverlay').classList.add('open');
+      if(confirmTarget)confirmTarget.textContent=currentSnapId;
+      resetConfirmInput();
+      overlay.classList.add('open');
+      setTimeout(function(){if(confirmInp)confirmInp.focus();},120);
     });
   });
-  var overlay=document.getElementById('snapModalOverlay');
-  var cancelBtn=document.getElementById('snapModalCancel');
-  var confirmBtn=document.getElementById('snapModalConfirm');
-  var closeBtn=document.getElementById('snapModalCloseBtn');
-  function closeSnapModal(){overlay.classList.remove('open');}
+
   if(cancelBtn)cancelBtn.addEventListener('click',closeSnapModal);
   if(closeBtn)closeBtn.addEventListener('click',closeSnapModal);
   if(overlay)overlay.addEventListener('click',function(e){if(e.target===overlay)closeSnapModal();});
   if(confirmBtn)confirmBtn.addEventListener('click',function(){
+    if(confirmBtn.disabled)return;
     overlay.classList.remove('open');
-    var toast=document.createElement('div');
-    toast.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--am50);border:1px solid rgba(200,136,0,.3);border-radius:8px;padding:12px 20px;font-size:13px;font-weight:700;color:var(--am700);z-index:9999;box-shadow:0 4px 20px rgba(15,23,42,.15);display:flex;align-items:center;gap:8px';
-    toast.innerHTML='<i class="pi pi-history" style="font-size:15px"></i> Snapshot restore initiated — system reverting...';
-    document.body.appendChild(toast);
-    setTimeout(function(){toast.style.opacity='0';toast.style.transition='opacity .4s';setTimeout(function(){toast.remove();},400);},3500);
+    resetConfirmInput();
   });
 })();
 
